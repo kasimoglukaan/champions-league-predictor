@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 import numpy as np
 
@@ -27,7 +28,7 @@ class MonteCarloSimulator:
     def __init__(
         self,
         simulations: int = 10_000,
-        random_seed: int | None = 42,
+        random_seed: Optional[int] = 42,
     ) -> None:
         if simulations <= 0:
             raise ValueError(
