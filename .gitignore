@@ -30,3 +30,6 @@ models/*.joblib
 
 # Large raw datasets
 data/raw/*.zip
+
+.venv/
+.venv-1/
