@@ -5,38 +5,67 @@ import numpy as np
 import pandas as pd
 
 
+MatchHistory = Tuple[int, int, int]
+
+
 class FeatureBuilder:
     FEATURE_COLUMNS = [
         "home_elo",
         "away_elo",
         "elo_difference",
-        "home_form_points",
-        "away_form_points",
-        "form_difference",
-        "home_goals_scored",
-        "away_goals_scored",
-        "home_goals_conceded",
-        "away_goals_conceded",
-        "home_goal_difference",
-        "away_goal_difference",
-        "home_win_rate",
-        "away_win_rate",
+        "absolute_elo_difference",
+
+        "home_form_points_5",
+        "away_form_points_5",
+        "form_points_difference_5",
+
+        "home_form_points_10",
+        "away_form_points_10",
+        "form_points_difference_10",
+
+        "home_goals_scored_5",
+        "away_goals_scored_5",
+        "home_goals_conceded_5",
+        "away_goals_conceded_5",
+
+        "home_home_points_5",
+        "away_away_points_5",
+        "home_home_win_rate_5",
+        "away_away_win_rate_5",
+
+        "home_goal_difference_5",
+        "away_goal_difference_5",
+
         "home_rest_days",
         "away_rest_days",
+
+        "home_league_strength",
+        "away_league_strength",
+        "league_strength_difference",
+
         "is_champions_league",
     ]
+
+    LEAGUE_STRENGTHS = {
+        "PL": 1.00,
+        "PD": 0.97,
+        "SA": 0.95,
+        "BL1": 0.94,
+        "FL1": 0.90,
+        "PPL": 0.84,
+        "DED": 0.82,
+        "CL": 1.00,
+    }
 
     def __init__(
         self,
         initial_elo: float = 1500.0,
         k_factor: float = 25.0,
         home_advantage: float = 60.0,
-        form_window: int = 8,
     ) -> None:
         self.initial_elo = initial_elo
         self.k_factor = k_factor
         self.home_advantage = home_advantage
-        self.form_window = form_window
 
     def build(
         self,
@@ -57,13 +86,25 @@ class FeatureBuilder:
             lambda: self.initial_elo
         )
 
-        histories: Dict[
+        overall_histories: Dict[
             str,
-            Deque[Tuple[int, int, int]]
+            Deque[MatchHistory]
         ] = defaultdict(
-            lambda: deque(
-                maxlen=self.form_window
-            )
+            lambda: deque(maxlen=10)
+        )
+
+        home_histories: Dict[
+            str,
+            Deque[MatchHistory]
+        ] = defaultdict(
+            lambda: deque(maxlen=10)
+        )
+
+        away_histories: Dict[
+            str,
+            Deque[MatchHistory]
+        ] = defaultdict(
+            lambda: deque(maxlen=10)
         )
 
         last_match_dates: Dict[
@@ -71,24 +112,52 @@ class FeatureBuilder:
             pd.Timestamp
         ] = {}
 
+        team_domestic_competition: Dict[
+            str,
+            str
+        ] = {}
+
         feature_rows: List[Dict] = []
 
         for row in dataframe.itertuples(
             index=False
         ):
-            home_team = row.home_team
-            away_team = row.away_team
+            home_team = str(row.home_team)
+            away_team = str(row.away_team)
+            competition = str(row.competition)
             match_date = row.date
 
             home_elo = ratings[home_team]
             away_elo = ratings[away_team]
 
-            home_stats = self._history_features(
-                histories[home_team]
+            home_form_5 = self._history_features(
+                overall_histories[home_team],
+                window=5,
             )
 
-            away_stats = self._history_features(
-                histories[away_team]
+            away_form_5 = self._history_features(
+                overall_histories[away_team],
+                window=5,
+            )
+
+            home_form_10 = self._history_features(
+                overall_histories[home_team],
+                window=10,
+            )
+
+            away_form_10 = self._history_features(
+                overall_histories[away_team],
+                window=10,
+            )
+
+            home_at_home = self._history_features(
+                home_histories[home_team],
+                window=5,
+            )
+
+            away_as_away = self._history_features(
+                away_histories[away_team],
+                window=5,
             )
 
             home_rest_days = self._rest_days(
@@ -103,13 +172,28 @@ class FeatureBuilder:
                 last_match_dates=last_match_dates,
             )
 
+            home_league_strength = (
+                self._get_team_league_strength(
+                    home_team,
+                    team_domestic_competition,
+                )
+            )
+
+            away_league_strength = (
+                self._get_team_league_strength(
+                    away_team,
+                    team_domestic_competition,
+                )
+            )
+
             feature_rows.append(
                 {
                     "match_id": row.match_id,
                     "date": match_date,
-                    "competition": row.competition,
+                    "competition": competition,
                     "home_team": home_team,
                     "away_team": away_team,
+
                     "home_elo": home_elo,
                     "away_elo": away_elo,
                     "elo_difference": (
@@ -117,90 +201,151 @@ class FeatureBuilder:
                         + self.home_advantage
                         - away_elo
                     ),
-                    "home_form_points": (
-                        home_stats["points"]
+                    "absolute_elo_difference": abs(
+                        home_elo - away_elo
                     ),
-                    "away_form_points": (
-                        away_stats["points"]
+
+                    "home_form_points_5": (
+                        home_form_5["points"]
                     ),
-                    "form_difference": (
-                        home_stats["points"]
-                        - away_stats["points"]
+                    "away_form_points_5": (
+                        away_form_5["points"]
                     ),
-                    "home_goals_scored": (
-                        home_stats["goals_scored"]
+                    "form_points_difference_5": (
+                        home_form_5["points"]
+                        - away_form_5["points"]
                     ),
-                    "away_goals_scored": (
-                        away_stats["goals_scored"]
+
+                    "home_form_points_10": (
+                        home_form_10["points"]
                     ),
-                    "home_goals_conceded": (
-                        home_stats["goals_conceded"]
+                    "away_form_points_10": (
+                        away_form_10["points"]
                     ),
-                    "away_goals_conceded": (
-                        away_stats["goals_conceded"]
+                    "form_points_difference_10": (
+                        home_form_10["points"]
+                        - away_form_10["points"]
                     ),
-                    "home_goal_difference": (
-                        home_stats["goal_difference"]
+
+                    "home_goals_scored_5": (
+                        home_form_5["goals_scored"]
                     ),
-                    "away_goal_difference": (
-                        away_stats["goal_difference"]
+                    "away_goals_scored_5": (
+                        away_form_5["goals_scored"]
                     ),
-                    "home_win_rate": (
-                        home_stats["win_rate"]
+                    "home_goals_conceded_5": (
+                        home_form_5["goals_conceded"]
                     ),
-                    "away_win_rate": (
-                        away_stats["win_rate"]
+                    "away_goals_conceded_5": (
+                        away_form_5["goals_conceded"]
                     ),
+
+                    "home_home_points_5": (
+                        home_at_home["points"]
+                    ),
+                    "away_away_points_5": (
+                        away_as_away["points"]
+                    ),
+                    "home_home_win_rate_5": (
+                        home_at_home["win_rate"]
+                    ),
+                    "away_away_win_rate_5": (
+                        away_as_away["win_rate"]
+                    ),
+
+                    "home_goal_difference_5": (
+                        home_form_5["goal_difference"]
+                    ),
+                    "away_goal_difference_5": (
+                        away_form_5["goal_difference"]
+                    ),
+
                     "home_rest_days": home_rest_days,
                     "away_rest_days": away_rest_days,
-                    "is_champions_league": int(
-                        row.competition == "CL"
+
+                    "home_league_strength": (
+                        home_league_strength
                     ),
+                    "away_league_strength": (
+                        away_league_strength
+                    ),
+                    "league_strength_difference": (
+                        home_league_strength
+                        - away_league_strength
+                    ),
+
+                    "is_champions_league": int(
+                        competition == "CL"
+                    ),
+
                     "target": row.winner,
                 }
             )
 
+            home_goals = int(row.home_goals)
+            away_goals = int(row.away_goals)
+
             self._update_elo(
                 home_team=home_team,
                 away_team=away_team,
-                home_goals=int(row.home_goals),
-                away_goals=int(row.away_goals),
+                home_goals=home_goals,
+                away_goals=away_goals,
                 ratings=ratings,
             )
 
-            self._update_history(
-                team=home_team,
-                goals_scored=int(row.home_goals),
-                goals_conceded=int(row.away_goals),
-                history=histories[home_team],
+            self._append_history(
+                overall_histories[home_team],
+                home_goals,
+                away_goals,
             )
 
-            self._update_history(
-                team=away_team,
-                goals_scored=int(row.away_goals),
-                goals_conceded=int(row.home_goals),
-                history=histories[away_team],
+            self._append_history(
+                overall_histories[away_team],
+                away_goals,
+                home_goals,
+            )
+
+            self._append_history(
+                home_histories[home_team],
+                home_goals,
+                away_goals,
+            )
+
+            self._append_history(
+                away_histories[away_team],
+                away_goals,
+                home_goals,
             )
 
             last_match_dates[home_team] = match_date
             last_match_dates[away_team] = match_date
 
+            if competition != "CL":
+                team_domestic_competition[
+                    home_team
+                ] = competition
+
+                team_domestic_competition[
+                    away_team
+                ] = competition
+
         return pd.DataFrame(feature_rows)
 
     def _history_features(
         self,
-        history: Deque[Tuple[int, int, int]],
+        history: Deque[MatchHistory],
+        window: int,
     ) -> Dict[str, float]:
-        if not history:
+        matches = list(history)[-window:]
+
+        if not matches:
             return {
-                "points": 0.0,
+                "points": 1.0,
                 "goals_scored": 1.2,
                 "goals_conceded": 1.2,
                 "goal_difference": 0.0,
-                "win_rate": 0.0,
+                "win_rate": 0.33,
             }
-
-        matches = list(history)
 
         points = np.mean(
             [match[2] for match in matches]
@@ -229,17 +374,19 @@ class FeatureBuilder:
                 goals_conceded
             ),
             "goal_difference": float(
-                goals_scored - goals_conceded
+                goals_scored
+                - goals_conceded
             ),
-            "win_rate": wins / len(matches),
+            "win_rate": float(
+                wins / len(matches)
+            ),
         }
 
-    def _update_history(
-        self,
-        team: str,
+    @staticmethod
+    def _append_history(
+        history: Deque[MatchHistory],
         goals_scored: int,
         goals_conceded: int,
-        history: Deque[Tuple[int, int, int]],
     ) -> None:
         if goals_scored > goals_conceded:
             points = 3
@@ -292,24 +439,46 @@ class FeatureBuilder:
         )
 
         margin_multiplier = (
-            1.0
-            + np.log1p(goal_margin)
+            1.0 + np.log1p(goal_margin)
             if goal_margin > 0
             else 1.0
         )
 
-        change = (
+        rating_change = (
             self.k_factor
             * margin_multiplier
-            * (actual_home - expected_home)
+            * (
+                actual_home
+                - expected_home
+            )
         )
 
         ratings[home_team] = (
-            home_rating + change
+            home_rating + rating_change
         )
 
         ratings[away_team] = (
-            away_rating - change
+            away_rating - rating_change
+        )
+
+    def _get_team_league_strength(
+        self,
+        team: str,
+        team_domestic_competition: Dict[
+            str,
+            str
+        ],
+    ) -> float:
+        competition = (
+            team_domestic_competition.get(team)
+        )
+
+        if competition is None:
+            return 0.85
+
+        return self.LEAGUE_STRENGTHS.get(
+            competition,
+            0.85,
         )
 
     @staticmethod
