@@ -1,0 +1,92 @@
+{
+  "dataset_rows": 7592,
+  "feature_count": 17,
+  "folds": [
+    {
+      "fold": 1,
+      "validation_start": "2024-01-01",
+      "validation_end": "2024-07-01",
+      "training_rows": 1227,
+      "validation_rows": 29
+    },
+    {
+      "fold": 2,
+      "validation_start": "2024-07-01",
+      "validation_end": "2025-01-01",
+      "training_rows": 2489,
+      "validation_rows": 108
+    },
+    {
+      "fold": 3,
+      "validation_start": "2025-01-01",
+      "validation_end": "2025-07-01",
+      "training_rows": 3710,
+      "validation_rows": 81
+    },
+    {
+      "fold": 4,
+      "validation_start": "2025-07-01",
+      "validation_end": "2026-01-01",
+      "training_rows": 5040,
+      "validation_rows": 108
+    }
+  ],
+  "rolling_validation": {
+    "logistic_regression": {
+      "average_accuracy": 0.5401766709237974,
+      "average_log_loss": 0.9911891178093629,
+      "accuracy_std": 0.08617619441296598,
+      "log_loss_std": 0.05710406076381157,
+      "folds": [
+        {
+          "accuracy": 0.41379310344827586,
+          "log_loss": 1.083823047694787
+        },
+        {
+          "accuracy": 0.6481481481481481,
+          "log_loss": 0.938245431823313
+        },
+        {
+          "accuracy": 0.5802469135802469,
+          "log_loss": 0.950466275190679
+        },
+        {
+          "accuracy": 0.5185185185185185,
+          "log_loss": 0.9922217165286726
+        }
+      ]
+    },
+    "xgboost_regularized": {
+      "average_accuracy": 0.5552362707535121,
+      "average_log_loss": 0.9748427529924972,
+      "accuracy_std": 0.04012522114568387,
+      "log_loss_std": 0.04265014861140737,
+      "folds": [
+        {
+          "accuracy": 0.5172413793103449,
+          "log_loss": 1.012352629362807
+        },
+        {
+          "accuracy": 0.6203703703703703,
+          "log_loss": 0.920884326753955
+        },
+        {
+          "accuracy": 0.5555555555555556,
+          "log_loss": 0.9455013472961461
+        },
+        {
+          "accuracy": 0.5277777777777778,
+          "log_loss": 1.020632708557081
+        }
+      ]
+    }
+  },
+  "selected_model": "xgboost_regularized",
+  "final_test": {
+    "start_date": "2026-01-01",
+    "development_rows": 6244,
+    "test_rows": 81,
+    "accuracy": 0.5061728395061729,
+    "log_loss": 1.0219292294834448
+  }
+}
