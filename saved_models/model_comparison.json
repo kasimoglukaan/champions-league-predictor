@@ -1,0 +1,35 @@
+{
+  "baseline": {
+    "accuracy": 0.5767,
+    "log_loss": 1.0054
+  },
+  "best_candidate": {
+    "model": "logistic_regression",
+    "accuracy": 0.5767195767195767,
+    "log_loss": 1.0053681773329581,
+    "brier_score": 0.5767904638666743
+  },
+  "promoted_to_production": true,
+  "all_models": {
+    "logistic_regression": {
+      "accuracy": 0.5767195767195767,
+      "log_loss": 1.0053681773329581,
+      "multiclass_brier": 0.5767904638666743
+    },
+    "hist_gradient_boosting": {
+      "accuracy": 0.5291005291005291,
+      "log_loss": 1.1749820382547491,
+      "multiclass_brier": 0.6552131229663476
+    },
+    "random_forest": {
+      "accuracy": 0.5370370370370371,
+      "log_loss": 1.0179419733979864,
+      "multiclass_brier": 0.5995233813745202
+    },
+    "extra_trees": {
+      "accuracy": 0.5370370370370371,
+      "log_loss": 1.016941166800258,
+      "multiclass_brier": 0.6023127179971273
+    }
+  }
+}

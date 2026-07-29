@@ -13,15 +13,64 @@ from sklearn.metrics import (
 class ModelEvaluator:
     LABEL_ORDER = ["A", "D", "H"]
 
+    def evaluate_named_model(
+        self,
+        model_manager,
+        model_name: str,
+        X_test: pd.DataFrame,
+        y_test: pd.Series,
+    ) -> Dict[str, float]:
+        predictions = (
+            model_manager.predict_with_model(
+                model_name=model_name,
+                X=X_test,
+            )
+        )
+
+        probabilities = (
+            model_manager
+            .predict_proba_with_model(
+                model_name=model_name,
+                X=X_test,
+            )
+        )
+
+        return {
+            "accuracy": float(
+                accuracy_score(
+                    y_test,
+                    predictions,
+                )
+            ),
+            "log_loss": float(
+                log_loss(
+                    y_test,
+                    probabilities,
+                    labels=self.LABEL_ORDER,
+                )
+            ),
+            "multiclass_brier": (
+                self._multiclass_brier(
+                    y_test=y_test,
+                    probabilities=probabilities,
+                )
+            ),
+        }
+
     def evaluate(
         self,
         model,
         X_test: pd.DataFrame,
         y_test: pd.Series,
     ) -> Dict[str, object]:
-        predictions = model.predict(X_test)
-        probabilities = model.predict_proba(
+        predictions = model.predict(
             X_test
+        )
+
+        probabilities = (
+            model.predict_proba(
+                X_test
+            )
         )
 
         return {
@@ -61,75 +110,14 @@ class ModelEvaluator:
             ),
         }
 
-    def evaluate_single_model(
-        self,
-        sklearn_model,
-        X_test: pd.DataFrame,
-        y_test: pd.Series,
-    ) -> Dict[str, float]:
-        predictions = sklearn_model.predict(
-            X_test
-        )
-
-        probabilities = (
-            sklearn_model.predict_proba(
-                X_test
-            )
-        )
-
-        classes = list(
-            sklearn_model.classes_
-        )
-
-        ordered_probabilities = np.zeros(
-            (
-                len(X_test),
-                len(self.LABEL_ORDER),
-            )
-        )
-
-        for output_index, label in enumerate(
-            self.LABEL_ORDER
-        ):
-            class_index = classes.index(label)
-
-            ordered_probabilities[
-                :,
-                output_index,
-            ] = probabilities[
-                :,
-                class_index,
-            ]
-
-        return {
-            "accuracy": float(
-                accuracy_score(
-                    y_test,
-                    predictions,
-                )
-            ),
-            "log_loss": float(
-                log_loss(
-                    y_test,
-                    ordered_probabilities,
-                    labels=self.LABEL_ORDER,
-                )
-            ),
-            "multiclass_brier": (
-                self._multiclass_brier(
-                    y_test,
-                    ordered_probabilities,
-                )
-            ),
-        }
-
     def _multiclass_brier(
         self,
         y_test: pd.Series,
         probabilities: np.ndarray,
     ) -> float:
-        encoded = np.zeros_like(
-            probabilities
+        encoded_targets = np.zeros_like(
+            probabilities,
+            dtype=float,
         )
 
         label_to_index = {
@@ -140,9 +128,9 @@ class ModelEvaluator:
         }
 
         for row_index, label in enumerate(
-            y_test
+            y_test.to_numpy()
         ):
-            encoded[
+            encoded_targets[
                 row_index,
                 label_to_index[label],
             ] = 1.0
@@ -152,7 +140,7 @@ class ModelEvaluator:
                 np.sum(
                     (
                         probabilities
-                        - encoded
+                        - encoded_targets
                     )
                     ** 2,
                     axis=1,
