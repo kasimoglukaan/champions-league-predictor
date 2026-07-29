@@ -1,0 +1,73 @@
+{
+  "baseline": {
+    "accuracy": 0.5767,
+    "log_loss": 1.0054
+  },
+  "best_model": {
+    "name": "xgb_regularized",
+    "accuracy": 0.5582010582010583,
+    "log_loss": 0.9935414047145994,
+    "parameters": {
+      "name": "xgb_regularized",
+      "n_estimators": 400,
+      "learning_rate": 0.02,
+      "max_depth": 3,
+      "min_child_weight": 8,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.5,
+      "reg_lambda": 5.0
+    }
+  },
+  "promoted_to_production": false,
+  "all_results": [
+    {
+      "name": "xgb_small",
+      "accuracy": 0.5529100529100529,
+      "log_loss": 1.0158825354467975,
+      "parameters": {
+        "name": "xgb_small",
+        "n_estimators": 300,
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "subsample": 0.85,
+        "colsample_bytree": 0.85,
+        "reg_alpha": 0.1,
+        "reg_lambda": 2.0
+      }
+    },
+    {
+      "name": "xgb_medium",
+      "accuracy": 0.5502645502645502,
+      "log_loss": 1.0460727951552355,
+      "parameters": {
+        "name": "xgb_medium",
+        "n_estimators": 500,
+        "learning_rate": 0.025,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "subsample": 0.85,
+        "colsample_bytree": 0.85,
+        "reg_alpha": 0.2,
+        "reg_lambda": 3.0
+      }
+    },
+    {
+      "name": "xgb_regularized",
+      "accuracy": 0.5582010582010583,
+      "log_loss": 0.9935414047145994,
+      "parameters": {
+        "name": "xgb_regularized",
+        "n_estimators": 400,
+        "learning_rate": 0.02,
+        "max_depth": 3,
+        "min_child_weight": 8,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.5,
+        "reg_lambda": 5.0
+      }
+    }
+  ]
+}
