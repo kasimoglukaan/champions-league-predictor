@@ -1,0 +1,70 @@
+{
+  "test_start_date": "2024-07-01",
+  "development_matches": 2489,
+  "validation_matches": 498,
+  "test_matches": 378,
+  "best_validation_parameters": {
+    "draw_c": 0.01,
+    "winner_c": 0.03,
+    "draw_logit_bias": 0.25,
+    "accuracy": 0.5240963855421686,
+    "log_loss": 0.9849441196918811,
+    "draw_recall": 0.11904761904761904,
+    "draw_precision": 0.3191489361702128,
+    "predicted_draws": 47
+  },
+  "production_model": {
+    "accuracy": 0.582010582010582,
+    "log_loss": 1.00746248572528,
+    "draw_recall": 0.1016949152542373,
+    "draw_precision": 0.5454545454545454,
+    "predicted_draws": 11,
+    "correct_draws": 6,
+    "confusion_matrix": [
+      [
+        75,
+        2,
+        51
+      ],
+      [
+        27,
+        6,
+        26
+      ],
+      [
+        49,
+        3,
+        139
+      ]
+    ]
+  },
+  "two_stage_model": {
+    "accuracy": 0.582010582010582,
+    "log_loss": 0.9907463317565038,
+    "draw_recall": 0.0847457627118644,
+    "draw_precision": 0.8333333333333334,
+    "predicted_draws": 6,
+    "correct_draws": 5,
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.53      0.48      0.50       128\n           D       0.83      0.08      0.15        59\n           H       0.60      0.81      0.69       191\n\n    accuracy                           0.58       378\n   macro avg       0.65      0.46      0.45       378\nweighted avg       0.61      0.58      0.54       378\n",
+    "confusion_matrix": [
+      [
+        61,
+        0,
+        67
+      ],
+      [
+        19,
+        5,
+        35
+      ],
+      [
+        36,
+        1,
+        154
+      ]
+    ]
+  },
+  "accuracy_difference": 0.0,
+  "log_loss_improvement": 0.016716153968776237,
+  "candidate_model_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/saved_models/two_stage_candidate.joblib"
+}
