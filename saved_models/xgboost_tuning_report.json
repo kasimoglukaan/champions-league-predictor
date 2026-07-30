@@ -1,0 +1,75 @@
+{
+  "test_start_date": "2024-07-01",
+  "development_matches": 2489,
+  "validation_matches": 498,
+  "test_matches": 378,
+  "best_validation_result": {
+    "name": "deeper_regularized",
+    "parameters": {
+      "name": "deeper_regularized",
+      "n_estimators": 250,
+      "max_depth": 4,
+      "learning_rate": 0.02,
+      "min_child_weight": 8,
+      "subsample": 0.75,
+      "colsample_bytree": 0.75,
+      "gamma": 0.25,
+      "reg_alpha": 1.0,
+      "reg_lambda": 8.0
+    },
+    "accuracy": 0.5100401606425703,
+    "log_loss": 0.9935521762428611,
+    "draw_recall": 0.09523809523809523
+  },
+  "production_model": {
+    "accuracy": 0.582010582010582,
+    "log_loss": 1.00746248572528,
+    "draw_recall": 0.1016949152542373,
+    "confusion_matrix": [
+      [
+        75,
+        2,
+        51
+      ],
+      [
+        27,
+        6,
+        26
+      ],
+      [
+        49,
+        3,
+        139
+      ]
+    ]
+  },
+  "xgboost_model": {
+    "accuracy": 0.5476190476190477,
+    "log_loss": 0.9811038596832118,
+    "draw_recall": 0.0,
+    "draw_precision": 0.0,
+    "predicted_draws": 3,
+    "correct_draws": 0,
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.45      0.47       128\n           D       0.00      0.00      0.00        59\n           H       0.57      0.79      0.66       191\n\n    accuracy                           0.55       378\n   macro avg       0.36      0.41      0.38       378\nweighted avg       0.46      0.55      0.49       378\n",
+    "confusion_matrix": [
+      [
+        57,
+        0,
+        71
+      ],
+      [
+        19,
+        0,
+        40
+      ],
+      [
+        38,
+        3,
+        150
+      ]
+    ]
+  },
+  "accuracy_difference": -0.034391534391534306,
+  "log_loss_improvement": 0.02635862604206829,
+  "candidate_model_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/saved_models/xgboost_tuned_candidate.joblib"
+}
