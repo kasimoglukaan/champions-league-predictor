@@ -11,6 +11,9 @@ from src.models.machine_learning_model import (
 from src.models.ml_prediction import (
     MLPrediction,
 )
+from src.services.prediction_explanation_service import (
+    PredictionExplanationService,
+)
 
 
 class MLPredictionService:
@@ -21,8 +24,13 @@ class MLPredictionService:
         data_path: str,
         model_path: str,
     ) -> None:
-        self.data_path = Path(data_path)
-        self.model_path = Path(model_path)
+        self.data_path = Path(
+            data_path
+        )
+
+        self.model_path = Path(
+            model_path
+        )
 
         self.feature_builder = (
             LiveFeatureBuilder(
@@ -33,19 +41,26 @@ class MLPredictionService:
             )
         )
 
-        self.model = MachineLearningModel()
+        self.model = (
+            MachineLearningModel()
+        )
+
+        self.explanation_service = (
+            PredictionExplanationService()
+        )
+
         self.is_loaded = False
 
     def load(self) -> None:
         if not self.data_path.exists():
             raise FileNotFoundError(
-                f"Data file not found: "
+                "Data file not found: "
                 f"{self.data_path}"
             )
 
         if not self.model_path.exists():
             raise FileNotFoundError(
-                f"Model file not found: "
+                "Model file not found: "
                 f"{self.model_path}"
             )
 
@@ -70,11 +85,16 @@ class MLPredictionService:
             raise ValueError(
                 "Missing data columns: "
                 + ", ".join(
-                    sorted(missing_columns)
+                    sorted(
+                        missing_columns
+                    )
                 )
             )
 
-        self.feature_builder.fit(matches)
+        self.feature_builder.fit(
+            matches
+        )
+
         self.model.load(
             str(self.model_path)
         )
@@ -126,23 +146,43 @@ class MLPredictionService:
             key=probability_map.get,
         )
 
-        confidence = probability_map[
-            predicted_result
-        ]
+        confidence = float(
+            probability_map[
+                predicted_result
+            ]
+        )
 
         home_summary = (
             self.feature_builder
-            .get_team_summary(home_team)
+            .get_team_summary(
+                home_team
+            )
         )
 
         away_summary = (
             self.feature_builder
-            .get_team_summary(away_team)
+            .get_team_summary(
+                away_team
+            )
+        )
+
+        explanation = (
+            self.explanation_service
+            .explain(
+                feature_row=features,
+                predicted_result=(
+                    predicted_result
+                ),
+                home_team=home_team,
+                away_team=away_team,
+                top_n=5,
+            )
         )
 
         return MLPrediction(
             home_team=home_team,
             away_team=away_team,
+
             home_win_probability=(
                 home_probability
             ),
@@ -152,6 +192,7 @@ class MLPredictionService:
             away_win_probability=(
                 away_probability
             ),
+
             predicted_result=(
                 predicted_result
             ),
@@ -161,15 +202,32 @@ class MLPredictionService:
                     confidence
                 )
             ),
-            home_elo=home_summary["elo"],
-            away_elo=away_summary["elo"],
+
+            home_elo=float(
+                home_summary["elo"]
+            ),
+            away_elo=float(
+                away_summary["elo"]
+            ),
+
+            positive_factors=(
+                explanation[
+                    "positive_factors"
+                ]
+            ),
+            negative_factors=(
+                explanation[
+                    "negative_factors"
+                ]
+            ),
         )
 
     def get_teams(self) -> list:
         self._ensure_loaded()
 
         return (
-            self.feature_builder.get_teams()
+            self.feature_builder
+            .get_teams()
         )
 
     def get_team_summary(
@@ -180,7 +238,9 @@ class MLPredictionService:
 
         return (
             self.feature_builder
-            .get_team_summary(team_name)
+            .get_team_summary(
+                team_name
+            )
         )
 
     @staticmethod
@@ -195,7 +255,9 @@ class MLPredictionService:
 
         return "LOW"
 
-    def _ensure_loaded(self) -> None:
+    def _ensure_loaded(
+        self,
+    ) -> None:
         if not self.is_loaded:
             raise RuntimeError(
                 "ML prediction service "
