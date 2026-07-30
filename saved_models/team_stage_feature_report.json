@@ -1,0 +1,429 @@
+{
+  "test_start_date": "2024-07-01",
+  "test_matches": 378,
+  "validation_results": {
+    "numeric_baseline": {
+      "experiment_name": "numeric_baseline",
+      "c_value": 0.03,
+      "numeric_columns": [
+        "home_elo",
+        "away_elo",
+        "elo_difference",
+        "absolute_elo_difference",
+        "squared_elo_difference",
+        "close_elo_match",
+        "home_form_points",
+        "away_form_points",
+        "form_difference",
+        "home_goals_scored",
+        "away_goals_scored",
+        "home_goals_conceded",
+        "away_goals_conceded",
+        "home_attack_matchup",
+        "away_attack_matchup",
+        "attack_matchup_difference",
+        "home_goal_difference",
+        "away_goal_difference",
+        "home_win_rate",
+        "away_win_rate",
+        "home_rest_days",
+        "away_rest_days",
+        "is_champions_league"
+      ],
+      "categorical_columns": [],
+      "accuracy": 0.5120481927710844,
+      "log_loss": 0.984177767693459,
+      "draw_recall": 0.03968253968253968,
+      "draw_precision": 0.2631578947368421,
+      "predicted_draws": 19,
+      "correct_draws": 5,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.53      0.57      0.55       164\n           D       0.26      0.04      0.07       126\n           H       0.52      0.75      0.62       208\n\n    accuracy                           0.51       498\n   macro avg       0.44      0.45      0.41       498\nweighted avg       0.46      0.51      0.45       498\n",
+      "confusion_matrix": [
+        [
+          93,
+          8,
+          63
+        ],
+        [
+          39,
+          5,
+          82
+        ],
+        [
+          45,
+          6,
+          157
+        ]
+      ]
+    },
+    "stage_only": {
+      "experiment_name": "stage_only",
+      "c_value": 0.03,
+      "numeric_columns": [
+        "home_elo",
+        "away_elo",
+        "elo_difference",
+        "absolute_elo_difference",
+        "squared_elo_difference",
+        "close_elo_match",
+        "home_form_points",
+        "away_form_points",
+        "form_difference",
+        "home_goals_scored",
+        "away_goals_scored",
+        "home_goals_conceded",
+        "away_goals_conceded",
+        "home_attack_matchup",
+        "away_attack_matchup",
+        "attack_matchup_difference",
+        "home_goal_difference",
+        "away_goal_difference",
+        "home_win_rate",
+        "away_win_rate",
+        "home_rest_days",
+        "away_rest_days",
+        "is_champions_league"
+      ],
+      "categorical_columns": [
+        "stage"
+      ],
+      "accuracy": 0.5120481927710844,
+      "log_loss": 0.9843540292908121,
+      "draw_recall": 0.03968253968253968,
+      "draw_precision": 0.2631578947368421,
+      "predicted_draws": 19,
+      "correct_draws": 5,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.53      0.57      0.55       164\n           D       0.26      0.04      0.07       126\n           H       0.52      0.75      0.62       208\n\n    accuracy                           0.51       498\n   macro avg       0.44      0.45      0.41       498\nweighted avg       0.46      0.51      0.45       498\n",
+      "confusion_matrix": [
+        [
+          93,
+          8,
+          63
+        ],
+        [
+          39,
+          5,
+          82
+        ],
+        [
+          45,
+          6,
+          157
+        ]
+      ]
+    },
+    "stage_matchday": {
+      "experiment_name": "stage_matchday",
+      "c_value": 0.03,
+      "numeric_columns": [
+        "home_elo",
+        "away_elo",
+        "elo_difference",
+        "absolute_elo_difference",
+        "squared_elo_difference",
+        "close_elo_match",
+        "home_form_points",
+        "away_form_points",
+        "form_difference",
+        "home_goals_scored",
+        "away_goals_scored",
+        "home_goals_conceded",
+        "away_goals_conceded",
+        "home_attack_matchup",
+        "away_attack_matchup",
+        "attack_matchup_difference",
+        "home_goal_difference",
+        "away_goal_difference",
+        "home_win_rate",
+        "away_win_rate",
+        "home_rest_days",
+        "away_rest_days",
+        "is_champions_league",
+        "matchday"
+      ],
+      "categorical_columns": [
+        "stage"
+      ],
+      "accuracy": 0.5180722891566265,
+      "log_loss": 0.9886453260621603,
+      "draw_recall": 0.12698412698412698,
+      "draw_precision": 0.2909090909090909,
+      "predicted_draws": 55,
+      "correct_draws": 16,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.55      0.53      0.54       164\n           D       0.29      0.13      0.18       126\n           H       0.54      0.75      0.63       208\n\n    accuracy                           0.52       498\n   macro avg       0.46      0.47      0.45       498\nweighted avg       0.48      0.52      0.49       498\n",
+      "confusion_matrix": [
+        [
+          87,
+          23,
+          54
+        ],
+        [
+          33,
+          16,
+          77
+        ],
+        [
+          37,
+          16,
+          155
+        ]
+      ]
+    },
+    "team_identity": {
+      "experiment_name": "team_identity",
+      "c_value": 0.1,
+      "numeric_columns": [
+        "home_elo",
+        "away_elo",
+        "elo_difference",
+        "absolute_elo_difference",
+        "squared_elo_difference",
+        "close_elo_match",
+        "home_form_points",
+        "away_form_points",
+        "form_difference",
+        "home_goals_scored",
+        "away_goals_scored",
+        "home_goals_conceded",
+        "away_goals_conceded",
+        "home_attack_matchup",
+        "away_attack_matchup",
+        "attack_matchup_difference",
+        "home_goal_difference",
+        "away_goal_difference",
+        "home_win_rate",
+        "away_win_rate",
+        "home_rest_days",
+        "away_rest_days",
+        "is_champions_league"
+      ],
+      "categorical_columns": [
+        "home_team",
+        "away_team"
+      ],
+      "accuracy": 0.5160642570281124,
+      "log_loss": 0.9911389217683572,
+      "draw_recall": 0.06349206349206349,
+      "draw_precision": 0.27586206896551724,
+      "predicted_draws": 29,
+      "correct_draws": 8,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.54      0.58      0.56       164\n           D       0.28      0.06      0.10       126\n           H       0.53      0.74      0.61       208\n\n    accuracy                           0.52       498\n   macro avg       0.45      0.46      0.43       498\nweighted avg       0.47      0.52      0.47       498\n",
+      "confusion_matrix": [
+        [
+          95,
+          10,
+          59
+        ],
+        [
+          38,
+          8,
+          80
+        ],
+        [
+          43,
+          11,
+          154
+        ]
+      ]
+    },
+    "team_stage": {
+      "experiment_name": "team_stage",
+      "c_value": 0.03,
+      "numeric_columns": [
+        "home_elo",
+        "away_elo",
+        "elo_difference",
+        "absolute_elo_difference",
+        "squared_elo_difference",
+        "close_elo_match",
+        "home_form_points",
+        "away_form_points",
+        "form_difference",
+        "home_goals_scored",
+        "away_goals_scored",
+        "home_goals_conceded",
+        "away_goals_conceded",
+        "home_attack_matchup",
+        "away_attack_matchup",
+        "attack_matchup_difference",
+        "home_goal_difference",
+        "away_goal_difference",
+        "home_win_rate",
+        "away_win_rate",
+        "home_rest_days",
+        "away_rest_days",
+        "is_champions_league"
+      ],
+      "categorical_columns": [
+        "home_team",
+        "away_team",
+        "stage"
+      ],
+      "accuracy": 0.5140562248995983,
+      "log_loss": 0.9846830105045731,
+      "draw_recall": 0.031746031746031744,
+      "draw_precision": 0.25,
+      "predicted_draws": 16,
+      "correct_draws": 4,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.53      0.59      0.55       164\n           D       0.25      0.03      0.06       126\n           H       0.52      0.75      0.61       208\n\n    accuracy                           0.51       498\n   macro avg       0.43      0.46      0.41       498\nweighted avg       0.45      0.51      0.45       498\n",
+      "confusion_matrix": [
+        [
+          96,
+          7,
+          61
+        ],
+        [
+          39,
+          4,
+          83
+        ],
+        [
+          47,
+          5,
+          156
+        ]
+      ]
+    },
+    "team_stage_matchday": {
+      "experiment_name": "team_stage_matchday",
+      "c_value": 0.1,
+      "numeric_columns": [
+        "home_elo",
+        "away_elo",
+        "elo_difference",
+        "absolute_elo_difference",
+        "squared_elo_difference",
+        "close_elo_match",
+        "home_form_points",
+        "away_form_points",
+        "form_difference",
+        "home_goals_scored",
+        "away_goals_scored",
+        "home_goals_conceded",
+        "away_goals_conceded",
+        "home_attack_matchup",
+        "away_attack_matchup",
+        "attack_matchup_difference",
+        "home_goal_difference",
+        "away_goal_difference",
+        "home_win_rate",
+        "away_win_rate",
+        "home_rest_days",
+        "away_rest_days",
+        "is_champions_league",
+        "matchday"
+      ],
+      "categorical_columns": [
+        "home_team",
+        "away_team",
+        "stage"
+      ],
+      "accuracy": 0.5160642570281124,
+      "log_loss": 0.9964436540347462,
+      "draw_recall": 0.23015873015873015,
+      "draw_precision": 0.34523809523809523,
+      "predicted_draws": 84,
+      "correct_draws": 29,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.55      0.52      0.53       164\n           D       0.35      0.23      0.28       126\n           H       0.55      0.69      0.61       208\n\n    accuracy                           0.52       498\n   macro avg       0.48      0.48      0.47       498\nweighted avg       0.50      0.52      0.50       498\n",
+      "confusion_matrix": [
+        [
+          85,
+          27,
+          52
+        ],
+        [
+          33,
+          29,
+          64
+        ],
+        [
+          37,
+          28,
+          143
+        ]
+      ]
+    }
+  },
+  "selected_experiment": "stage_matchday",
+  "production_model": {
+    "accuracy": 0.582010582010582,
+    "log_loss": 1.00746248572528,
+    "draw_recall": 0.1016949152542373,
+    "draw_precision": 0.5454545454545454,
+    "predicted_draws": 11,
+    "correct_draws": 6,
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.59      0.54       128\n           D       0.55      0.10      0.17        59\n           H       0.64      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.56      0.47      0.46       378\nweighted avg       0.58      0.58      0.55       378\n",
+    "confusion_matrix": [
+      [
+        75,
+        2,
+        51
+      ],
+      [
+        27,
+        6,
+        26
+      ],
+      [
+        49,
+        3,
+        139
+      ]
+    ]
+  },
+  "candidate_model": {
+    "accuracy": 0.5687830687830688,
+    "log_loss": 0.9746704461420919,
+    "draw_recall": 0.05084745762711865,
+    "draw_precision": 1.0,
+    "predicted_draws": 3,
+    "correct_draws": 3,
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.05      0.10        59\n           H       0.60      0.77      0.68       191\n\n    accuracy                           0.57       378\n   macro avg       0.70      0.44      0.42       378\nweighted avg       0.63      0.57      0.53       378\n",
+    "confusion_matrix": [
+      [
+        65,
+        0,
+        63
+      ],
+      [
+        22,
+        3,
+        34
+      ],
+      [
+        44,
+        0,
+        147
+      ]
+    ]
+  },
+  "production_candidate_50_50": {
+    "accuracy": 0.5740740740740741,
+    "log_loss": 0.9845899540805545,
+    "draw_recall": 0.05084745762711865,
+    "draw_precision": 1.0,
+    "predicted_draws": 3,
+    "correct_draws": 3,
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.55      0.52       128\n           D       1.00      0.05      0.10        59\n           H       0.62      0.75      0.68       191\n\n    accuracy                           0.57       378\n   macro avg       0.70      0.45      0.43       378\nweighted avg       0.64      0.57      0.53       378\n",
+    "confusion_matrix": [
+      [
+        71,
+        0,
+        57
+      ],
+      [
+        24,
+        3,
+        32
+      ],
+      [
+        48,
+        0,
+        143
+      ]
+    ]
+  },
+  "candidate_accuracy_difference": -0.013227513227513144,
+  "hybrid_accuracy_difference": -0.007936507936507908,
+  "candidate_model_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/saved_models/team_stage_candidate.joblib"
+}
