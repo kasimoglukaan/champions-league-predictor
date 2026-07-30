@@ -1,0 +1,609 @@
+{
+  "test_start_date": "2024-07-01",
+  "test_matches": 378,
+  "label_order": [
+    "A",
+    "D",
+    "H"
+  ],
+  "ml_baseline": {
+    "accuracy": 0.582010582010582,
+    "log_loss": 1.00746248572528,
+    "confusion_matrix": [
+      [
+        75,
+        2,
+        51
+      ],
+      [
+        27,
+        6,
+        26
+      ],
+      [
+        49,
+        3,
+        139
+      ]
+    ]
+  },
+  "poisson_baseline": {
+    "accuracy": 0.5740740740740741,
+    "log_loss": 0.9821742739124736,
+    "confusion_matrix": [
+      [
+        83,
+        0,
+        45
+      ],
+      [
+        29,
+        0,
+        30
+      ],
+      [
+        57,
+        0,
+        134
+      ]
+    ]
+  },
+  "best_accuracy_ensemble": {
+    "name": "ml_0.50_poisson_0.50",
+    "ml_weight": 0.5,
+    "poisson_weight": 0.5,
+    "accuracy": 0.58994708994709,
+    "log_loss": 0.9794425127734705,
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.51      0.64      0.57       128\n           D       1.00      0.03      0.07        59\n           H       0.65      0.73      0.69       191\n\n    accuracy                           0.59       378\n   macro avg       0.72      0.47      0.44       378\nweighted avg       0.66      0.59      0.55       378\n",
+    "confusion_matrix": [
+      [
+        82,
+        0,
+        46
+      ],
+      [
+        28,
+        2,
+        29
+      ],
+      [
+        52,
+        0,
+        139
+      ]
+    ]
+  },
+  "best_log_loss_ensemble": {
+    "name": "ml_0.30_poisson_0.70",
+    "ml_weight": 0.3,
+    "poisson_weight": 0.7,
+    "accuracy": 0.5740740740740741,
+    "log_loss": 0.9770431435291669,
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.64      0.56       128\n           D       0.00      0.00      0.00        59\n           H       0.64      0.71      0.67       191\n\n    accuracy                           0.57       378\n   macro avg       0.38      0.45      0.41       378\nweighted avg       0.49      0.57      0.53       378\n",
+    "confusion_matrix": [
+      [
+        82,
+        0,
+        46
+      ],
+      [
+        29,
+        0,
+        30
+      ],
+      [
+        56,
+        0,
+        135
+      ]
+    ]
+  },
+  "beats_ml_accuracy": true,
+  "beats_ml_log_loss": true,
+  "all_results": {
+    "ml_1.00_poisson_0.00": {
+      "ml_weight": 1.0,
+      "poisson_weight": 0.0,
+      "accuracy": 0.582010582010582,
+      "log_loss": 1.00746248572528,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.59      0.54       128\n           D       0.55      0.10      0.17        59\n           H       0.64      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.56      0.47      0.46       378\nweighted avg       0.58      0.58      0.55       378\n",
+      "confusion_matrix": [
+        [
+          75,
+          2,
+          51
+        ],
+        [
+          27,
+          6,
+          26
+        ],
+        [
+          49,
+          3,
+          139
+        ]
+      ]
+    },
+    "ml_0.95_poisson_0.05": {
+      "ml_weight": 0.95,
+      "poisson_weight": 0.050000000000000044,
+      "accuracy": 0.582010582010582,
+      "log_loss": 1.0025584478258645,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.59      0.54       128\n           D       0.56      0.08      0.15        59\n           H       0.65      0.73      0.69       191\n\n    accuracy                           0.58       378\n   macro avg       0.56      0.47      0.46       378\nweighted avg       0.58      0.58      0.55       378\n",
+      "confusion_matrix": [
+        [
+          75,
+          2,
+          51
+        ],
+        [
+          28,
+          5,
+          26
+        ],
+        [
+          49,
+          2,
+          140
+        ]
+      ]
+    },
+    "ml_0.90_poisson_0.10": {
+      "ml_weight": 0.9,
+      "poisson_weight": 0.09999999999999998,
+      "accuracy": 0.582010582010582,
+      "log_loss": 0.9983352596948728,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.59      0.53       128\n           D       0.67      0.07      0.12        59\n           H       0.64      0.74      0.69       191\n\n    accuracy                           0.58       378\n   macro avg       0.60      0.46      0.45       378\nweighted avg       0.60      0.58      0.55       378\n",
+      "confusion_matrix": [
+        [
+          75,
+          1,
+          52
+        ],
+        [
+          29,
+          4,
+          26
+        ],
+        [
+          49,
+          1,
+          141
+        ]
+      ]
+    },
+    "ml_0.85_poisson_0.15": {
+      "ml_weight": 0.85,
+      "poisson_weight": 0.15000000000000002,
+      "accuracy": 0.5793650793650794,
+      "log_loss": 0.9946601282574873,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.59      0.53       128\n           D       0.75      0.05      0.10        59\n           H       0.64      0.74      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.63      0.46      0.44       378\nweighted avg       0.61      0.58      0.54       378\n",
+      "confusion_matrix": [
+        [
+          75,
+          1,
+          52
+        ],
+        [
+          28,
+          3,
+          28
+        ],
+        [
+          50,
+          0,
+          141
+        ]
+      ]
+    },
+    "ml_0.80_poisson_0.20": {
+      "ml_weight": 0.8,
+      "poisson_weight": 0.19999999999999996,
+      "accuracy": 0.582010582010582,
+      "log_loss": 0.991446429268343,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.59      0.54       128\n           D       1.00      0.05      0.10        59\n           H       0.64      0.74      0.69       191\n\n    accuracy                           0.58       378\n   macro avg       0.71      0.46      0.44       378\nweighted avg       0.65      0.58      0.54       378\n",
+      "confusion_matrix": [
+        [
+          76,
+          0,
+          52
+        ],
+        [
+          29,
+          3,
+          27
+        ],
+        [
+          50,
+          0,
+          141
+        ]
+      ]
+    },
+    "ml_0.75_poisson_0.25": {
+      "ml_weight": 0.75,
+      "poisson_weight": 0.25,
+      "accuracy": 0.5767195767195767,
+      "log_loss": 0.9886344373665921,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.48      0.59      0.53       128\n           D       1.00      0.03      0.07        59\n           H       0.64      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.71      0.45      0.43       378\nweighted avg       0.64      0.58      0.54       378\n",
+      "confusion_matrix": [
+        [
+          76,
+          0,
+          52
+        ],
+        [
+          30,
+          2,
+          27
+        ],
+        [
+          51,
+          0,
+          140
+        ]
+      ]
+    },
+    "ml_0.70_poisson_0.30": {
+      "ml_weight": 0.7,
+      "poisson_weight": 0.30000000000000004,
+      "accuracy": 0.5740740740740741,
+      "log_loss": 0.986181400516355,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.59      0.54       128\n           D       1.00      0.03      0.07        59\n           H       0.63      0.73      0.68       191\n\n    accuracy                           0.57       378\n   macro avg       0.71      0.45      0.43       378\nweighted avg       0.64      0.57      0.53       378\n",
+      "confusion_matrix": [
+        [
+          76,
+          0,
+          52
+        ],
+        [
+          28,
+          2,
+          29
+        ],
+        [
+          52,
+          0,
+          139
+        ]
+      ]
+    },
+    "ml_0.65_poisson_0.35": {
+      "ml_weight": 0.65,
+      "poisson_weight": 0.35,
+      "accuracy": 0.5767195767195767,
+      "log_loss": 0.9840559868471126,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.59      0.54       128\n           D       1.00      0.03      0.07        59\n           H       0.63      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.71      0.45      0.43       378\nweighted avg       0.64      0.58      0.54       378\n",
+      "confusion_matrix": [
+        [
+          76,
+          0,
+          52
+        ],
+        [
+          28,
+          2,
+          29
+        ],
+        [
+          51,
+          0,
+          140
+        ]
+      ]
+    },
+    "ml_0.60_poisson_0.40": {
+      "ml_weight": 0.6,
+      "poisson_weight": 0.4,
+      "accuracy": 0.5846560846560847,
+      "log_loss": 0.9822349863650544,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.62      0.55       128\n           D       1.00      0.03      0.07        59\n           H       0.64      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.71      0.46      0.43       378\nweighted avg       0.65      0.58      0.54       378\n",
+      "confusion_matrix": [
+        [
+          79,
+          0,
+          49
+        ],
+        [
+          28,
+          2,
+          29
+        ],
+        [
+          51,
+          0,
+          140
+        ]
+      ]
+    },
+    "ml_0.55_poisson_0.45": {
+      "ml_weight": 0.55,
+      "poisson_weight": 0.44999999999999996,
+      "accuracy": 0.582010582010582,
+      "log_loss": 0.98070127149578,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.62      0.55       128\n           D       1.00      0.03      0.07        59\n           H       0.64      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.71      0.46      0.43       378\nweighted avg       0.65      0.58      0.54       378\n",
+      "confusion_matrix": [
+        [
+          79,
+          0,
+          49
+        ],
+        [
+          28,
+          2,
+          29
+        ],
+        [
+          52,
+          0,
+          139
+        ]
+      ]
+    },
+    "ml_0.50_poisson_0.50": {
+      "ml_weight": 0.5,
+      "poisson_weight": 0.5,
+      "accuracy": 0.58994708994709,
+      "log_loss": 0.9794425127734705,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.51      0.64      0.57       128\n           D       1.00      0.03      0.07        59\n           H       0.65      0.73      0.69       191\n\n    accuracy                           0.59       378\n   macro avg       0.72      0.47      0.44       378\nweighted avg       0.66      0.59      0.55       378\n",
+      "confusion_matrix": [
+        [
+          82,
+          0,
+          46
+        ],
+        [
+          28,
+          2,
+          29
+        ],
+        [
+          52,
+          0,
+          139
+        ]
+      ]
+    },
+    "ml_0.45_poisson_0.55": {
+      "ml_weight": 0.45,
+      "poisson_weight": 0.55,
+      "accuracy": 0.5846560846560847,
+      "log_loss": 0.9784503833731732,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.63      0.56       128\n           D       1.00      0.02      0.03        59\n           H       0.64      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.72      0.46      0.43       378\nweighted avg       0.65      0.58      0.54       378\n",
+      "confusion_matrix": [
+        [
+          81,
+          0,
+          47
+        ],
+        [
+          28,
+          1,
+          30
+        ],
+        [
+          52,
+          0,
+          139
+        ]
+      ]
+    },
+    "ml_0.40_poisson_0.60": {
+      "ml_weight": 0.4,
+      "poisson_weight": 0.6,
+      "accuracy": 0.582010582010582,
+      "log_loss": 0.9777201121455545,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.63      0.56       128\n           D       0.00      0.00      0.00        59\n           H       0.65      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.38      0.45      0.41       378\nweighted avg       0.49      0.58      0.53       378\n",
+      "confusion_matrix": [
+        [
+          81,
+          0,
+          47
+        ],
+        [
+          30,
+          0,
+          29
+        ],
+        [
+          52,
+          0,
+          139
+        ]
+      ]
+    },
+    "ml_0.35_poisson_0.65": {
+      "ml_weight": 0.35,
+      "poisson_weight": 0.65,
+      "accuracy": 0.5793650793650794,
+      "log_loss": 0.9772503212888904,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.63      0.56       128\n           D       0.00      0.00      0.00        59\n           H       0.64      0.72      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.38      0.45      0.41       378\nweighted avg       0.49      0.58      0.53       378\n",
+      "confusion_matrix": [
+        [
+          81,
+          0,
+          47
+        ],
+        [
+          29,
+          0,
+          30
+        ],
+        [
+          53,
+          0,
+          138
+        ]
+      ]
+    },
+    "ml_0.30_poisson_0.70": {
+      "ml_weight": 0.3,
+      "poisson_weight": 0.7,
+      "accuracy": 0.5740740740740741,
+      "log_loss": 0.9770431435291669,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.64      0.56       128\n           D       0.00      0.00      0.00        59\n           H       0.64      0.71      0.67       191\n\n    accuracy                           0.57       378\n   macro avg       0.38      0.45      0.41       378\nweighted avg       0.49      0.57      0.53       378\n",
+      "confusion_matrix": [
+        [
+          82,
+          0,
+          46
+        ],
+        [
+          29,
+          0,
+          30
+        ],
+        [
+          56,
+          0,
+          135
+        ]
+      ]
+    },
+    "ml_0.25_poisson_0.75": {
+      "ml_weight": 0.25,
+      "poisson_weight": 0.75,
+      "accuracy": 0.5661375661375662,
+      "log_loss": 0.9771046781800319,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.48      0.63      0.55       128\n           D       0.00      0.00      0.00        59\n           H       0.63      0.70      0.66       191\n\n    accuracy                           0.57       378\n   macro avg       0.37      0.44      0.40       378\nweighted avg       0.48      0.57      0.52       378\n",
+      "confusion_matrix": [
+        [
+          81,
+          0,
+          47
+        ],
+        [
+          29,
+          0,
+          30
+        ],
+        [
+          58,
+          0,
+          133
+        ]
+      ]
+    },
+    "ml_0.20_poisson_0.80": {
+      "ml_weight": 0.2,
+      "poisson_weight": 0.8,
+      "accuracy": 0.5687830687830688,
+      "log_loss": 0.9774459470560347,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.63      0.55       128\n           D       0.00      0.00      0.00        59\n           H       0.64      0.70      0.67       191\n\n    accuracy                           0.57       378\n   macro avg       0.37      0.44      0.41       378\nweighted avg       0.49      0.57      0.52       378\n",
+      "confusion_matrix": [
+        [
+          81,
+          0,
+          47
+        ],
+        [
+          29,
+          0,
+          30
+        ],
+        [
+          57,
+          0,
+          134
+        ]
+      ]
+    },
+    "ml_0.15_poisson_0.85": {
+      "ml_weight": 0.15,
+      "poisson_weight": 0.85,
+      "accuracy": 0.5714285714285714,
+      "log_loss": 0.9780847169515448,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.63      0.55       128\n           D       0.00      0.00      0.00        59\n           H       0.63      0.71      0.67       191\n\n    accuracy                           0.57       378\n   macro avg       0.37      0.45      0.41       378\nweighted avg       0.49      0.57      0.52       378\n",
+      "confusion_matrix": [
+        [
+          81,
+          0,
+          47
+        ],
+        [
+          28,
+          0,
+          31
+        ],
+        [
+          56,
+          0,
+          135
+        ]
+      ]
+    },
+    "ml_0.10_poisson_0.90": {
+      "ml_weight": 0.1,
+      "poisson_weight": 0.9,
+      "accuracy": 0.5740740740740741,
+      "log_loss": 0.9790490496778048,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.64      0.56       128\n           D       0.00      0.00      0.00        59\n           H       0.64      0.71      0.67       191\n\n    accuracy                           0.57       378\n   macro avg       0.38      0.45      0.41       378\nweighted avg       0.49      0.57      0.53       378\n",
+      "confusion_matrix": [
+        [
+          82,
+          0,
+          46
+        ],
+        [
+          28,
+          0,
+          31
+        ],
+        [
+          56,
+          0,
+          135
+        ]
+      ]
+    },
+    "ml_0.05_poisson_0.95": {
+      "ml_weight": 0.05,
+      "poisson_weight": 0.95,
+      "accuracy": 0.5714285714285714,
+      "log_loss": 0.9803848308229348,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.64      0.56       128\n           D       0.00      0.00      0.00        59\n           H       0.64      0.70      0.67       191\n\n    accuracy                           0.57       378\n   macro avg       0.38      0.45      0.41       378\nweighted avg       0.49      0.57      0.53       378\n",
+      "confusion_matrix": [
+        [
+          82,
+          0,
+          46
+        ],
+        [
+          28,
+          0,
+          31
+        ],
+        [
+          57,
+          0,
+          134
+        ]
+      ]
+    },
+    "ml_0.00_poisson_1.00": {
+      "ml_weight": 0.0,
+      "poisson_weight": 1.0,
+      "accuracy": 0.5740740740740741,
+      "log_loss": 0.9821742739124736,
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.49      0.65      0.56       128\n           D       0.00      0.00      0.00        59\n           H       0.64      0.70      0.67       191\n\n    accuracy                           0.57       378\n   macro avg       0.38      0.45      0.41       378\nweighted avg       0.49      0.57      0.53       378\n",
+      "confusion_matrix": [
+        [
+          83,
+          0,
+          45
+        ],
+        [
+          29,
+          0,
+          30
+        ],
+        [
+          57,
+          0,
+          134
+        ]
+      ]
+    }
+  }
+}
