@@ -54,15 +54,23 @@ def create_probability_table(
     return pd.DataFrame(
         {
             "Result": [
-                f"{prediction.home_team} win",
+                (
+                    f"{prediction.home_team} "
+                    "win"
+                ),
                 "Draw",
-                f"{prediction.away_team} win",
+                (
+                    f"{prediction.away_team} "
+                    "win"
+                ),
             ],
             "Probability": [
                 prediction
                 .home_win_probability,
+
                 prediction
                 .draw_probability,
+
                 prediction
                 .away_win_probability,
             ],
@@ -70,17 +78,90 @@ def create_probability_table(
     )
 
 
+def display_prediction_factors(
+    prediction,
+) -> None:
+    st.subheader(
+        "Why did the model choose "
+        "this result?"
+    )
+
+    st.caption(
+        "These explanations summarize "
+        "important match features used by "
+        "the prediction system. They are "
+        "not guarantees or exact causal "
+        "model explanations."
+    )
+
+    positive_column, negative_column = (
+        st.columns(2)
+    )
+
+    with positive_column:
+        st.markdown(
+            "### Factors supporting "
+            "the prediction"
+        )
+
+        if (
+            prediction
+            .positive_factors
+        ):
+            for factor in (
+                prediction
+                .positive_factors
+            ):
+                st.success(
+                    f"**{factor.title}**\n\n"
+                    f"{factor.explanation}"
+                )
+
+        else:
+            st.info(
+                "No strong supporting "
+                "factor was identified."
+            )
+
+    with negative_column:
+        st.markdown(
+            "### Factors creating "
+            "uncertainty"
+        )
+
+        if (
+            prediction
+            .negative_factors
+        ):
+            for factor in (
+                prediction
+                .negative_factors
+            ):
+                st.warning(
+                    f"**{factor.title}**\n\n"
+                    f"{factor.explanation}"
+                )
+
+        else:
+            st.info(
+                "No major opposing factor "
+                "was identified."
+            )
+
+
 def main() -> None:
     st.set_page_config(
         page_title=(
-            "Champions League ML Predictor"
+            "Champions League "
+            "ML Predictor"
         ),
         page_icon="🏆",
         layout="wide",
     )
 
     st.title(
-        "🏆 Champions League ML Predictor"
+        "🏆 Champions League "
+        "ML Predictor"
     )
 
     st.write(
@@ -99,9 +180,18 @@ def main() -> None:
             "The ML prediction system "
             f"could not start: {error}"
         )
+
         st.stop()
 
     teams = service.get_teams()
+
+    if len(teams) < 2:
+        st.error(
+            "At least two teams are "
+            "required for prediction."
+        )
+
+        st.stop()
 
     home_column, away_column = (
         st.columns(2)
@@ -131,7 +221,9 @@ def main() -> None:
 
         if "Celtic FC" in teams:
             default_away_index = (
-                teams.index("Celtic FC")
+                teams.index(
+                    "Celtic FC"
+                )
             )
 
         away_team = st.selectbox(
@@ -145,188 +237,207 @@ def main() -> None:
             "Please select two "
             "different teams."
         )
+
         st.stop()
 
-    if st.button(
+    predict_button = st.button(
         "Predict Match",
         type="primary",
-        use_container_width=True,
+        width="stretch",
+    )
+
+    if not predict_button:
+        return
+
+    try:
+        prediction = service.predict(
+            home_team=home_team,
+            away_team=away_team,
+        )
+
+    except Exception as error:
+        st.error(
+            f"Prediction failed: {error}"
+        )
+
+        st.stop()
+
+    st.subheader(
+        f"{home_team} vs {away_team}"
+    )
+
+    first_metric, second_metric, third_metric = (
+        st.columns(3)
+    )
+
+    with first_metric:
+        st.metric(
+            f"{home_team} win",
+            (
+                f"{prediction.home_win_probability:.1%}"
+            ),
+        )
+
+    with second_metric:
+        st.metric(
+            "Draw",
+            (
+                f"{prediction.draw_probability:.1%}"
+            ),
+        )
+
+    with third_metric:
+        st.metric(
+            f"{away_team} win",
+            (
+                f"{prediction.away_win_probability:.1%}"
+            ),
+        )
+
+    result_column, confidence_column = (
+        st.columns(2)
+    )
+
+    with result_column:
+        st.metric(
+            "Model prediction",
+            prediction
+            .predicted_result_text,
+        )
+
+    with confidence_column:
+        st.metric(
+            "Confidence",
+            (
+                f"{prediction.confidence_label} "
+                f"({prediction.confidence:.1%})"
+            ),
+        )
+
+    if (
+        prediction.confidence_label
+        == "LOW"
     ):
-        try:
-            prediction = service.predict(
-                home_team=home_team,
-                away_team=away_team,
-            )
-
-        except Exception as error:
-            st.error(
-                f"Prediction failed: {error}"
-            )
-            st.stop()
-
-        st.subheader(
-            f"{home_team} vs {away_team}"
+        st.warning(
+            "The probabilities are close. "
+            "This should be treated as a "
+            "low-confidence prediction."
         )
 
-        first_metric, second_metric, third_metric = (
-            st.columns(3)
+    probability_table = (
+        create_probability_table(
+            prediction
         )
+    )
 
-        with first_metric:
-            st.metric(
-                f"{home_team} win",
-                (
-                    f"{prediction.home_win_probability:.1%}"
+    st.subheader(
+        "ML result probabilities"
+    )
+
+    st.bar_chart(
+        probability_table,
+        x="Result",
+        y="Probability",
+    )
+
+    st.divider()
+
+    display_prediction_factors(
+        prediction
+    )
+
+    st.divider()
+
+    st.subheader(
+        "Current team information"
+    )
+
+    home_summary = (
+        service.get_team_summary(
+            home_team
+        )
+    )
+
+    away_summary = (
+        service.get_team_summary(
+            away_team
+        )
+    )
+
+    summary_dataframe = pd.DataFrame(
+        [
+            {
+                "Team": home_team,
+                "Elo": (
+                    home_summary[
+                        "elo"
+                    ]
                 ),
-            )
-
-        with second_metric:
-            st.metric(
-                "Draw",
-                (
-                    f"{prediction.draw_probability:.1%}"
+                "Recent points per match": (
+                    home_summary[
+                        "form_points"
+                    ]
                 ),
-            )
-
-        with third_metric:
-            st.metric(
-                f"{away_team} win",
-                (
-                    f"{prediction.away_win_probability:.1%}"
+                "Recent goals scored": (
+                    home_summary[
+                        "goals_scored"
+                    ]
                 ),
-            )
-
-        result_column, confidence_column = (
-            st.columns(2)
-        )
-
-        with result_column:
-            st.metric(
-                "Model prediction",
-                prediction
-                .predicted_result_text,
-            )
-
-        with confidence_column:
-            st.metric(
-                "Confidence",
-                (
-                    f"{prediction.confidence_label} "
-                    f"({prediction.confidence:.1%})"
+                "Recent goals conceded": (
+                    home_summary[
+                        "goals_conceded"
+                    ]
                 ),
-            )
+                "Recent win rate": (
+                    home_summary[
+                        "win_rate"
+                    ]
+                ),
+            },
+            {
+                "Team": away_team,
+                "Elo": (
+                    away_summary[
+                        "elo"
+                    ]
+                ),
+                "Recent points per match": (
+                    away_summary[
+                        "form_points"
+                    ]
+                ),
+                "Recent goals scored": (
+                    away_summary[
+                        "goals_scored"
+                    ]
+                ),
+                "Recent goals conceded": (
+                    away_summary[
+                        "goals_conceded"
+                    ]
+                ),
+                "Recent win rate": (
+                    away_summary[
+                        "win_rate"
+                    ]
+                ),
+            },
+        ]
+    )
 
-        if (
-            prediction.confidence_label
-            == "LOW"
-        ):
-            st.warning(
-                "The probabilities are close. "
-                "This should be treated as a "
-                "low-confidence prediction."
-            )
+    st.dataframe(
+        summary_dataframe,
+        width="stretch",
+        hide_index=True,
+    )
 
-        probability_table = (
-            create_probability_table(
-                prediction
-            )
-        )
-
-        st.subheader(
-            "ML result probabilities"
-        )
-
-        st.bar_chart(
-            probability_table,
-            x="Result",
-            y="Probability",
-        )
-
-        st.subheader(
-            "Current team information"
-        )
-
-        home_summary = (
-            service.get_team_summary(
-                home_team
-            )
-        )
-
-        away_summary = (
-            service.get_team_summary(
-                away_team
-            )
-        )
-
-        summary_dataframe = pd.DataFrame(
-            [
-                {
-                    "Team": home_team,
-                    "Elo": (
-                        home_summary["elo"]
-                    ),
-                    "Recent points per match": (
-                        home_summary[
-                            "form_points"
-                        ]
-                    ),
-                    "Recent goals scored": (
-                        home_summary[
-                            "goals_scored"
-                        ]
-                    ),
-                    "Recent goals conceded": (
-                        home_summary[
-                            "goals_conceded"
-                        ]
-                    ),
-                    "Recent win rate": (
-                        home_summary[
-                            "win_rate"
-                        ]
-                    ),
-                },
-                {
-                    "Team": away_team,
-                    "Elo": (
-                        away_summary["elo"]
-                    ),
-                    "Recent points per match": (
-                        away_summary[
-                            "form_points"
-                        ]
-                    ),
-                    "Recent goals scored": (
-                        away_summary[
-                            "goals_scored"
-                        ]
-                    ),
-                    "Recent goals conceded": (
-                        away_summary[
-                            "goals_conceded"
-                        ]
-                    ),
-                    "Recent win rate": (
-                        away_summary[
-                            "win_rate"
-                        ]
-                    ),
-                },
-            ]
-        )
-
-        st.dataframe(
-            summary_dataframe,
-            use_container_width=True,
-            hide_index=True,
-        )
-
-        st.caption(
-            "Model test accuracy: 57.67% "
-            "on 378 unseen Champions League "
-            "matches. Individual predictions "
-            "are probabilities, not guarantees."
-        )
+    st.caption(
+        "Production model test accuracy: "
+        "58.20% on 378 unseen Champions "
+        "League matches. Individual "
+        "predictions are probabilities, "
+        "not guarantees."
+    )
 
 
 if __name__ == "__main__":

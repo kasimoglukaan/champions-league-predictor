@@ -1,4 +1,13 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
+
+
+@dataclass(frozen=True)
+class PredictionFactor:
+    title: str
+    explanation: str
+    strength: float
+    supports_prediction: bool
 
 
 @dataclass
@@ -16,6 +25,14 @@ class MLPrediction:
 
     home_elo: float
     away_elo: float
+
+    positive_factors: List[
+        PredictionFactor
+    ] = field(default_factory=list)
+
+    negative_factors: List[
+        PredictionFactor
+    ] = field(default_factory=list)
 
     @property
     def predicted_result_text(self) -> str:
