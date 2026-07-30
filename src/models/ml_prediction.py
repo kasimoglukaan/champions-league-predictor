@@ -26,6 +26,16 @@ class MLPrediction:
     home_elo: float
     away_elo: float
 
+    poisson_home_probability: float = 0.0
+    poisson_draw_probability: float = 0.0
+    poisson_away_probability: float = 0.0
+
+    expected_home_goals: float = 0.0
+    expected_away_goals: float = 0.0
+
+    most_likely_home_goals: int = 0
+    most_likely_away_goals: int = 0
+
     positive_factors: List[
         PredictionFactor
     ] = field(default_factory=list)
@@ -43,3 +53,13 @@ class MLPrediction:
             return f"{self.away_team} wins"
 
         return "Draw"
+
+    @property
+    def most_likely_score_text(self) -> str:
+        return (
+            f"{self.home_team} "
+            f"{self.most_likely_home_goals}"
+            "-"
+            f"{self.most_likely_away_goals} "
+            f"{self.away_team}"
+        )

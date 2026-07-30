@@ -11,6 +11,9 @@ from src.models.machine_learning_model import (
 from src.models.ml_prediction import (
     MLPrediction,
 )
+from src.services.poisson_simulation_service import (
+    PoissonSimulationService,
+)
 from src.services.prediction_explanation_service import (
     PredictionExplanationService,
 )
@@ -24,29 +27,27 @@ class MLPredictionService:
         data_path: str,
         model_path: str,
     ) -> None:
-        self.data_path = Path(
-            data_path
+        self.data_path = Path(data_path)
+        self.model_path = Path(model_path)
+
+        self.feature_builder = LiveFeatureBuilder(
+            initial_elo=1500,
+            k_factor=25,
+            home_advantage=60,
+            form_window=8,
         )
 
-        self.model_path = Path(
-            model_path
-        )
-
-        self.feature_builder = (
-            LiveFeatureBuilder(
-                initial_elo=1500,
-                k_factor=25,
-                home_advantage=60,
-                form_window=8,
-            )
-        )
-
-        self.model = (
-            MachineLearningModel()
-        )
+        self.model = MachineLearningModel()
 
         self.explanation_service = (
             PredictionExplanationService()
+        )
+
+        self.poisson_service = (
+            PoissonSimulationService(
+                simulations=20_000,
+                random_seed=42,
+            )
         )
 
         self.is_loaded = False
@@ -166,6 +167,14 @@ class MLPredictionService:
             )
         )
 
+        home_elo = float(
+            home_summary["elo"]
+        )
+
+        away_elo = float(
+            away_summary["elo"]
+        )
+
         explanation = (
             self.explanation_service
             .explain(
@@ -176,6 +185,15 @@ class MLPredictionService:
                 home_team=home_team,
                 away_team=away_team,
                 top_n=5,
+            )
+        )
+
+        simulation = (
+            self.poisson_service.simulate(
+                home_summary=home_summary,
+                away_summary=away_summary,
+                home_elo=home_elo,
+                away_elo=away_elo,
             )
         )
 
@@ -203,11 +221,38 @@ class MLPredictionService:
                 )
             ),
 
-            home_elo=float(
-                home_summary["elo"]
+            home_elo=home_elo,
+            away_elo=away_elo,
+
+            poisson_home_probability=(
+                simulation
+                .home_win_probability
             ),
-            away_elo=float(
-                away_summary["elo"]
+            poisson_draw_probability=(
+                simulation
+                .draw_probability
+            ),
+            poisson_away_probability=(
+                simulation
+                .away_win_probability
+            ),
+
+            expected_home_goals=(
+                simulation
+                .expected_home_goals
+            ),
+            expected_away_goals=(
+                simulation
+                .expected_away_goals
+            ),
+
+            most_likely_home_goals=(
+                simulation
+                .most_likely_home_goals
+            ),
+            most_likely_away_goals=(
+                simulation
+                .most_likely_away_goals
             ),
 
             positive_factors=(
