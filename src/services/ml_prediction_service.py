@@ -237,6 +237,28 @@ class MLPredictionService:
                 .away_win_probability
             ),
 
+            btts_probability=(
+                simulation
+                .btts_probability
+            ),
+
+            over_1_5_probability=(
+                simulation
+                .over_1_5_probability
+            ),
+            over_2_5_probability=(
+                simulation
+                .over_2_5_probability
+            ),
+            under_2_5_probability=(
+                simulation
+                .under_2_5_probability
+            ),
+            under_3_5_probability=(
+                simulation
+                .under_3_5_probability
+            ),
+
             expected_home_goals=(
                 simulation
                 .expected_home_goals

@@ -33,3 +33,6 @@ data/raw/*.zip
 
 .venv/
 .venv-1/
+
+# Streamlit secrets
+.streamlit/secrets.toml
