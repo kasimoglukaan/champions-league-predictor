@@ -1,0 +1,375 @@
+{
+  "test_start_date": "2024-07-01",
+  "test_matches": 378,
+  "production_baseline": {
+    "accuracy": 0.582010582010582,
+    "log_loss": 1.00746248572528,
+    "draw_recall": 0.1016949152542373,
+    "draw_precision": 0.5454545454545454,
+    "predicted_draws": 11,
+    "correct_draws": 6,
+    "confusion_matrix": [
+      [
+        75,
+        2,
+        51
+      ],
+      [
+        27,
+        6,
+        26
+      ],
+      [
+        49,
+        3,
+        139
+      ]
+    ],
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.59      0.54       128\n           D       0.55      0.10      0.17        59\n           H       0.64      0.73      0.68       191\n\n    accuracy                           0.58       378\n   macro avg       0.56      0.47      0.46       378\nweighted avg       0.58      0.58      0.55       378\n"
+  },
+  "best_accuracy_experiment": {
+    "name": "time_decay_365_days",
+    "years": null,
+    "half_life_days": 365,
+    "training_matches": 2489,
+    "training_start": "2023-08-11 17:30:00+00:00",
+    "training_end": "2024-06-02 16:00:00+00:00",
+    "minimum_weight": 0.5402079430256971,
+    "average_weight": 0.7227948460901149,
+    "accuracy": 0.5634920634920635,
+    "log_loss": 0.9599092545897545,
+    "draw_recall": 0.01694915254237288,
+    "draw_precision": 1.0,
+    "predicted_draws": 1,
+    "correct_draws": 1,
+    "confusion_matrix": [
+      [
+        65,
+        0,
+        63
+      ],
+      [
+        22,
+        1,
+        36
+      ],
+      [
+        44,
+        0,
+        147
+      ]
+    ],
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.60      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.63      0.56      0.52       378\n"
+  },
+  "best_log_loss_experiment": {
+    "name": "time_decay_180_days",
+    "years": null,
+    "half_life_days": 180,
+    "training_matches": 2489,
+    "training_start": "2023-08-11 17:30:00+00:00",
+    "training_end": "2024-06-02 16:00:00+00:00",
+    "minimum_weight": 0.2868752419429785,
+    "average_weight": 0.5314772013676826,
+    "accuracy": 0.5608465608465608,
+    "log_loss": 0.9566382624856828,
+    "draw_recall": 0.01694915254237288,
+    "draw_precision": 1.0,
+    "predicted_draws": 1,
+    "correct_draws": 1,
+    "confusion_matrix": [
+      [
+        64,
+        0,
+        64
+      ],
+      [
+        21,
+        1,
+        37
+      ],
+      [
+        44,
+        0,
+        147
+      ]
+    ],
+    "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.50      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.59      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.62      0.56      0.51       378\n"
+  },
+  "accuracy_improvement": -0.01851851851851849,
+  "log_loss_improvement": 0.05082422323959723,
+  "all_experiments": {
+    "all_history": {
+      "name": "all_history",
+      "years": null,
+      "half_life_days": null,
+      "training_matches": 2489,
+      "training_start": "2023-08-11 17:30:00+00:00",
+      "training_end": "2024-06-02 16:00:00+00:00",
+      "minimum_weight": null,
+      "average_weight": null,
+      "accuracy": 0.5634920634920635,
+      "log_loss": 0.963921856798203,
+      "draw_recall": 0.01694915254237288,
+      "draw_precision": 1.0,
+      "predicted_draws": 1,
+      "correct_draws": 1,
+      "confusion_matrix": [
+        [
+          65,
+          0,
+          63
+        ],
+        [
+          22,
+          1,
+          36
+        ],
+        [
+          44,
+          0,
+          147
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.60      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.63      0.56      0.52       378\n"
+    },
+    "last_1_year": {
+      "name": "last_1_year",
+      "years": 1,
+      "half_life_days": null,
+      "training_matches": 2489,
+      "training_start": "2023-08-11 17:30:00+00:00",
+      "training_end": "2024-06-02 16:00:00+00:00",
+      "minimum_weight": null,
+      "average_weight": null,
+      "accuracy": 0.5634920634920635,
+      "log_loss": 0.963921856798203,
+      "draw_recall": 0.01694915254237288,
+      "draw_precision": 1.0,
+      "predicted_draws": 1,
+      "correct_draws": 1,
+      "confusion_matrix": [
+        [
+          65,
+          0,
+          63
+        ],
+        [
+          22,
+          1,
+          36
+        ],
+        [
+          44,
+          0,
+          147
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.60      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.63      0.56      0.52       378\n"
+    },
+    "last_2_years": {
+      "name": "last_2_years",
+      "years": 2,
+      "half_life_days": null,
+      "training_matches": 2489,
+      "training_start": "2023-08-11 17:30:00+00:00",
+      "training_end": "2024-06-02 16:00:00+00:00",
+      "minimum_weight": null,
+      "average_weight": null,
+      "accuracy": 0.5634920634920635,
+      "log_loss": 0.963921856798203,
+      "draw_recall": 0.01694915254237288,
+      "draw_precision": 1.0,
+      "predicted_draws": 1,
+      "correct_draws": 1,
+      "confusion_matrix": [
+        [
+          65,
+          0,
+          63
+        ],
+        [
+          22,
+          1,
+          36
+        ],
+        [
+          44,
+          0,
+          147
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.60      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.63      0.56      0.52       378\n"
+    },
+    "last_3_years": {
+      "name": "last_3_years",
+      "years": 3,
+      "half_life_days": null,
+      "training_matches": 2489,
+      "training_start": "2023-08-11 17:30:00+00:00",
+      "training_end": "2024-06-02 16:00:00+00:00",
+      "minimum_weight": null,
+      "average_weight": null,
+      "accuracy": 0.5634920634920635,
+      "log_loss": 0.963921856798203,
+      "draw_recall": 0.01694915254237288,
+      "draw_precision": 1.0,
+      "predicted_draws": 1,
+      "correct_draws": 1,
+      "confusion_matrix": [
+        [
+          65,
+          0,
+          63
+        ],
+        [
+          22,
+          1,
+          36
+        ],
+        [
+          44,
+          0,
+          147
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.60      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.63      0.56      0.52       378\n"
+    },
+    "time_decay_180_days": {
+      "name": "time_decay_180_days",
+      "years": null,
+      "half_life_days": 180,
+      "training_matches": 2489,
+      "training_start": "2023-08-11 17:30:00+00:00",
+      "training_end": "2024-06-02 16:00:00+00:00",
+      "minimum_weight": 0.2868752419429785,
+      "average_weight": 0.5314772013676826,
+      "accuracy": 0.5608465608465608,
+      "log_loss": 0.9566382624856828,
+      "draw_recall": 0.01694915254237288,
+      "draw_precision": 1.0,
+      "predicted_draws": 1,
+      "correct_draws": 1,
+      "confusion_matrix": [
+        [
+          64,
+          0,
+          64
+        ],
+        [
+          21,
+          1,
+          37
+        ],
+        [
+          44,
+          0,
+          147
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.50      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.59      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.62      0.56      0.51       378\n"
+    },
+    "time_decay_365_days": {
+      "name": "time_decay_365_days",
+      "years": null,
+      "half_life_days": 365,
+      "training_matches": 2489,
+      "training_start": "2023-08-11 17:30:00+00:00",
+      "training_end": "2024-06-02 16:00:00+00:00",
+      "minimum_weight": 0.5402079430256971,
+      "average_weight": 0.7227948460901149,
+      "accuracy": 0.5634920634920635,
+      "log_loss": 0.9599092545897545,
+      "draw_recall": 0.01694915254237288,
+      "draw_precision": 1.0,
+      "predicted_draws": 1,
+      "correct_draws": 1,
+      "confusion_matrix": [
+        [
+          65,
+          0,
+          63
+        ],
+        [
+          22,
+          1,
+          36
+        ],
+        [
+          44,
+          0,
+          147
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.60      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.63      0.56      0.52       378\n"
+    },
+    "time_decay_730_days": {
+      "name": "time_decay_730_days",
+      "years": null,
+      "half_life_days": 730,
+      "training_matches": 2489,
+      "training_start": "2023-08-11 17:30:00+00:00",
+      "training_end": "2024-06-02 16:00:00+00:00",
+      "minimum_weight": 0.7349883965245282,
+      "average_weight": 0.8474635043066246,
+      "accuracy": 0.5634920634920635,
+      "log_loss": 0.9618105315600834,
+      "draw_recall": 0.01694915254237288,
+      "draw_precision": 1.0,
+      "predicted_draws": 1,
+      "correct_draws": 1,
+      "confusion_matrix": [
+        [
+          65,
+          0,
+          63
+        ],
+        [
+          22,
+          1,
+          36
+        ],
+        [
+          44,
+          0,
+          147
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.60      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.63      0.56      0.52       378\n"
+    },
+    "last_3_years_decay_365": {
+      "name": "last_3_years_decay_365",
+      "years": 3,
+      "half_life_days": 365,
+      "training_matches": 2489,
+      "training_start": "2023-08-11 17:30:00+00:00",
+      "training_end": "2024-06-02 16:00:00+00:00",
+      "minimum_weight": 0.5402079430256971,
+      "average_weight": 0.7227948460901149,
+      "accuracy": 0.5634920634920635,
+      "log_loss": 0.9599092545897545,
+      "draw_recall": 0.01694915254237288,
+      "draw_precision": 1.0,
+      "predicted_draws": 1,
+      "correct_draws": 1,
+      "confusion_matrix": [
+        [
+          65,
+          0,
+          63
+        ],
+        [
+          22,
+          1,
+          36
+        ],
+        [
+          44,
+          0,
+          147
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n           A       0.50      0.51      0.50       128\n           D       1.00      0.02      0.03        59\n           H       0.60      0.77      0.67       191\n\n    accuracy                           0.56       378\n   macro avg       0.70      0.43      0.40       378\nweighted avg       0.63      0.56      0.52       378\n"
+    }
+  },
+  "candidate_model_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/saved_models/recency_candidate.joblib"
+}
