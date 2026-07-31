@@ -21,6 +21,10 @@ if str(PROJECT_ROOT) not in sys.path:
     )
 
 
+from src.config import (
+    PRODUCTION_DATASET,
+    PRODUCTION_MODEL,
+)
 from src.models.bookmaker_odds import (
     MatchOdds,
     OddsEvent,
@@ -41,18 +45,8 @@ from src.services.value_bet_service import (
 )
 
 
-DATA_PATH = (
-    PROJECT_ROOT
-    / "data"
-    / "raw"
-    / "all_matches.csv"
-)
-
-MODEL_PATH = (
-    PROJECT_ROOT
-    / "saved_models"
-    / "match_model.joblib"
-)
+DATA_PATH = PRODUCTION_DATASET
+MODEL_PATH = PRODUCTION_MODEL
 
 
 PAGE_CSS = """
