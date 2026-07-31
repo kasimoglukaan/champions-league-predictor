@@ -1,0 +1,213 @@
+league,sport_key,api_team,status,matched_model_team,best_candidate,best_score,second_best_score,score_margin,distinctive_overlap,reason
+Belgian First Division,soccer_belgium_first_div,Anderlecht,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Cercle Brugge KSV,MISSING,,Club Brugge KV,0.29598064516129036,0.0,0.29598064516129036,brugge,The best candidate score is below the required threshold of 84%.
+Belgian First Division,soccer_belgium_first_div,Charleroi,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Genk,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Gent,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,KV Kortrijk,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,KV Mechelen,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Leuven,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Lommel SK,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,RAAL La Louvière,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,SK Beveren,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,SV Zulte-Waregem,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Sint Truiden,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Standard Liege,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Union Saint-Gilloise,MISSING,,Royale Union Saint-Gilloise,0.7083413926499033,0.19695000000000001,0.5113913926499032,"gilloise, saint, union",The best candidate score is below the required threshold of 84%.
+Belgian First Division,soccer_belgium_first_div,Westerlo,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Bundesliga,soccer_germany_bundesliga,Augsburg,MISSING,,FC Augsburg,0.7763157894736842,0.0,0.7763157894736842,augsburg,The best candidate score is below the required threshold of 84%.
+Bundesliga,soccer_germany_bundesliga,Elversberg,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Bundesliga,soccer_germany_bundesliga,FC Schalke 04,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Bundesliga,soccer_germany_bundesliga,FSV Mainz 05,MISSING,,1. FSV Mainz 05,0.8384615384615386,0.0,0.8384615384615386,mainz,The best candidate score is below the required threshold of 84%.
+Bundesliga,soccer_germany_bundesliga,SC Paderborn,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Bundesliga,soccer_germany_bundesliga,TSG Hoffenheim,MISSING,,TSG 1899 Hoffenheim,0.7272727272727272,0.0,0.7272727272727272,"hoffenheim, tsg",The best candidate score is below the required threshold of 84%.
+Bundesliga,soccer_germany_bundesliga,Union Berlin,MISSING,,1. FC Union Berlin,0.7741379310344828,0.17918181818181822,0.5949561128526646,"berlin, union",The best candidate score is below the required threshold of 84%.
+Bundesliga,soccer_germany_bundesliga,Werder Bremen,MISSING,,SV Werder Bremen,0.8178160919540229,0.0,0.8178160919540229,"bremen, werder",The best candidate score is below the required threshold of 84%.
+Champions League Qualification,soccer_uefa_champs_league_qualification,AGF Aarhus,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Bodø/Glimt,MISSING,,FK Bodø/Glimt,0.8119047619047619,0.0,0.8119047619047619,"bod, glimt",The best candidate score is below the required threshold of 84%.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Dinamo Zagreb,MISSING,,GNK Dinamo Zagreb,0.6522222222222223,0.0,0.6522222222222223,"dinamo, zagreb",The best candidate score is below the required threshold of 84%.
+Champions League Qualification,soccer_uefa_champs_league_qualification,FC Ararat-Armenia,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,FC Kairat,MISSING,,FK Kairat,0.8,0.0,0.8,kairat,The best candidate score is below the required threshold of 84%.
+Champions League Qualification,soccer_uefa_champs_league_qualification,FK Kauno Žalgiris,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Fenerbahce,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Hapoel Be'er Sheva,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Lyon,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Mjällby AIF,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,NEC Nijmegen,MISSING,,NEC,0.535,0.0,0.535,nec,The best candidate score is below the required threshold of 84%.
+Champions League Qualification,soccer_uefa_champs_league_qualification,NK Celje,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Olympiakos Piraeus,MISSING,,PAE Olympiakos SFP,0.24825,0.0,0.24825,olympiakos,The best candidate score is below the required threshold of 84%.
+Champions League Qualification,soccer_uefa_champs_league_qualification,PFC Levski Sofia,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Red Star Belgrade,MISSING,,FC Red Bull Salzburg,0.1623945945945946,0.0,0.1623945945945946,red,The best candidate score is below the required threshold of 84%.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Sabah FK,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Sparta Prague,MISSING,,Sparta Rotterdam,0.34562068965517245,0.2850714285714286,0.060549261083743866,sparta,The best candidate score is below the required threshold of 84%.
+Champions League Qualification,soccer_uefa_champs_league_qualification,Union Saint-Gilloise,MISSING,,Royale Union Saint-Gilloise,0.7083413926499033,0.19695000000000001,0.5113913926499032,"gilloise, saint, union",The best candidate score is below the required threshold of 84%.
+EFL Championship,soccer_efl_champ,Birmingham City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Blackburn Rovers,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Bolton Wanderers,MISSING,,Wolverhampton Wanderers FC,0.30662406015037597,0.0,0.30662406015037597,wanderers,The best candidate score is below the required threshold of 84%.
+EFL Championship,soccer_efl_champ,Bristol City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Cardiff City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Charlton Athletic,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Derby County,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Lincoln City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Middlesbrough,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Millwall,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Norwich City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Portsmouth,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Preston North End,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Queens Park Rangers,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Stoke City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Swansea City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,Watford,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+EFL Championship,soccer_efl_champ,West Bromwich Albion,MISSING,,West Ham United FC,0.26051315789473684,0.1615516717325228,0.09896148616221404,west,The best candidate score is below the required threshold of 84%.
+EFL Championship,soccer_efl_champ,Wrexham AFC,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Eredivisie,soccer_netherlands_eredivisie,ADO Den Haag,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Eredivisie,soccer_netherlands_eredivisie,AZ Alkmaar,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Eredivisie,soccer_netherlands_eredivisie,Ajax,MISSING,,AFC Ajax,0.7785714285714286,0.0,0.7785714285714286,ajax,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,Excelsior,MISSING,,SBV Excelsior,0.5143939393939394,0.0,0.5143939393939394,excelsior,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,FC Twente Enschede,MISSING,,FC Twente '65,0.575,0.0,0.575,twente,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,FC Zwolle,MISSING,,PEC Zwolle,0.5079824561403509,0.0,0.5079824561403509,zwolle,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,Feyenoord,MISSING,,Feyenoord Rotterdam,0.5714285714285714,0.0,0.5714285714285714,feyenoord,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,Groningen,MISSING,,FC Groningen,0.7785714285714286,0.0,0.7785714285714286,groningen,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,Heerenveen,MISSING,,SC Heerenveen,0.7804347826086957,0.0,0.7804347826086957,heerenveen,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,NEC Nijmegen,MISSING,,NEC,0.535,0.0,0.535,nec,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,SC Cambuur,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Eredivisie,soccer_netherlands_eredivisie,SC Telstar,MISSING,,Telstar 1963,0.45934343434343433,0.0,0.45934343434343433,telstar,The best candidate score is below the required threshold of 84%.
+Eredivisie,soccer_netherlands_eredivisie,Willem II,MISSING,,Willem II Tilburg,0.6121794871794871,0.0,0.6121794871794871,willem,The best candidate score is below the required threshold of 84%.
+La Liga,soccer_spain_la_liga,Alavés,MISSING,,Deportivo Alavés,0.4701515151515151,0.0,0.4701515151515151,alaves,The best candidate score is below the required threshold of 84%.
+La Liga,soccer_spain_la_liga,Athletic Bilbao,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+La Liga,soccer_spain_la_liga,Celta Vigo,MISSING,,RC Celta de Vigo,0.793956043956044,0.0,0.793956043956044,"celta, vigo",The best candidate score is below the required threshold of 84%.
+La Liga,soccer_spain_la_liga,Deportivo La Coruña,MISSING,,Deportivo Alavés,0.3402285714285715,0.0,0.3402285714285715,deportivo,The best candidate score is below the required threshold of 84%.
+La Liga,soccer_spain_la_liga,Espanyol,MISSING,,RCD Espanyol de Barcelona,0.2387272727272727,0.0,0.2387272727272727,espanyol,The best candidate score is below the required threshold of 84%.
+La Liga,soccer_spain_la_liga,Málaga,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+La Liga,soccer_spain_la_liga,Rayo Vallecano,MISSING,,Rayo Vallecano de Madrid,0.6771929824561403,0.0,0.6771929824561403,"rayo, vallecano",The best candidate score is below the required threshold of 84%.
+La Liga,soccer_spain_la_liga,Real Betis,MISSING,,Real Betis Balompié,0.6117816091954023,0.0,0.6117816091954023,betis,The best candidate score is below the required threshold of 84%.
+La Liga,soccer_spain_la_liga,Real Racing Club de Santander,MISSING,,Racing Club de Lens,0.3302,0.0,0.3302,racing,The best candidate score is below the required threshold of 84%.
+La Liga,soccer_spain_la_liga,Real Sociedad,MISSING,,Real Sociedad de Fútbol,0.5833333333333334,0.0,0.5833333333333334,sociedad,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,Angers,MISSING,,Angers SCO,0.5875,0.0,0.5875,angers,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,Auxerre,MISSING,,AJ Auxerre,0.7957516339869282,0.0,0.7957516339869282,auxerre,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,Brest,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Ligue 1,soccer_france_ligue_one,Le Mans FC,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Ligue 1,soccer_france_ligue_one,Lille,MISSING,,Lille OSC,0.5821428571428572,0.0,0.5821428571428572,lille,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,Lorient,MISSING,,FC Lorient,0.7735294117647059,0.0,0.7735294117647059,lorient,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,Lyon,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Ligue 1,soccer_france_ligue_one,Marseille,MISSING,,Olympique de Marseille,0.7259856630824374,0.0,0.7259856630824374,marseille,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,Nice,MISSING,,OGC Nice,0.5035714285714286,0.0,0.5035714285714286,nice,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,RC Lens,MISSING,,Racing Club de Lens,0.4457692307692308,0.0,0.4457692307692308,lens,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,Rennes,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Ligue 1,soccer_france_ligue_one,Strasbourg,MISSING,,RC Strasbourg Alsace,0.4583333333333333,0.0,0.4583333333333333,strasbourg,The best candidate score is below the required threshold of 84%.
+Ligue 1,soccer_france_ligue_one,Troyes,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Premier League,soccer_epl,Bournemouth,MISSING,,AFC Bournemouth,0.7769230769230769,0.0,0.7769230769230769,bournemouth,The best candidate score is below the required threshold of 84%.
+Premier League,soccer_epl,Coventry City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Premier League,soccer_epl,Hull City,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Premier League,soccer_epl,Manchester City,MISSING,,Manchester City FC,0.9196969696969697,0.8114285714285715,0.10826839826839818,manchester,The best and second-best candidates are too close. The match is ambiguous and was rejected.
+Premier League,soccer_epl,Manchester United,MISSING,,Manchester United FC,0.9211711711711712,0.8114285714285715,0.1097425997425997,manchester,The best and second-best candidates are too close. The match is ambiguous and was rejected.
+Primeira Liga,soccer_portugal_primeira_liga,Académico de Viseu,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Primeira Liga,soccer_portugal_primeira_liga,Alverca,MISSING,,FC Alverca,0.7957516339869282,0.0,0.7957516339869282,alverca,The best candidate score is below the required threshold of 84%.
+Primeira Liga,soccer_portugal_primeira_liga,Arouca,MISSING,,FC Arouca,0.795,0.0,0.795,arouca,The best candidate score is below the required threshold of 84%.
+Primeira Liga,soccer_portugal_primeira_liga,Benfica,MISSING,,Sport Lisboa e Benfica,0.39741379310344827,0.0,0.39741379310344827,benfica,The best candidate score is below the required threshold of 84%.
+Primeira Liga,soccer_portugal_primeira_liga,Braga,MISSING,,Sporting Clube de Braga,0.40934065934065933,0.0,0.40934065934065933,braga,The best candidate score is below the required threshold of 84%.
+Primeira Liga,soccer_portugal_primeira_liga,CF Estrela,MISSING,,CF Estrela da Amadora,0.5717741935483871,0.0,0.5717741935483871,estrela,The best candidate score is below the required threshold of 84%.
+Primeira Liga,soccer_portugal_primeira_liga,CS Maritimo,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Primeira Liga,soccer_portugal_primeira_liga,Estoril,MISSING,,GD Estoril Praia,0.43297101449275366,0.0,0.43297101449275366,estoril,The best candidate score is below the required threshold of 84%.
+Primeira Liga,soccer_portugal_primeira_liga,Famalicão,MISSING,,FC Famalicão,0.814935064935065,0.0,0.814935064935065,famalicao,The best candidate score is below the required threshold of 84%.
+Primeira Liga,soccer_portugal_primeira_liga,Nacional,MISSING,,CD Nacional,0.7963157894736842,0.0,0.7963157894736842,nacional,The best candidate score is below the required threshold of 84%.
+Primeira Liga,soccer_portugal_primeira_liga,Santa Clara,MISSING,,CD Santa Clara,0.8153333333333334,0.0,0.8153333333333334,"clara, santa",The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Bologna,MISSING,,Bologna FC 1909,0.5371212121212121,0.0,0.5371212121212121,bologna,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Fiorentina,MISSING,,ACF Fiorentina,0.5153846153846153,0.0,0.5153846153846153,fiorentina,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Genoa,MISSING,,Genoa CFC,0.5821428571428572,0.0,0.5821428571428572,genoa,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Inter Milan,MISSING,,AC Milan,0.7114035087719298,0.0,0.7114035087719298,milan,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Lazio,MISSING,,SS Lazio,0.7653846153846154,0.0,0.7653846153846154,lazio,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Lecce,MISSING,,US Lecce,0.7653846153846154,0.0,0.7653846153846154,lecce,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Monza,MISSING,,AC Monza,0.793956043956044,0.0,0.793956043956044,monza,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Napoli,MISSING,,SSC Napoli,0.7625,0.0,0.7625,napoli,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Parma,MISSING,,Parma Calcio 1913,0.7848484848484848,0.0,0.7848484848484848,parma,The best candidate score is below the required threshold of 84%.
+Serie A,soccer_italy_serie_a,Sassuolo,MISSING,,US Sassuolo Calcio,0.728974358974359,0.0,0.728974358974359,sassuolo,The best candidate score is below the required threshold of 84%.
+Turkish Super League,soccer_turkey_super_league,Akhisar Belediyespor,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Alanyaspor,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Amed SK,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Basaksehir,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Besiktas JK,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Erzurum BB,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Eyüpspor,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Fenerbahce,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Gazişehir Gaziantep,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Genclerbirligi SK,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Goztepe,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Kasimpasa SK,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Kocaelispor,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Samsunspor,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Torku Konyaspor,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Trabzonspor,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Turkish Super League,soccer_turkey_super_league,Çaykur Rizespor,MISSING,,1. FC Heidenheim 1846,0.0,0.0,0.0,,No distinctive team-name token matched. A match based only on generic words was rejected.
+Belgian First Division,soccer_belgium_first_div,Club Brugge,MATCHED,Club Brugge KV,Club Brugge KV,0.99,0.0,0.99,brugge,Verified team alias match.
+Belgian First Division,soccer_belgium_first_div,Royal Antwerp,MATCHED,Royal Antwerp FC,Royal Antwerp FC,0.9178160919540229,0.0,0.9178160919540229,"antwerp, royal",High-confidence distinctive-name match.
+Bundesliga,soccer_germany_bundesliga,1. FC Köln,MATCHED,1. FC Köln,1. FC Köln,1.0,0.0,1.0,koln,Exact normalized team-name match.
+Bundesliga,soccer_germany_bundesliga,Bayer Leverkusen,MATCHED,Bayer 04 Leverkusen,Bayer 04 Leverkusen,0.99,0.0,0.99,"bayer, leverkusen",Verified team alias match.
+Bundesliga,soccer_germany_bundesliga,Bayern Munich,MATCHED,FC Bayern München,FC Bayern München,0.99,0.0,0.99,"bayern, munchen, munich",Verified team alias match.
+Bundesliga,soccer_germany_bundesliga,Borussia Dortmund,MATCHED,Borussia Dortmund,Borussia Dortmund,1.0,0.3300731707317074,0.6699268292682926,"borussia, dortmund",Exact normalized team-name match.
+Bundesliga,soccer_germany_bundesliga,Borussia Monchengladbach,MATCHED,Borussia Mönchengladbach,Borussia Mönchengladbach,1.0,0.34148780487804875,0.6585121951219512,"borussia, monchengladbach",Exact normalized team-name match.
+Bundesliga,soccer_germany_bundesliga,Eintracht Frankfurt,MATCHED,Eintracht Frankfurt,Eintracht Frankfurt,1.0,0.0,1.0,"eintracht, frankfurt",Exact normalized team-name match.
+Bundesliga,soccer_germany_bundesliga,Hamburger SV,MATCHED,Hamburger SV,Hamburger SV,1.0,0.0,1.0,hamburger,Exact normalized team-name match.
+Bundesliga,soccer_germany_bundesliga,RB Leipzig,MATCHED,RB Leipzig,RB Leipzig,1.0,0.0,1.0,leipzig,Exact normalized team-name match.
+Bundesliga,soccer_germany_bundesliga,SC Freiburg,MATCHED,SC Freiburg,SC Freiburg,1.0,0.0,1.0,freiburg,Exact normalized team-name match.
+Bundesliga,soccer_germany_bundesliga,VfB Stuttgart,MATCHED,VfB Stuttgart,VfB Stuttgart,1.0,0.0,1.0,stuttgart,Exact normalized team-name match.
+Champions League Qualification,soccer_uefa_champs_league_qualification,SK Sturm Graz,MATCHED,SK Sturm Graz,SK Sturm Graz,1.0,0.0,1.0,"graz, sturm",Exact normalized team-name match.
+Champions League Qualification,soccer_uefa_champs_league_qualification,ŠK Slovan Bratislava,MATCHED,ŠK Slovan Bratislava,ŠK Slovan Bratislava,1.0,0.0,1.0,"bratislava, slovan",Exact normalized team-name match.
+EFL Championship,soccer_efl_champ,Burnley,MATCHED,Burnley FC,Burnley FC,0.8735294117647059,0.0,0.8735294117647059,burnley,High-confidence distinctive-name match.
+EFL Championship,soccer_efl_champ,Sheffield United,MATCHED,Sheffield United FC,Sheffield United FC,0.9204761904761904,0.0,0.9204761904761904,sheffield,High-confidence distinctive-name match.
+EFL Championship,soccer_efl_champ,Southampton,MATCHED,Southampton FC,Southampton FC,0.882,0.0,0.882,southampton,High-confidence distinctive-name match.
+EFL Championship,soccer_efl_champ,West Ham United,MATCHED,West Ham United FC,West Ham United FC,0.9363636363636364,0.0,0.9363636363636364,"ham, west",High-confidence distinctive-name match.
+EFL Championship,soccer_efl_champ,Wolverhampton Wanderers,MATCHED,Wolverhampton Wanderers FC,Wolverhampton Wanderers FC,0.9241496598639456,0.0,0.9241496598639456,"wanderers, wolverhampton",High-confidence distinctive-name match.
+Eredivisie,soccer_netherlands_eredivisie,FC Utrecht,MATCHED,FC Utrecht,FC Utrecht,1.0,0.0,1.0,utrecht,Exact normalized team-name match.
+Eredivisie,soccer_netherlands_eredivisie,Fortuna Sittard,MATCHED,Fortuna Sittard,Fortuna Sittard,1.0,0.0,1.0,"fortuna, sittard",Exact normalized team-name match.
+Eredivisie,soccer_netherlands_eredivisie,Go Ahead Eagles,MATCHED,Go Ahead Eagles,Go Ahead Eagles,1.0,0.0,1.0,"ahead, eagles",Exact normalized team-name match.
+Eredivisie,soccer_netherlands_eredivisie,PSV Eindhoven,MATCHED,PSV,PSV,0.99,0.0,0.99,"eindhoven, psv",Verified team alias match.
+Eredivisie,soccer_netherlands_eredivisie,Sparta Rotterdam,MATCHED,Sparta Rotterdam,Sparta Rotterdam,1.0,0.27894285714285716,0.7210571428571428,"rotterdam, sparta",Exact normalized team-name match.
+La Liga,soccer_spain_la_liga,Atlético Madrid,MATCHED,Club Atlético de Madrid,Club Atlético de Madrid,0.99,0.7264367816091954,0.26356321839080454,madrid,Verified team alias match.
+La Liga,soccer_spain_la_liga,Barcelona,MATCHED,FC Barcelona,FC Barcelona,0.99,0.26994117647058824,0.7200588235294118,barcelona,Verified team alias match.
+La Liga,soccer_spain_la_liga,CA Osasuna,MATCHED,CA Osasuna,CA Osasuna,1.0,0.0,1.0,osasuna,Exact normalized team-name match.
+La Liga,soccer_spain_la_liga,Elche CF,MATCHED,Elche CF,Elche CF,1.0,0.0,1.0,elche,Exact normalized team-name match.
+La Liga,soccer_spain_la_liga,Getafe,MATCHED,Getafe CF,Getafe CF,0.87,0.0,0.87,getafe,High-confidence distinctive-name match.
+La Liga,soccer_spain_la_liga,Levante,MATCHED,Levante UD,Levante UD,0.8735294117647059,0.0,0.8735294117647059,levante,High-confidence distinctive-name match.
+La Liga,soccer_spain_la_liga,Real Madrid,MATCHED,Real Madrid CF,Real Madrid CF,0.99,0.6855882352941177,0.30441176470588227,madrid,Verified team alias match.
+La Liga,soccer_spain_la_liga,Sevilla,MATCHED,Sevilla FC,Sevilla FC,0.8735294117647059,0.0,0.8735294117647059,sevilla,High-confidence distinctive-name match.
+La Liga,soccer_spain_la_liga,Valencia,MATCHED,Valencia CF,Valencia CF,0.8763157894736842,0.0,0.8763157894736842,valencia,High-confidence distinctive-name match.
+La Liga,soccer_spain_la_liga,Villarreal,MATCHED,Villarreal CF,Villarreal CF,0.8804347826086957,0.0,0.8804347826086957,villarreal,High-confidence distinctive-name match.
+Ligue 1,soccer_france_ligue_one,AS Monaco,MATCHED,AS Monaco FC,AS Monaco FC,0.9119047619047619,0.0,0.9119047619047619,monaco,High-confidence distinctive-name match.
+Ligue 1,soccer_france_ligue_one,Le Havre,MATCHED,Le Havre AC,Le Havre AC,0.9096491228070175,0.0,0.9096491228070175,havre,High-confidence distinctive-name match.
+Ligue 1,soccer_france_ligue_one,Paris FC,MATCHED,Paris FC,Paris FC,1.0,0.36140000000000005,0.6386,paris,Exact normalized team-name match.
+Ligue 1,soccer_france_ligue_one,Paris Saint Germain,MATCHED,Paris Saint-Germain FC,Paris Saint-Germain FC,0.9390243902439025,0.31200000000000006,0.6270243902439024,"germain, paris, saint",High-confidence distinctive-name match.
+Ligue 1,soccer_france_ligue_one,Toulouse,MATCHED,Toulouse FC,Toulouse FC,0.8763157894736842,0.0,0.8763157894736842,toulouse,High-confidence distinctive-name match.
+Premier League,soccer_epl,Arsenal,MATCHED,Arsenal FC,Arsenal FC,0.99,0.0,0.99,arsenal,Verified team alias match.
+Premier League,soccer_epl,Aston Villa,MATCHED,Aston Villa FC,Aston Villa FC,0.99,0.0,0.99,"aston, villa",Verified team alias match.
+Premier League,soccer_epl,Brentford,MATCHED,Brentford FC,Brentford FC,0.8785714285714286,0.0,0.8785714285714286,brentford,High-confidence distinctive-name match.
+Premier League,soccer_epl,Brighton and Hove Albion,MATCHED,Brighton & Hove Albion FC,Brighton & Hove Albion FC,0.9511764705882354,0.0,0.9511764705882354,"albion, and, brighton, hove",High-confidence distinctive-name match.
+Premier League,soccer_epl,Chelsea,MATCHED,Chelsea FC,Chelsea FC,0.8735294117647059,0.0,0.8735294117647059,chelsea,High-confidence distinctive-name match.
+Premier League,soccer_epl,Crystal Palace,MATCHED,Crystal Palace FC,Crystal Palace FC,0.99,0.0,0.99,"crystal, palace",Verified team alias match.
+Premier League,soccer_epl,Everton,MATCHED,Everton FC,Everton FC,0.8735294117647059,0.0,0.8735294117647059,everton,High-confidence distinctive-name match.
+Premier League,soccer_epl,Fulham,MATCHED,Fulham FC,Fulham FC,0.87,0.0,0.87,fulham,High-confidence distinctive-name match.
+Premier League,soccer_epl,Ipswich Town,MATCHED,Ipswich Town FC,Ipswich Town FC,0.9166666666666666,0.0,0.9166666666666666,ipswich,High-confidence distinctive-name match.
+Premier League,soccer_epl,Leeds United,MATCHED,Leeds United FC,Leeds United FC,0.9166666666666666,0.0,0.9166666666666666,leeds,High-confidence distinctive-name match.
+Premier League,soccer_epl,Liverpool,MATCHED,Liverpool FC,Liverpool FC,0.99,0.0,0.99,liverpool,Verified team alias match.
+Premier League,soccer_epl,Newcastle United,MATCHED,Newcastle United FC,Newcastle United FC,0.99,0.0,0.99,newcastle,Verified team alias match.
+Premier League,soccer_epl,Nottingham Forest,MATCHED,Nottingham Forest FC,Nottingham Forest FC,0.9211711711711712,0.0,0.9211711711711712,"forest, nottingham",High-confidence distinctive-name match.
+Premier League,soccer_epl,Sunderland,MATCHED,Sunderland AFC,Sunderland AFC,0.875,0.0,0.875,sunderland,High-confidence distinctive-name match.
+Premier League,soccer_epl,Tottenham Hotspur,MATCHED,Tottenham Hotspur FC,Tottenham Hotspur FC,0.9211711711711712,0.0,0.9211711711711712,"hotspur, tottenham",High-confidence distinctive-name match.
+Primeira Liga,soccer_portugal_primeira_liga,Casa Pia,MATCHED,Casa Pia AC,Casa Pia AC,0.9096491228070175,0.0,0.9096491228070175,"casa, pia",High-confidence distinctive-name match.
+Primeira Liga,soccer_portugal_primeira_liga,FC Porto,MATCHED,FC Porto,FC Porto,1.0,0.0,1.0,porto,Exact normalized team-name match.
+Primeira Liga,soccer_portugal_primeira_liga,Gil Vicente,MATCHED,Gil Vicente FC,Gil Vicente FC,0.9153333333333333,0.0,0.9153333333333333,"gil, vicente",High-confidence distinctive-name match.
+Primeira Liga,soccer_portugal_primeira_liga,Moreirense FC,MATCHED,Moreirense FC,Moreirense FC,1.0,0.0,1.0,moreirense,Exact normalized team-name match.
+Primeira Liga,soccer_portugal_primeira_liga,Rio Ave FC,MATCHED,Rio Ave FC,Rio Ave FC,1.0,0.0,1.0,"ave, rio",Exact normalized team-name match.
+Primeira Liga,soccer_portugal_primeira_liga,Sporting Lisbon,MATCHED,Sporting Clube de Portugal,Sporting Clube de Portugal,0.99,0.0,0.99,"clube, lisbon, portugal",Verified team alias match.
+Primeira Liga,soccer_portugal_primeira_liga,Vitória SC,MATCHED,Vitória SC,Vitória SC,1.0,0.0,1.0,vitoria,Exact normalized team-name match.
+Serie A,soccer_italy_serie_a,AC Milan,MATCHED,AC Milan,AC Milan,1.0,0.0,1.0,milan,Exact normalized team-name match.
+Serie A,soccer_italy_serie_a,AS Roma,MATCHED,AS Roma,AS Roma,1.0,0.0,1.0,roma,Exact normalized team-name match.
+Serie A,soccer_italy_serie_a,Atalanta BC,MATCHED,Atalanta BC,Atalanta BC,1.0,0.0,1.0,atalanta,Exact normalized team-name match.
+Serie A,soccer_italy_serie_a,Cagliari,MATCHED,Cagliari Calcio,Cagliari Calcio,0.8543478260869565,0.0,0.8543478260869565,cagliari,High-confidence distinctive-name match.
+Serie A,soccer_italy_serie_a,Como,MATCHED,Como 1907,Como 1907,0.8423076923076923,0.0,0.8423076923076923,como,High-confidence distinctive-name match.
+Serie A,soccer_italy_serie_a,Frosinone,MATCHED,Frosinone Calcio,Frosinone Calcio,0.858,0.0,0.858,frosinone,High-confidence distinctive-name match.
+Serie A,soccer_italy_serie_a,Juventus,MATCHED,Juventus FC,Juventus FC,0.8763157894736842,0.0,0.8763157894736842,juventus,High-confidence distinctive-name match.
+Serie A,soccer_italy_serie_a,Torino,MATCHED,Torino FC,Torino FC,0.87,0.0,0.87,torino,High-confidence distinctive-name match.
+Serie A,soccer_italy_serie_a,Udinese,MATCHED,Udinese Calcio,Udinese Calcio,0.85,0.0,0.85,udinese,High-confidence distinctive-name match.
+Serie A,soccer_italy_serie_a,Venezia,MATCHED,Venezia FC,Venezia FC,0.8735294117647059,0.0,0.8735294117647059,venezia,High-confidence distinctive-name match.
+Turkish Super League,soccer_turkey_super_league,Galatasaray,MATCHED,Galatasaray SK,Galatasaray SK,0.99,0.0,0.99,galatasaray,Verified team alias match.
