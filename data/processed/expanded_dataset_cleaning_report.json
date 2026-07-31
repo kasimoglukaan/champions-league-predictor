@@ -1,0 +1,36 @@
+{
+  "source_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/processed/all_matches_expanded_candidate.csv",
+  "output_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/processed/all_matches_expanded_clean.csv",
+  "original_rows": 43294,
+  "cleaned_rows": 43108,
+  "removed_duplicate_rows": 186,
+  "date_min": "2016-07-29",
+  "date_max": "2026-05-30",
+  "unique_teams": 462,
+  "competitions": 18,
+  "league_names": 18,
+  "matches_by_league": {
+    "EFL Championship": 5520,
+    "Premier League": 3800,
+    "La Liga": 3800,
+    "Serie A": 3800,
+    "Ligue 1": 3477,
+    "Turkish Super League": 3394,
+    "Bundesliga": 3060,
+    "Primeira Liga": 3060,
+    "Eredivisie": 2986,
+    "Belgian First Division": 2805,
+    "PL": 1140,
+    "PD": 1122,
+    "SA": 1122,
+    "PPL": 914,
+    "FL1": 902,
+    "DED": 888,
+    "BL1": 815,
+    "CL": 503
+  },
+  "matches_by_source": {
+    "football-data.co.uk": 35702,
+    "existing_project_data": 7406
+  }
+}

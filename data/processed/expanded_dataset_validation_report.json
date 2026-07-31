@@ -1,0 +1,68 @@
+{
+  "dataset_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/processed/all_matches_expanded_candidate.csv",
+  "total_rows": 43294,
+  "invalid_rows": 0,
+  "duplicate_rows": 372,
+  "date_min": "2016-07-29",
+  "date_max": "2026-05-30",
+  "competition_count": 18,
+  "league_name_count": 18,
+  "competition_matches": {
+    "EFL Championship": 5520,
+    "Premier League": 3800,
+    "La Liga": 3800,
+    "Serie A": 3800,
+    "Ligue 1": 3477,
+    "Turkish Super League": 3394,
+    "Bundesliga": 3060,
+    "Primeira Liga": 3060,
+    "Eredivisie": 2986,
+    "Belgian First Division": 2805,
+    "PD": 1140,
+    "PL": 1140,
+    "SA": 1140,
+    "DED": 918,
+    "PPL": 918,
+    "BL1": 917,
+    "FL1": 916,
+    "CL": 503
+  },
+  "season_matches": {
+    "2016-17": 3536,
+    "2017-18": 3536,
+    "2018-19": 3536,
+    "2019-20": 3353,
+    "2020-21": 3716,
+    "2021-22": 3676,
+    "2022-23": 3638,
+    "2023": 2489,
+    "2023-24": 3608,
+    "2024": 2551,
+    "2024-25": 3570,
+    "2025": 2552,
+    "2025-26": 3533
+  },
+  "source_matches": {
+    "football-data.co.uk": 35702,
+    "existing_project_data": 7592
+  },
+  "winner_distribution": {
+    "H": 0.44073081720330765,
+    "A": 0.3092576338522659,
+    "D": 0.25001154894442645
+  },
+  "team_coverage": {
+    "unique_team_count": 462,
+    "teams_with_fewer_than_10_matches": {
+      "Royal Antwerp FC": 6,
+      "SK Slavia Praha": 8,
+      "FK Kairat": 8,
+      "Paphos FC": 8,
+      "AC Sparta Praha": 8,
+      "ŠK Slovan Bratislava": 8,
+      "SK Sturm Graz": 8,
+      "GNK Dinamo Zagreb": 8,
+      "Royale Union Saint-Gilloise": 8
+    }
+  }
+}

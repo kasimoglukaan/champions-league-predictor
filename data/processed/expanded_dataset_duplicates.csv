@@ -1,0 +1,373 @@
+match_id,date,competition,season,stage,matchday,home_team,away_team,home_goals,away_goals,winner,country,league_name,data_source
+441792,2023-08-19,BL1,2023,REGULAR_SEASON,1.0,Bayer 04 Leverkusen,RB Leipzig,3,2,H,,BL1,existing_project_data
+league_96688ff060cf842a,2023-08-19,BUNDESLIGA,2023-24,LEAGUE,,Bayer 04 Leverkusen,RB Leipzig,3,2,H,Germany,Bundesliga,football-data.co.uk
+441497,2023-08-20,DED,2023,REGULAR_SEASON,2.0,Sparta Rotterdam,Feyenoord Rotterdam,2,2,D,,DED,existing_project_data
+league_42b1bcaf69371344,2023-08-20,EREDIVISIE,2023-24,LEAGUE,,Sparta Rotterdam,Feyenoord Rotterdam,2,2,D,Netherlands,Eredivisie,football-data.co.uk
+441802,2023-08-26,BL1,2023,REGULAR_SEASON,2.0,Borussia Mönchengladbach,Bayer 04 Leverkusen,0,3,A,,BL1,existing_project_data
+league_a761f802339df3c8,2023-08-26,BUNDESLIGA,2023-24,LEAGUE,,Borussia Mönchengladbach,Bayer 04 Leverkusen,0,3,A,Germany,Bundesliga,football-data.co.uk
+444280,2023-09-01,SA,2023,REGULAR_SEASON,3.0,AS Roma,AC Milan,1,2,A,,SA,existing_project_data
+league_70b289df0bbf5488,2023-09-01,SERIE_A,2023-24,LEAGUE,,AS Roma,AC Milan,1,2,A,Italy,Serie A,football-data.co.uk
+441811,2023-09-02,BL1,2023,REGULAR_SEASON,3.0,Borussia Mönchengladbach,FC Bayern München,1,2,A,,BL1,existing_project_data
+league_b88006e1d78d82c0,2023-09-02,BUNDESLIGA,2023-24,LEAGUE,,Borussia Mönchengladbach,FC Bayern München,1,2,A,Germany,Bundesliga,football-data.co.uk
+442742,2023-09-03,FL1,2023,REGULAR_SEASON,4.0,Olympique Lyonnais,Paris Saint-Germain FC,1,4,A,,FL1,existing_project_data
+league_bf0363c0c5a39983,2023-09-03,LIGUE_1,2023-24,LEAGUE,,Olympique Lyonnais,Paris Saint-Germain FC,1,4,A,France,Ligue 1,football-data.co.uk
+441816,2023-09-15,BL1,2023,REGULAR_SEASON,4.0,FC Bayern München,Bayer 04 Leverkusen,2,2,D,,BL1,existing_project_data
+league_b233faf1f2480d20,2023-09-15,BUNDESLIGA,2023-24,LEAGUE,,FC Bayern München,Bayer 04 Leverkusen,2,2,D,Germany,Bundesliga,football-data.co.uk
+441830,2023-09-23,BL1,2023,REGULAR_SEASON,5.0,Borussia Mönchengladbach,RB Leipzig,0,1,A,,BL1,existing_project_data
+league_3dab3c4298dada2e,2023-09-23,BUNDESLIGA,2023-24,LEAGUE,,Borussia Mönchengladbach,RB Leipzig,0,1,A,Germany,Bundesliga,football-data.co.uk
+league_611675e57aeca7e4,2023-09-24,LA_LIGA,2023-24,LEAGUE,,Club Atlético de Madrid,Real Madrid CF,3,1,H,Spain,La Liga,football-data.co.uk
+438524,2023-09-24,PD,2023,REGULAR_SEASON,6.0,Club Atlético de Madrid,Real Madrid CF,3,1,H,,PD,existing_project_data
+444318,2023-09-30,SA,2023,REGULAR_SEASON,7.0,AC Milan,SS Lazio,2,0,H,,SA,existing_project_data
+league_35ee84f0f83cf962,2023-09-30,SERIE_A,2023-24,LEAGUE,,AC Milan,SS Lazio,2,0,H,Italy,Serie A,football-data.co.uk
+441536,2023-09-30,DED,2023,REGULAR_SEASON,7.0,Feyenoord Rotterdam,Go Ahead Eagles,3,1,H,,DED,existing_project_data
+league_c97bdbaa161af74f,2023-09-30,EREDIVISIE,2023-24,LEAGUE,,Feyenoord Rotterdam,Go Ahead Eagles,3,1,H,Netherlands,Eredivisie,football-data.co.uk
+441834,2023-09-30,BL1,2023,REGULAR_SEASON,6.0,RB Leipzig,FC Bayern München,2,2,D,,BL1,existing_project_data
+league_0354fe7e9f6ccbd7,2023-09-30,BUNDESLIGA,2023-24,LEAGUE,,RB Leipzig,FC Bayern München,2,2,D,Germany,Bundesliga,football-data.co.uk
+441562,2023-10-22,DED,2023,REGULAR_SEASON,9.0,Go Ahead Eagles,Sparta Rotterdam,0,0,D,,DED,existing_project_data
+league_7d6ecd350c560175,2023-10-22,EREDIVISIE,2023-24,LEAGUE,,Go Ahead Eagles,Sparta Rotterdam,0,0,D,Netherlands,Eredivisie,football-data.co.uk
+league_87a6c233f5735a60,2023-10-28,LA_LIGA,2023-24,LEAGUE,,FC Barcelona,Real Madrid CF,1,2,A,Spain,La Liga,football-data.co.uk
+438577,2023-10-28,PD,2023,REGULAR_SEASON,11.0,FC Barcelona,Real Madrid CF,1,2,A,,PD,existing_project_data
+441864,2023-10-29,BL1,2023,REGULAR_SEASON,9.0,Eintracht Frankfurt,Borussia Dortmund,3,3,D,,BL1,existing_project_data
+league_dd070944dabb9015,2023-10-29,BUNDESLIGA,2023-24,LEAGUE,,Eintracht Frankfurt,Borussia Dortmund,3,3,D,Germany,Bundesliga,football-data.co.uk
+441870,2023-11-04,BL1,2023,REGULAR_SEASON,10.0,Borussia Dortmund,FC Bayern München,0,4,A,,BL1,existing_project_data
+league_11ef3e78cefa23fc,2023-11-04,BUNDESLIGA,2023-24,LEAGUE,,Borussia Dortmund,FC Bayern München,0,4,A,Germany,Bundesliga,football-data.co.uk
+444368,2023-11-12,SA,2023,REGULAR_SEASON,12.0,SS Lazio,AS Roma,0,0,D,,SA,existing_project_data
+league_b59ab5f6c81ed7c4,2023-11-12,SERIE_A,2023-24,LEAGUE,,SS Lazio,AS Roma,0,0,D,Italy,Serie A,football-data.co.uk
+441888,2023-11-25,BL1,2023,REGULAR_SEASON,12.0,Borussia Dortmund,Borussia Mönchengladbach,4,2,H,,BL1,existing_project_data
+league_eb75ae76d15e8e3a,2023-11-25,BUNDESLIGA,2023-24,LEAGUE,,Borussia Dortmund,Borussia Mönchengladbach,4,2,H,Germany,Bundesliga,football-data.co.uk
+441899,2023-12-03,BL1,2023,REGULAR_SEASON,13.0,Bayer 04 Leverkusen,Borussia Dortmund,1,1,D,,BL1,existing_project_data
+league_f8ae62dadc3cc6fe,2023-12-03,BUNDESLIGA,2023-24,LEAGUE,,Bayer 04 Leverkusen,Borussia Dortmund,1,1,D,Germany,Bundesliga,football-data.co.uk
+league_39b453197add5eff,2023-12-03,LA_LIGA,2023-24,LEAGUE,,FC Barcelona,Club Atlético de Madrid,1,0,H,Spain,La Liga,football-data.co.uk
+438617,2023-12-03,PD,2023,REGULAR_SEASON,15.0,FC Barcelona,Club Atlético de Madrid,1,0,H,,PD,existing_project_data
+441906,2023-12-09,BL1,2023,REGULAR_SEASON,14.0,Borussia Dortmund,RB Leipzig,2,3,A,,BL1,existing_project_data
+league_368946f27cc74379,2023-12-09,BUNDESLIGA,2023-24,LEAGUE,,Borussia Dortmund,RB Leipzig,2,3,A,Germany,Bundesliga,football-data.co.uk
+441908,2023-12-09,BL1,2023,REGULAR_SEASON,14.0,Eintracht Frankfurt,FC Bayern München,5,1,H,,BL1,existing_project_data
+league_60479058b435a30e,2023-12-09,BUNDESLIGA,2023-24,LEAGUE,,Eintracht Frankfurt,FC Bayern München,5,1,H,Germany,Bundesliga,football-data.co.uk
+441918,2023-12-17,BL1,2023,REGULAR_SEASON,15.0,Bayer 04 Leverkusen,Eintracht Frankfurt,3,0,H,,BL1,existing_project_data
+league_4fa11264bb1e9ba4,2023-12-17,BUNDESLIGA,2023-24,LEAGUE,,Bayer 04 Leverkusen,Eintracht Frankfurt,3,0,H,Germany,Bundesliga,football-data.co.uk
+441927,2023-12-20,BL1,2023,REGULAR_SEASON,16.0,Eintracht Frankfurt,Borussia Mönchengladbach,2,1,H,,BL1,existing_project_data
+league_9ca6ee8de01483e0,2023-12-20,BUNDESLIGA,2023-24,LEAGUE,,Eintracht Frankfurt,Borussia Mönchengladbach,2,1,H,Germany,Bundesliga,football-data.co.uk
+441934,2024-01-13,BL1,2023,REGULAR_SEASON,17.0,RB Leipzig,Eintracht Frankfurt,0,1,A,,BL1,existing_project_data
+league_e9fdc584f57725bf,2024-01-13,BUNDESLIGA,2023-24,LEAGUE,,RB Leipzig,Eintracht Frankfurt,0,1,A,Germany,Bundesliga,football-data.co.uk
+444451,2024-01-14,SA,2023,REGULAR_SEASON,20.0,AC Milan,AS Roma,3,1,H,,SA,existing_project_data
+league_dd8aed8278377b97,2024-01-14,SERIE_A,2023-24,LEAGUE,,AC Milan,AS Roma,3,1,H,Italy,Serie A,football-data.co.uk
+441945,2024-01-20,BL1,2023,REGULAR_SEASON,18.0,RB Leipzig,Bayer 04 Leverkusen,2,3,A,,BL1,existing_project_data
+league_fadcd1d9e703686e,2024-01-20,BUNDESLIGA,2023-24,LEAGUE,,RB Leipzig,Bayer 04 Leverkusen,2,3,A,Germany,Bundesliga,football-data.co.uk
+441642,2024-01-21,DED,2023,REGULAR_SEASON,18.0,Sparta Rotterdam,Go Ahead Eagles,0,2,A,,DED,existing_project_data
+league_b5d12902d01b4439,2024-01-21,EREDIVISIE,2023-24,LEAGUE,,Sparta Rotterdam,Go Ahead Eagles,0,2,A,Netherlands,Eredivisie,football-data.co.uk
+441955,2024-01-27,BL1,2023,REGULAR_SEASON,19.0,Bayer 04 Leverkusen,Borussia Mönchengladbach,0,0,D,,BL1,existing_project_data
+league_fb02f338ed1fe8e8,2024-01-27,BUNDESLIGA,2023-24,LEAGUE,,Bayer 04 Leverkusen,Borussia Mönchengladbach,0,0,D,Germany,Bundesliga,football-data.co.uk
+441964,2024-02-03,BL1,2023,REGULAR_SEASON,20.0,FC Bayern München,Borussia Mönchengladbach,3,1,H,,BL1,existing_project_data
+league_bfc19cbcf4410cfd,2024-02-03,BUNDESLIGA,2023-24,LEAGUE,,FC Bayern München,Borussia Mönchengladbach,3,1,H,Germany,Bundesliga,football-data.co.uk
+league_e60a65c625623777,2024-02-04,LA_LIGA,2023-24,LEAGUE,,Real Madrid CF,Club Atlético de Madrid,1,1,D,Spain,La Liga,football-data.co.uk
+438703,2024-02-04,PD,2023,REGULAR_SEASON,23.0,Real Madrid CF,Club Atlético de Madrid,1,1,D,,PD,existing_project_data
+441969,2024-02-10,BL1,2023,REGULAR_SEASON,21.0,Bayer 04 Leverkusen,FC Bayern München,3,0,H,,BL1,existing_project_data
+league_5e5aa03134382c87,2024-02-10,BUNDESLIGA,2023-24,LEAGUE,,Bayer 04 Leverkusen,FC Bayern München,3,0,H,Germany,Bundesliga,football-data.co.uk
+441666,2024-02-11,DED,2023,REGULAR_SEASON,21.0,Feyenoord Rotterdam,Sparta Rotterdam,2,0,H,,DED,existing_project_data
+league_fe25b4d76e9e9169,2024-02-11,EREDIVISIE,2023-24,LEAGUE,,Feyenoord Rotterdam,Sparta Rotterdam,2,0,H,Netherlands,Eredivisie,football-data.co.uk
+441983,2024-02-17,BL1,2023,REGULAR_SEASON,22.0,RB Leipzig,Borussia Mönchengladbach,2,0,H,,BL1,existing_project_data
+league_2bb9ed193c550f7d,2024-02-17,BUNDESLIGA,2023-24,LEAGUE,,RB Leipzig,Borussia Mönchengladbach,2,0,H,Germany,Bundesliga,football-data.co.uk
+441987,2024-02-24,BL1,2023,REGULAR_SEASON,23.0,FC Bayern München,RB Leipzig,2,1,H,,BL1,existing_project_data
+league_b5e1106fe514d352,2024-02-24,BUNDESLIGA,2023-24,LEAGUE,,FC Bayern München,RB Leipzig,2,1,H,Germany,Bundesliga,football-data.co.uk
+444519,2024-03-01,SA,2023,REGULAR_SEASON,27.0,SS Lazio,AC Milan,0,1,A,,SA,existing_project_data
+league_96f902d9b5188ffe,2024-03-01,SERIE_A,2023-24,LEAGUE,,SS Lazio,AC Milan,0,1,A,Italy,Serie A,football-data.co.uk
+442017,2024-03-17,BL1,2023,REGULAR_SEASON,26.0,Borussia Dortmund,Eintracht Frankfurt,3,1,H,,BL1,existing_project_data
+league_77ef00a34951f2af,2024-03-17,BUNDESLIGA,2023-24,LEAGUE,,Borussia Dortmund,Eintracht Frankfurt,3,1,H,Germany,Bundesliga,football-data.co.uk
+league_217ec2a851e02b54,2024-03-17,LA_LIGA,2023-24,LEAGUE,,Club Atlético de Madrid,FC Barcelona,0,3,A,Spain,La Liga,football-data.co.uk
+438755,2024-03-17,PD,2023,REGULAR_SEASON,29.0,Club Atlético de Madrid,FC Barcelona,0,3,A,,PD,existing_project_data
+442023,2024-03-30,BL1,2023,REGULAR_SEASON,27.0,FC Bayern München,Borussia Dortmund,0,2,A,,BL1,existing_project_data
+league_aebdcc243973a277,2024-03-30,BUNDESLIGA,2023-24,LEAGUE,,FC Bayern München,Borussia Dortmund,0,2,A,Germany,Bundesliga,football-data.co.uk
+444561,2024-04-06,SA,2023,REGULAR_SEASON,31.0,AS Roma,SS Lazio,1,0,H,,SA,existing_project_data
+league_adfeb0b3ccea86d3,2024-04-06,SERIE_A,2023-24,LEAGUE,,AS Roma,SS Lazio,1,0,H,Italy,Serie A,football-data.co.uk
+442041,2024-04-13,BL1,2023,REGULAR_SEASON,29.0,Borussia Mönchengladbach,Borussia Dortmund,1,2,A,,BL1,existing_project_data
+league_33e0a4e65684b415,2024-04-13,BUNDESLIGA,2023-24,LEAGUE,,Borussia Mönchengladbach,Borussia Dortmund,1,2,A,Germany,Bundesliga,football-data.co.uk
+442052,2024-04-21,BL1,2023,REGULAR_SEASON,30.0,Borussia Dortmund,Bayer 04 Leverkusen,1,1,D,,BL1,existing_project_data
+league_81adbb4d66222eb5,2024-04-21,BUNDESLIGA,2023-24,LEAGUE,,Borussia Dortmund,Bayer 04 Leverkusen,1,1,D,Germany,Bundesliga,football-data.co.uk
+442973,2024-04-21,FL1,2023,REGULAR_SEASON,30.0,Paris Saint-Germain FC,Olympique Lyonnais,4,1,H,,FL1,existing_project_data
+league_d8b827b40c6d0079,2024-04-21,LIGUE_1,2023-24,LEAGUE,,Paris Saint-Germain FC,Olympique Lyonnais,4,1,H,France,Ligue 1,football-data.co.uk
+league_1129cd5fd45f0068,2024-04-21,LA_LIGA,2023-24,LEAGUE,,Real Madrid CF,FC Barcelona,3,2,H,Spain,La Liga,football-data.co.uk
+438792,2024-04-21,PD,2023,REGULAR_SEASON,32.0,Real Madrid CF,FC Barcelona,3,2,H,,PD,existing_project_data
+441753,2024-04-25,DED,2023,REGULAR_SEASON,31.0,Go Ahead Eagles,Feyenoord Rotterdam,1,3,A,,DED,existing_project_data
+league_ffbd852d868f56df,2024-04-25,EREDIVISIE,2023-24,LEAGUE,,Go Ahead Eagles,Feyenoord Rotterdam,1,3,A,Netherlands,Eredivisie,football-data.co.uk
+442061,2024-04-27,BL1,2023,REGULAR_SEASON,31.0,FC Bayern München,Eintracht Frankfurt,2,1,H,,BL1,existing_project_data
+league_15a8a49e7cef6c2d,2024-04-27,BUNDESLIGA,2023-24,LEAGUE,,FC Bayern München,Eintracht Frankfurt,2,1,H,Germany,Bundesliga,football-data.co.uk
+442059,2024-04-27,BL1,2023,REGULAR_SEASON,31.0,RB Leipzig,Borussia Dortmund,4,1,H,,BL1,existing_project_data
+league_82ce3ad466d754c3,2024-04-27,BUNDESLIGA,2023-24,LEAGUE,,RB Leipzig,Borussia Dortmund,4,1,H,Germany,Bundesliga,football-data.co.uk
+442071,2024-05-05,BL1,2023,REGULAR_SEASON,32.0,Eintracht Frankfurt,Bayer 04 Leverkusen,1,5,A,,BL1,existing_project_data
+league_3d04deb0a12e7dfa,2024-05-05,BUNDESLIGA,2023-24,LEAGUE,,Eintracht Frankfurt,Bayer 04 Leverkusen,1,5,A,Germany,Bundesliga,football-data.co.uk
+442080,2024-05-11,BL1,2023,REGULAR_SEASON,33.0,Borussia Mönchengladbach,Eintracht Frankfurt,1,1,D,,BL1,existing_project_data
+league_1fcfef835d30ff1a,2024-05-11,BUNDESLIGA,2023-24,LEAGUE,,Borussia Mönchengladbach,Eintracht Frankfurt,1,1,D,Germany,Bundesliga,football-data.co.uk
+442087,2024-05-18,BL1,2023,REGULAR_SEASON,34.0,Eintracht Frankfurt,RB Leipzig,2,2,D,,BL1,existing_project_data
+league_98314c0e048fba59,2024-05-18,BUNDESLIGA,2023-24,LEAGUE,,Eintracht Frankfurt,RB Leipzig,2,2,D,Germany,Bundesliga,football-data.co.uk
+502371,2024-08-23,BL1,2024,REGULAR_SEASON,1.0,Borussia Mönchengladbach,Bayer 04 Leverkusen,2,3,A,,BL1,existing_project_data
+league_2bb8131ce6a863ed,2024-08-23,BUNDESLIGA,2024-25,LEAGUE,,Borussia Mönchengladbach,Bayer 04 Leverkusen,2,3,A,Germany,Bundesliga,football-data.co.uk
+502373,2024-08-24,BL1,2024,REGULAR_SEASON,1.0,Borussia Dortmund,Eintracht Frankfurt,2,0,H,,BL1,existing_project_data
+league_71b10d8e42a3ab07,2024-08-24,BUNDESLIGA,2024-25,LEAGUE,,Borussia Dortmund,Eintracht Frankfurt,2,0,H,Germany,Bundesliga,football-data.co.uk
+499016,2024-08-25,DED,2024,REGULAR_SEASON,3.0,Sparta Rotterdam,Feyenoord Rotterdam,1,1,D,,DED,existing_project_data
+league_e8595b8649c50d0a,2024-08-25,EREDIVISIE,2024-25,LEAGUE,,Sparta Rotterdam,Feyenoord Rotterdam,1,1,D,Netherlands,Eredivisie,football-data.co.uk
+502380,2024-08-31,BL1,2024,REGULAR_SEASON,2.0,Bayer 04 Leverkusen,RB Leipzig,2,3,A,,BL1,existing_project_data
+league_879c2bfb1b3adb6b,2024-08-31,BUNDESLIGA,2024-25,LEAGUE,,Bayer 04 Leverkusen,RB Leipzig,2,3,A,Germany,Bundesliga,football-data.co.uk
+503068,2024-08-31,SA,2024,REGULAR_SEASON,3.0,SS Lazio,AC Milan,2,2,D,,SA,existing_project_data
+league_750f434398491cbc,2024-08-31,SERIE_A,2024-25,LEAGUE,,SS Lazio,AC Milan,2,2,D,Italy,Serie A,football-data.co.uk
+502397,2024-09-14,BL1,2024,REGULAR_SEASON,3.0,Holstein Kiel,FC Bayern München,1,6,A,,BL1,existing_project_data
+league_ff78db43fa707eba,2024-09-14,BUNDESLIGA,2024-25,LEAGUE,,Holstein Kiel,FC Bayern München,1,6,A,Germany,Bundesliga,football-data.co.uk
+499034,2024-09-15,DED,2024,REGULAR_SEASON,5.0,Sparta Rotterdam,Go Ahead Eagles,1,2,A,,DED,existing_project_data
+league_b18777dd5a9995ac,2024-09-15,EREDIVISIE,2024-25,LEAGUE,,Sparta Rotterdam,Go Ahead Eagles,1,2,A,Netherlands,Eredivisie,football-data.co.uk
+502400,2024-09-21,BL1,2024,REGULAR_SEASON,4.0,Eintracht Frankfurt,Borussia Mönchengladbach,2,0,H,,BL1,existing_project_data
+league_94505ffb8db20e7e,2024-09-21,BUNDESLIGA,2024-25,LEAGUE,,Eintracht Frankfurt,Borussia Mönchengladbach,2,0,H,Germany,Bundesliga,football-data.co.uk
+499045,2024-09-22,DED,2024,REGULAR_SEASON,6.0,Feyenoord Rotterdam,NAC Breda,2,0,H,,DED,existing_project_data
+league_34ee0c1189bdb0e3,2024-09-22,EREDIVISIE,2024-25,LEAGUE,,Feyenoord Rotterdam,NAC Breda,2,0,H,Netherlands,Eredivisie,football-data.co.uk
+502407,2024-09-28,BL1,2024,REGULAR_SEASON,5.0,FC Bayern München,Bayer 04 Leverkusen,1,1,D,,BL1,existing_project_data
+league_fa049b02b88740a8,2024-09-28,BUNDESLIGA,2024-25,LEAGUE,,FC Bayern München,Bayer 04 Leverkusen,1,1,D,Germany,Bundesliga,football-data.co.uk
+league_b1cccb1519a5a5e9,2024-09-29,LA_LIGA,2024-25,LEAGUE,,Club Atlético de Madrid,Real Madrid CF,1,1,D,Spain,La Liga,football-data.co.uk
+498684,2024-09-29,PD,2024,REGULAR_SEASON,8.0,Club Atlético de Madrid,Real Madrid CF,1,1,D,,PD,existing_project_data
+502415,2024-09-29,BL1,2024,REGULAR_SEASON,5.0,Holstein Kiel,Eintracht Frankfurt,2,4,A,,BL1,existing_project_data
+league_9d2688c4f6749db1,2024-09-29,BUNDESLIGA,2024-25,LEAGUE,,Holstein Kiel,Eintracht Frankfurt,2,4,A,Germany,Bundesliga,football-data.co.uk
+502416,2024-10-05,BL1,2024,REGULAR_SEASON,6.0,Bayer 04 Leverkusen,Holstein Kiel,2,2,D,,BL1,existing_project_data
+league_2f53454dc3496d3b,2024-10-05,BUNDESLIGA,2024-25,LEAGUE,,Bayer 04 Leverkusen,Holstein Kiel,2,2,D,Germany,Bundesliga,football-data.co.uk
+502418,2024-10-06,BL1,2024,REGULAR_SEASON,6.0,Eintracht Frankfurt,FC Bayern München,3,3,D,,BL1,existing_project_data
+league_4bbfd975a3a97f16,2024-10-06,BUNDESLIGA,2024-25,LEAGUE,,Eintracht Frankfurt,FC Bayern München,3,3,D,Germany,Bundesliga,football-data.co.uk
+502425,2024-10-19,BL1,2024,REGULAR_SEASON,7.0,Bayer 04 Leverkusen,Eintracht Frankfurt,2,1,H,,BL1,existing_project_data
+league_65394475d346fd92,2024-10-19,BUNDESLIGA,2024-25,LEAGUE,,Bayer 04 Leverkusen,Eintracht Frankfurt,2,1,H,Germany,Bundesliga,football-data.co.uk
+499069,2024-10-19,DED,2024,REGULAR_SEASON,9.0,Go Ahead Eagles,Feyenoord Rotterdam,1,5,A,,DED,existing_project_data
+league_3cfc3c08041a84a6,2024-10-19,EREDIVISIE,2024-25,LEAGUE,,Go Ahead Eagles,Feyenoord Rotterdam,1,5,A,Netherlands,Eredivisie,football-data.co.uk
+league_ed8cab9d6651e10e,2024-10-26,LA_LIGA,2024-25,LEAGUE,,Real Madrid CF,FC Barcelona,0,4,A,Spain,La Liga,football-data.co.uk
+498718,2024-10-26,PD,2024,REGULAR_SEASON,11.0,Real Madrid CF,FC Barcelona,0,4,A,,PD,existing_project_data
+503952,2024-10-28,PPL,2024,REGULAR_SEASON,9.0,AVS,FC Porto,0,5,A,,PPL,existing_project_data
+league_dee17d2e76b7e66c,2024-10-28,PRIMEIRA_LIGA,2024-25,LEAGUE,,AVS,FC Porto,0,5,A,Portugal,Primeira Liga,football-data.co.uk
+502445,2024-11-02,BL1,2024,REGULAR_SEASON,9.0,Borussia Dortmund,RB Leipzig,2,1,H,,BL1,existing_project_data
+league_28c340e011806ed4,2024-11-02,BUNDESLIGA,2024-25,LEAGUE,,Borussia Dortmund,RB Leipzig,2,1,H,Germany,Bundesliga,football-data.co.uk
+502453,2024-11-09,BL1,2024,REGULAR_SEASON,10.0,RB Leipzig,Borussia Mönchengladbach,0,0,D,,BL1,existing_project_data
+league_4a12b9fabe34923d,2024-11-09,BUNDESLIGA,2024-25,LEAGUE,,RB Leipzig,Borussia Mönchengladbach,0,0,D,Germany,Bundesliga,football-data.co.uk
+498042,2024-11-10,FL1,2024,REGULAR_SEASON,11.0,Olympique Lyonnais,AS Saint-Étienne,1,0,H,,FL1,existing_project_data
+league_bafe89c540a0a971,2024-11-10,LIGUE_1,2024-25,LEAGUE,,Olympique Lyonnais,AS Saint-Étienne,1,0,H,France,Ligue 1,football-data.co.uk
+502471,2024-11-30,BL1,2024,REGULAR_SEASON,12.0,Borussia Dortmund,FC Bayern München,1,1,D,,BL1,existing_project_data
+league_d6c2990ae79b206a,2024-11-30,BUNDESLIGA,2024-25,LEAGUE,,Borussia Dortmund,FC Bayern München,1,1,D,Germany,Bundesliga,football-data.co.uk
+502485,2024-12-07,BL1,2024,REGULAR_SEASON,13.0,Borussia Mönchengladbach,Borussia Dortmund,1,1,D,,BL1,existing_project_data
+league_c4bb3116b0bbd2c6,2024-12-07,BUNDESLIGA,2024-25,LEAGUE,,Borussia Mönchengladbach,Borussia Dortmund,1,1,D,Germany,Bundesliga,football-data.co.uk
+502487,2024-12-07,BL1,2024,REGULAR_SEASON,13.0,Holstein Kiel,RB Leipzig,0,2,A,,BL1,existing_project_data
+league_150d115f9e50f0e7,2024-12-07,BUNDESLIGA,2024-25,LEAGUE,,Holstein Kiel,RB Leipzig,0,2,A,Germany,Bundesliga,football-data.co.uk
+499126,2024-12-07,DED,2024,REGULAR_SEASON,15.0,Sparta Rotterdam,NAC Breda,0,2,A,,DED,existing_project_data
+league_818d0488e1137e33,2024-12-07,EREDIVISIE,2024-25,LEAGUE,,Sparta Rotterdam,NAC Breda,0,2,A,Netherlands,Eredivisie,football-data.co.uk
+502493,2024-12-14,BL1,2024,REGULAR_SEASON,14.0,Borussia Mönchengladbach,Holstein Kiel,4,1,H,,BL1,existing_project_data
+league_d48cc8fef728b11d,2024-12-14,BUNDESLIGA,2024-25,LEAGUE,,Borussia Mönchengladbach,Holstein Kiel,4,1,H,Germany,Bundesliga,football-data.co.uk
+498085,2024-12-15,FL1,2024,REGULAR_SEASON,15.0,Paris Saint-Germain FC,Olympique Lyonnais,3,1,H,,FL1,existing_project_data
+league_1af8e420fc35aec9,2024-12-15,LIGUE_1,2024-25,LEAGUE,,Paris Saint-Germain FC,Olympique Lyonnais,3,1,H,France,Ligue 1,football-data.co.uk
+502488,2024-12-15,BL1,2024,REGULAR_SEASON,14.0,RB Leipzig,Eintracht Frankfurt,2,1,H,,BL1,existing_project_data
+league_e0977cbbdda1fc54,2024-12-15,BUNDESLIGA,2024-25,LEAGUE,,RB Leipzig,Eintracht Frankfurt,2,1,H,Germany,Bundesliga,football-data.co.uk
+502499,2024-12-20,BL1,2024,REGULAR_SEASON,15.0,FC Bayern München,RB Leipzig,5,1,H,,BL1,existing_project_data
+league_4dab419ab77e91dc,2024-12-20,BUNDESLIGA,2024-25,LEAGUE,,FC Bayern München,RB Leipzig,5,1,H,Germany,Bundesliga,football-data.co.uk
+league_ad64ae29b30d7b07,2024-12-21,LA_LIGA,2024-25,LEAGUE,,FC Barcelona,Club Atlético de Madrid,1,2,A,Spain,La Liga,football-data.co.uk
+498787,2024-12-21,PD,2024,REGULAR_SEASON,18.0,FC Barcelona,Club Atlético de Madrid,1,2,A,,PD,existing_project_data
+499140,2024-12-21,DED,2024,REGULAR_SEASON,17.0,Go Ahead Eagles,NAC Breda,2,1,H,,DED,existing_project_data
+league_9be1bf4b362553d3,2024-12-21,EREDIVISIE,2024-25,LEAGUE,,Go Ahead Eagles,NAC Breda,2,1,H,Netherlands,Eredivisie,football-data.co.uk
+503219,2024-12-29,SA,2024,REGULAR_SEASON,18.0,AC Milan,AS Roma,1,1,D,,SA,existing_project_data
+league_e241b8a217c34880,2024-12-29,SERIE_A,2024-25,LEAGUE,,AC Milan,AS Roma,1,1,D,Italy,Serie A,football-data.co.uk
+503230,2025-01-05,SA,2024,REGULAR_SEASON,19.0,AS Roma,SS Lazio,2,0,H,,SA,existing_project_data
+league_cccb21474fb023c4,2025-01-05,SERIE_A,2024-25,LEAGUE,,AS Roma,SS Lazio,2,0,H,Italy,Serie A,football-data.co.uk
+502507,2025-01-10,BL1,2024,REGULAR_SEASON,16.0,Borussia Dortmund,Bayer 04 Leverkusen,2,3,A,,BL1,existing_project_data
+league_abf477efac6cf174,2025-01-10,BUNDESLIGA,2024-25,LEAGUE,,Borussia Dortmund,Bayer 04 Leverkusen,2,3,A,Germany,Bundesliga,football-data.co.uk
+502513,2025-01-11,BL1,2024,REGULAR_SEASON,16.0,Borussia Mönchengladbach,FC Bayern München,0,1,A,,BL1,existing_project_data
+league_ca51c6035898c65a,2025-01-11,BUNDESLIGA,2024-25,LEAGUE,,Borussia Mönchengladbach,FC Bayern München,0,1,A,Germany,Bundesliga,football-data.co.uk
+498102,2025-01-12,FL1,2024,REGULAR_SEASON,17.0,Paris Saint-Germain FC,AS Saint-Étienne,2,1,H,,FL1,existing_project_data
+league_e665ceac30ee3c93,2025-01-12,LIGUE_1,2024-25,LEAGUE,,Paris Saint-Germain FC,AS Saint-Étienne,2,1,H,France,Ligue 1,football-data.co.uk
+502523,2025-01-14,BL1,2024,REGULAR_SEASON,17.0,Holstein Kiel,Borussia Dortmund,4,2,H,,BL1,existing_project_data
+league_649400def0af45a9,2025-01-14,BUNDESLIGA,2024-25,LEAGUE,,Holstein Kiel,Borussia Dortmund,4,2,H,Germany,Bundesliga,football-data.co.uk
+502526,2025-01-17,BL1,2024,REGULAR_SEASON,18.0,Eintracht Frankfurt,Borussia Dortmund,2,0,H,,BL1,existing_project_data
+league_8f4b70cb09443a3f,2025-01-17,BUNDESLIGA,2024-25,LEAGUE,,Eintracht Frankfurt,Borussia Dortmund,2,0,H,Germany,Bundesliga,football-data.co.uk
+502524,2025-01-18,BL1,2024,REGULAR_SEASON,18.0,Bayer 04 Leverkusen,Borussia Mönchengladbach,3,1,H,,BL1,existing_project_data
+league_c8b22d2e38887e21,2025-01-18,BUNDESLIGA,2024-25,LEAGUE,,Bayer 04 Leverkusen,Borussia Mönchengladbach,3,1,H,Germany,Bundesliga,football-data.co.uk
+502533,2025-01-25,BL1,2024,REGULAR_SEASON,19.0,RB Leipzig,Bayer 04 Leverkusen,2,2,D,,BL1,existing_project_data
+league_a396b404a2925a96,2025-01-25,BUNDESLIGA,2024-25,LEAGUE,,RB Leipzig,Bayer 04 Leverkusen,2,2,D,Germany,Bundesliga,football-data.co.uk
+502550,2025-02-01,BL1,2024,REGULAR_SEASON,20.0,FC Bayern München,Holstein Kiel,4,3,H,,BL1,existing_project_data
+league_5ffce7bf3c3db165,2025-02-01,BUNDESLIGA,2024-25,LEAGUE,,FC Bayern München,Holstein Kiel,4,3,H,Germany,Bundesliga,football-data.co.uk
+502553,2025-02-08,BL1,2024,REGULAR_SEASON,21.0,Borussia Mönchengladbach,Eintracht Frankfurt,1,1,D,,BL1,existing_project_data
+league_c4abd9ffabd2562a,2025-02-08,BUNDESLIGA,2024-25,LEAGUE,,Borussia Mönchengladbach,Eintracht Frankfurt,1,1,D,Germany,Bundesliga,football-data.co.uk
+499185,2025-02-08,DED,2024,REGULAR_SEASON,22.0,Feyenoord Rotterdam,Sparta Rotterdam,3,0,H,,DED,existing_project_data
+league_f216e96548b43cc7,2025-02-08,EREDIVISIE,2024-25,LEAGUE,,Feyenoord Rotterdam,Sparta Rotterdam,3,0,H,Netherlands,Eredivisie,football-data.co.uk
+league_c1104579c917b183,2025-02-08,LA_LIGA,2024-25,LEAGUE,,Real Madrid CF,Club Atlético de Madrid,1,1,D,Spain,La Liga,football-data.co.uk
+498840,2025-02-08,PD,2024,REGULAR_SEASON,23.0,Real Madrid CF,Club Atlético de Madrid,1,1,D,,PD,existing_project_data
+499193,2025-02-14,DED,2024,REGULAR_SEASON,23.0,Go Ahead Eagles,Sparta Rotterdam,1,0,H,,DED,existing_project_data
+league_a92a5d3a59c391e3,2025-02-14,EREDIVISIE,2024-25,LEAGUE,,Go Ahead Eagles,Sparta Rotterdam,1,0,H,Netherlands,Eredivisie,football-data.co.uk
+502560,2025-02-15,BL1,2024,REGULAR_SEASON,22.0,Bayer 04 Leverkusen,FC Bayern München,0,0,D,,BL1,existing_project_data
+league_f71bf1a7efceddc9,2025-02-15,BUNDESLIGA,2024-25,LEAGUE,,Bayer 04 Leverkusen,FC Bayern München,0,0,D,Germany,Bundesliga,football-data.co.uk
+499194,2025-02-15,DED,2024,REGULAR_SEASON,23.0,NAC Breda,Feyenoord Rotterdam,0,0,D,,DED,existing_project_data
+league_6f8ac66de414d8da,2025-02-15,EREDIVISIE,2024-25,LEAGUE,,NAC Breda,Feyenoord Rotterdam,0,0,D,Netherlands,Eredivisie,football-data.co.uk
+502568,2025-02-16,BL1,2024,REGULAR_SEASON,22.0,Eintracht Frankfurt,Holstein Kiel,3,1,H,,BL1,existing_project_data
+league_ea6518095ae76760,2025-02-16,BUNDESLIGA,2024-25,LEAGUE,,Eintracht Frankfurt,Holstein Kiel,3,1,H,Germany,Bundesliga,football-data.co.uk
+502569,2025-02-22,BL1,2024,REGULAR_SEASON,23.0,Holstein Kiel,Bayer 04 Leverkusen,0,2,A,,BL1,existing_project_data
+league_418ea4d31357220a,2025-02-22,BUNDESLIGA,2024-25,LEAGUE,,Holstein Kiel,Bayer 04 Leverkusen,0,2,A,Germany,Bundesliga,football-data.co.uk
+502571,2025-02-23,BL1,2024,REGULAR_SEASON,23.0,FC Bayern München,Eintracht Frankfurt,4,0,H,,BL1,existing_project_data
+league_10eaaa3a9ce3d86a,2025-02-23,BUNDESLIGA,2024-25,LEAGUE,,FC Bayern München,Eintracht Frankfurt,4,0,H,Germany,Bundesliga,football-data.co.uk
+498157,2025-02-23,FL1,2024,REGULAR_SEASON,23.0,Olympique Lyonnais,Paris Saint-Germain FC,2,3,A,,FL1,existing_project_data
+league_a81ba7756f1452fc,2025-02-23,LIGUE_1,2024-25,LEAGUE,,Olympique Lyonnais,Paris Saint-Germain FC,2,3,A,France,Ligue 1,football-data.co.uk
+502578,2025-03-01,BL1,2024,REGULAR_SEASON,24.0,Eintracht Frankfurt,Bayer 04 Leverkusen,1,4,A,,BL1,existing_project_data
+league_048f73e29a60fe06,2025-03-01,BUNDESLIGA,2024-25,LEAGUE,,Eintracht Frankfurt,Bayer 04 Leverkusen,1,4,A,Germany,Bundesliga,football-data.co.uk
+503308,2025-03-02,SA,2024,REGULAR_SEASON,27.0,AC Milan,SS Lazio,1,2,A,,SA,existing_project_data
+league_96b0fe75e81d7a55,2025-03-02,SERIE_A,2024-25,LEAGUE,,AC Milan,SS Lazio,1,2,A,Italy,Serie A,football-data.co.uk
+499212,2025-03-07,DED,2024,REGULAR_SEASON,25.0,NAC Breda,Sparta Rotterdam,1,1,D,,DED,existing_project_data
+league_c7a9496dafd3794d,2025-03-07,EREDIVISIE,2024-25,LEAGUE,,NAC Breda,Sparta Rotterdam,1,1,D,Netherlands,Eredivisie,football-data.co.uk
+503800,2025-03-15,PPL,2024,REGULAR_SEASON,26.0,FC Porto,AVS,2,0,H,,PPL,existing_project_data
+league_9b873f0031209208,2025-03-15,PRIMEIRA_LIGA,2024-25,LEAGUE,,FC Porto,AVS,2,0,H,Portugal,Primeira Liga,football-data.co.uk
+502598,2025-03-15,BL1,2024,REGULAR_SEASON,26.0,RB Leipzig,Borussia Dortmund,2,0,H,,BL1,existing_project_data
+league_f586f696ab0f8fc9,2025-03-15,BUNDESLIGA,2024-25,LEAGUE,,RB Leipzig,Borussia Dortmund,2,0,H,Germany,Bundesliga,football-data.co.uk
+league_8667e67337b20fc6,2025-03-16,LA_LIGA,2024-25,LEAGUE,,Club Atlético de Madrid,FC Barcelona,2,4,A,Spain,La Liga,football-data.co.uk
+498883,2025-03-16,PD,2024,REGULAR_SEASON,28.0,Club Atlético de Madrid,FC Barcelona,2,4,A,,PD,existing_project_data
+498190,2025-03-29,FL1,2024,REGULAR_SEASON,27.0,AS Saint-Étienne,Paris Saint-Germain FC,1,6,A,,FL1,existing_project_data
+league_f6e2bd03d4b10e45,2025-03-29,LIGUE_1,2024-25,LEAGUE,,AS Saint-Étienne,Paris Saint-Germain FC,1,6,A,France,Ligue 1,football-data.co.uk
+502606,2025-03-29,BL1,2024,REGULAR_SEASON,27.0,Borussia Mönchengladbach,RB Leipzig,1,0,H,,BL1,existing_project_data
+league_41f6f399756586c4,2025-03-29,BUNDESLIGA,2024-25,LEAGUE,,Borussia Mönchengladbach,RB Leipzig,1,0,H,Germany,Bundesliga,football-data.co.uk
+499228,2025-03-30,DED,2024,REGULAR_SEASON,27.0,Feyenoord Rotterdam,Go Ahead Eagles,3,2,H,,DED,existing_project_data
+league_5051d4a72849a996,2025-03-30,EREDIVISIE,2024-25,LEAGUE,,Feyenoord Rotterdam,Go Ahead Eagles,3,2,H,Netherlands,Eredivisie,football-data.co.uk
+502624,2025-04-12,BL1,2024,REGULAR_SEASON,29.0,FC Bayern München,Borussia Dortmund,2,2,D,,BL1,existing_project_data
+league_3f7d2b2342967b63,2025-04-12,BUNDESLIGA,2024-25,LEAGUE,,FC Bayern München,Borussia Dortmund,2,2,D,Germany,Bundesliga,football-data.co.uk
+499248,2025-04-12,DED,2024,REGULAR_SEASON,29.0,NAC Breda,Go Ahead Eagles,1,1,D,,DED,existing_project_data
+league_0e7be5121b4fe7fc,2025-04-12,EREDIVISIE,2024-25,LEAGUE,,NAC Breda,Go Ahead Eagles,1,1,D,Netherlands,Eredivisie,football-data.co.uk
+503359,2025-04-13,SA,2024,REGULAR_SEASON,32.0,SS Lazio,AS Roma,1,1,D,,SA,existing_project_data
+league_869ca256b9b63747,2025-04-13,SERIE_A,2024-25,LEAGUE,,SS Lazio,AS Roma,1,1,D,Italy,Serie A,football-data.co.uk
+502640,2025-04-19,BL1,2024,REGULAR_SEASON,30.0,RB Leipzig,Holstein Kiel,1,1,D,,BL1,existing_project_data
+league_b83e6adbfe503359,2025-04-19,BUNDESLIGA,2024-25,LEAGUE,,RB Leipzig,Holstein Kiel,1,1,D,Germany,Bundesliga,football-data.co.uk
+498212,2025-04-20,FL1,2024,REGULAR_SEASON,30.0,AS Saint-Étienne,Olympique Lyonnais,2,1,H,,FL1,existing_project_data
+league_ceae38dba70619da,2025-04-20,LIGUE_1,2024-25,LEAGUE,,AS Saint-Étienne,Olympique Lyonnais,2,1,H,France,Ligue 1,football-data.co.uk
+502638,2025-04-20,BL1,2024,REGULAR_SEASON,30.0,Borussia Dortmund,Borussia Mönchengladbach,3,2,H,,BL1,existing_project_data
+league_e2f98cffa94aefcd,2025-04-20,BUNDESLIGA,2024-25,LEAGUE,,Borussia Dortmund,Borussia Mönchengladbach,3,2,H,Germany,Bundesliga,football-data.co.uk
+502641,2025-04-26,BL1,2024,REGULAR_SEASON,31.0,Eintracht Frankfurt,RB Leipzig,4,0,H,,BL1,existing_project_data
+league_98616917f01d0b12,2025-04-26,BUNDESLIGA,2024-25,LEAGUE,,Eintracht Frankfurt,RB Leipzig,4,0,H,Germany,Bundesliga,football-data.co.uk
+502646,2025-04-26,BL1,2024,REGULAR_SEASON,31.0,Holstein Kiel,Borussia Mönchengladbach,4,3,H,,BL1,existing_project_data
+league_c8211292cd6146ab,2025-04-26,BUNDESLIGA,2024-25,LEAGUE,,Holstein Kiel,Borussia Mönchengladbach,4,3,H,Germany,Bundesliga,football-data.co.uk
+502652,2025-05-03,BL1,2024,REGULAR_SEASON,32.0,RB Leipzig,FC Bayern München,3,3,D,,BL1,existing_project_data
+league_4e542f8bb549be87,2025-05-03,BUNDESLIGA,2024-25,LEAGUE,,RB Leipzig,FC Bayern München,3,3,D,Germany,Bundesliga,football-data.co.uk
+502666,2025-05-10,BL1,2024,REGULAR_SEASON,33.0,FC Bayern München,Borussia Mönchengladbach,2,0,H,,BL1,existing_project_data
+league_2967fd3f9b9387f2,2025-05-10,BUNDESLIGA,2024-25,LEAGUE,,FC Bayern München,Borussia Mönchengladbach,2,0,H,Germany,Bundesliga,football-data.co.uk
+502660,2025-05-11,BL1,2024,REGULAR_SEASON,33.0,Bayer 04 Leverkusen,Borussia Dortmund,2,4,A,,BL1,existing_project_data
+league_eb2f545692605761,2025-05-11,BUNDESLIGA,2024-25,LEAGUE,,Bayer 04 Leverkusen,Borussia Dortmund,2,4,A,Germany,Bundesliga,football-data.co.uk
+league_604aa2555667404c,2025-05-11,LA_LIGA,2024-25,LEAGUE,,FC Barcelona,Real Madrid CF,4,3,H,Spain,La Liga,football-data.co.uk
+498957,2025-05-11,PD,2024,REGULAR_SEASON,35.0,FC Barcelona,Real Madrid CF,4,3,H,,PD,existing_project_data
+502676,2025-05-17,BL1,2024,REGULAR_SEASON,34.0,Borussia Dortmund,Holstein Kiel,3,0,H,,BL1,existing_project_data
+league_9bd60a3fb4465b47,2025-05-17,BUNDESLIGA,2024-25,LEAGUE,,Borussia Dortmund,Holstein Kiel,3,0,H,Germany,Bundesliga,football-data.co.uk
+503412,2025-05-18,SA,2024,REGULAR_SEASON,37.0,AS Roma,AC Milan,3,1,H,,SA,existing_project_data
+league_49a58cfe599386ca,2025-05-18,SERIE_A,2024-25,LEAGUE,,AS Roma,AC Milan,3,1,H,Italy,Serie A,football-data.co.uk
+537443,2025-08-09,DED,2025,REGULAR_SEASON,1.0,Feyenoord Rotterdam,NAC Breda,2,0,H,,DED,existing_project_data
+league_69a0416e36d422e5,2025-08-09,EREDIVISIE,2025-26,LEAGUE,,Feyenoord Rotterdam,NAC Breda,2,0,H,Netherlands,Eredivisie,football-data.co.uk
+540406,2025-08-22,BL1,2025,REGULAR_SEASON,1.0,FC Bayern München,RB Leipzig,6,0,H,,BL1,existing_project_data
+league_e519830f6e3b0121,2025-08-22,BUNDESLIGA,2025-26,LEAGUE,,FC Bayern München,RB Leipzig,6,0,H,Germany,Bundesliga,football-data.co.uk
+537459,2025-08-23,DED,2025,REGULAR_SEASON,3.0,Go Ahead Eagles,Sparta Rotterdam,0,3,A,,DED,existing_project_data
+league_874228cfc75cd4f9,2025-08-23,EREDIVISIE,2025-26,LEAGUE,,Go Ahead Eagles,Sparta Rotterdam,0,3,A,Netherlands,Eredivisie,football-data.co.uk
+537475,2025-08-31,DED,2025,REGULAR_SEASON,4.0,Sparta Rotterdam,Feyenoord Rotterdam,0,4,A,,DED,existing_project_data
+league_faefed30074ea2ab,2025-08-31,EREDIVISIE,2025-26,LEAGUE,,Sparta Rotterdam,Feyenoord Rotterdam,0,4,A,Netherlands,Eredivisie,football-data.co.uk
+540425,2025-09-12,BL1,2025,REGULAR_SEASON,3.0,Bayer 04 Leverkusen,Eintracht Frankfurt,3,1,H,,BL1,existing_project_data
+league_99577dc09c8712d9,2025-09-12,BUNDESLIGA,2025-26,LEAGUE,,Bayer 04 Leverkusen,Eintracht Frankfurt,3,1,H,Germany,Bundesliga,football-data.co.uk
+540433,2025-09-21,BL1,2025,REGULAR_SEASON,4.0,Bayer 04 Leverkusen,Borussia Mönchengladbach,1,1,D,,BL1,existing_project_data
+league_5092c43e108da622,2025-09-21,BUNDESLIGA,2025-26,LEAGUE,,Bayer 04 Leverkusen,Borussia Mönchengladbach,1,1,D,Germany,Bundesliga,football-data.co.uk
+536850,2025-09-21,SA,2025,REGULAR_SEASON,4.0,SS Lazio,AS Roma,0,1,A,,SA,existing_project_data
+league_df777a737cb2040e,2025-09-21,SERIE_A,2025-26,LEAGUE,,SS Lazio,AS Roma,0,1,A,Italy,Serie A,football-data.co.uk
+540445,2025-09-27,BL1,2025,REGULAR_SEASON,5.0,Borussia Mönchengladbach,Eintracht Frankfurt,4,6,A,,BL1,existing_project_data
+league_c94e52cf599b43c9,2025-09-27,BUNDESLIGA,2025-26,LEAGUE,,Borussia Mönchengladbach,Eintracht Frankfurt,4,6,A,Germany,Bundesliga,football-data.co.uk
+league_471af319ab5b295e,2025-09-27,LA_LIGA,2025-26,LEAGUE,,Club Atlético de Madrid,Real Madrid CF,5,2,H,Spain,La Liga,football-data.co.uk
+544271,2025-09-27,PD,2025,REGULAR_SEASON,7.0,Club Atlético de Madrid,Real Madrid CF,5,2,H,,PD,existing_project_data
+540453,2025-10-04,BL1,2025,REGULAR_SEASON,6.0,Borussia Dortmund,RB Leipzig,1,1,D,,BL1,existing_project_data
+league_0b84eb3a991dae71,2025-10-04,BUNDESLIGA,2025-26,LEAGUE,,Borussia Dortmund,RB Leipzig,1,1,D,Germany,Bundesliga,football-data.co.uk
+540452,2025-10-04,BL1,2025,REGULAR_SEASON,6.0,Eintracht Frankfurt,FC Bayern München,0,3,A,,BL1,existing_project_data
+league_363bca64e435fee8,2025-10-04,BUNDESLIGA,2025-26,LEAGUE,,Eintracht Frankfurt,FC Bayern München,0,3,A,Germany,Bundesliga,football-data.co.uk
+540460,2025-10-18,BL1,2025,REGULAR_SEASON,7.0,FC Bayern München,Borussia Dortmund,2,1,H,,BL1,existing_project_data
+league_7682d7064602b2a5,2025-10-18,BUNDESLIGA,2025-26,LEAGUE,,FC Bayern München,Borussia Dortmund,2,1,H,Germany,Bundesliga,football-data.co.uk
+540474,2025-10-25,BL1,2025,REGULAR_SEASON,8.0,Borussia Mönchengladbach,FC Bayern München,0,3,A,,BL1,existing_project_data
+league_c6af18cc868fd429,2025-10-25,BUNDESLIGA,2025-26,LEAGUE,,Borussia Mönchengladbach,FC Bayern München,0,3,A,Germany,Bundesliga,football-data.co.uk
+league_d3398976df0117b7,2025-10-26,LA_LIGA,2025-26,LEAGUE,,Real Madrid CF,FC Barcelona,2,1,H,Spain,La Liga,football-data.co.uk
+544307,2025-10-26,PD,2025,REGULAR_SEASON,10.0,Real Madrid CF,FC Barcelona,2,1,H,,PD,existing_project_data
+542491,2025-10-29,FL1,2025,REGULAR_SEASON,10.0,Paris FC,Olympique Lyonnais,3,3,D,,FL1,existing_project_data
+league_35cecb878a560ecc,2025-10-29,LIGUE_1,2025-26,LEAGUE,,Paris FC,Olympique Lyonnais,3,3,D,France,Ligue 1,football-data.co.uk
+540478,2025-11-01,BL1,2025,REGULAR_SEASON,9.0,FC Bayern München,Bayer 04 Leverkusen,3,0,H,,BL1,existing_project_data
+league_3f90bada105da2f9,2025-11-01,BUNDESLIGA,2025-26,LEAGUE,,FC Bayern München,Bayer 04 Leverkusen,3,0,H,Germany,Bundesliga,football-data.co.uk
+537533,2025-11-01,DED,2025,REGULAR_SEASON,11.0,NAC Breda,Go Ahead Eagles,1,0,H,,DED,existing_project_data
+league_946821a7b5c4f4eb,2025-11-01,EREDIVISIE,2025-26,LEAGUE,,NAC Breda,Go Ahead Eagles,1,0,H,Netherlands,Eredivisie,football-data.co.uk
+536906,2025-11-02,SA,2025,REGULAR_SEASON,10.0,AC Milan,AS Roma,1,0,H,,SA,existing_project_data
+league_bd686f1c0de875f4,2025-11-02,SERIE_A,2025-26,LEAGUE,,AC Milan,AS Roma,1,0,H,Italy,Serie A,football-data.co.uk
+537548,2025-11-09,DED,2025,REGULAR_SEASON,12.0,Go Ahead Eagles,Feyenoord Rotterdam,2,1,H,,DED,existing_project_data
+league_74c572bb9e7b9f5c,2025-11-09,EREDIVISIE,2025-26,LEAGUE,,Go Ahead Eagles,Feyenoord Rotterdam,2,1,H,Netherlands,Eredivisie,football-data.co.uk
+542510,2025-11-09,FL1,2025,REGULAR_SEASON,12.0,Olympique Lyonnais,Paris Saint-Germain FC,2,3,A,,FL1,existing_project_data
+league_e36b46d243cebcb5,2025-11-09,LIGUE_1,2025-26,LEAGUE,,Olympique Lyonnais,Paris Saint-Germain FC,2,3,A,France,Ligue 1,football-data.co.uk
+540510,2025-11-28,BL1,2025,REGULAR_SEASON,12.0,Borussia Mönchengladbach,RB Leipzig,0,0,D,,BL1,existing_project_data
+league_3360219a051b1a75,2025-11-28,BUNDESLIGA,2025-26,LEAGUE,,Borussia Mönchengladbach,RB Leipzig,0,0,D,Germany,Bundesliga,football-data.co.uk
+536935,2025-11-29,SA,2025,REGULAR_SEASON,13.0,AC Milan,SS Lazio,1,0,H,,SA,existing_project_data
+league_9b215de91b52943e,2025-11-29,SERIE_A,2025-26,LEAGUE,,AC Milan,SS Lazio,1,0,H,Italy,Serie A,football-data.co.uk
+540506,2025-11-29,BL1,2025,REGULAR_SEASON,12.0,Bayer 04 Leverkusen,Borussia Dortmund,1,2,A,,BL1,existing_project_data
+league_239197f9541025fa,2025-11-29,BUNDESLIGA,2025-26,LEAGUE,,Bayer 04 Leverkusen,Borussia Dortmund,1,2,A,Germany,Bundesliga,football-data.co.uk
+league_914775bd3f69a817,2025-12-02,LA_LIGA,2025-26,LEAGUE,,FC Barcelona,Club Atlético de Madrid,3,1,H,Spain,La Liga,football-data.co.uk
+544395,2025-12-02,PD,2025,REGULAR_SEASON,19.0,FC Barcelona,Club Atlético de Madrid,3,1,H,,PD,existing_project_data
+540516,2025-12-06,BL1,2025,REGULAR_SEASON,13.0,RB Leipzig,Eintracht Frankfurt,6,0,H,,BL1,existing_project_data
+league_cc3141a4c0efe279,2025-12-06,BUNDESLIGA,2025-26,LEAGUE,,RB Leipzig,Eintracht Frankfurt,6,0,H,Germany,Bundesliga,football-data.co.uk
+537575,2025-12-07,DED,2025,REGULAR_SEASON,15.0,Sparta Rotterdam,NAC Breda,1,0,H,,DED,existing_project_data
+league_ff83183fa98ce515,2025-12-07,EREDIVISIE,2025-26,LEAGUE,,Sparta Rotterdam,NAC Breda,1,0,H,Netherlands,Eredivisie,football-data.co.uk
+540532,2025-12-19,BL1,2025,REGULAR_SEASON,15.0,Borussia Dortmund,Borussia Mönchengladbach,2,0,H,,BL1,existing_project_data
+league_147a6ae34ca898e6,2025-12-19,BUNDESLIGA,2025-26,LEAGUE,,Borussia Dortmund,Borussia Mönchengladbach,2,0,H,Germany,Bundesliga,football-data.co.uk
+540534,2025-12-20,BL1,2025,REGULAR_SEASON,15.0,RB Leipzig,Bayer 04 Leverkusen,1,3,A,,BL1,existing_project_data
+league_51374712241ba395,2025-12-20,BUNDESLIGA,2025-26,LEAGUE,,RB Leipzig,Bayer 04 Leverkusen,1,3,A,Germany,Bundesliga,football-data.co.uk
+545838,2025-12-29,PPL,2025,REGULAR_SEASON,16.0,FC Porto,AVS,2,0,H,,PPL,existing_project_data
+league_d612d91f2b386c2d,2025-12-29,PRIMEIRA_LIGA,2025-26,LEAGUE,,FC Porto,AVS,2,0,H,Portugal,Primeira Liga,football-data.co.uk
+542557,2026-01-04,FL1,2025,REGULAR_SEASON,17.0,Paris Saint-Germain FC,Paris FC,2,1,H,,FL1,existing_project_data
+league_e8aad0ad87f9c3a8,2026-01-04,LIGUE_1,2025-26,LEAGUE,,Paris Saint-Germain FC,Paris FC,2,1,H,France,Ligue 1,football-data.co.uk
+540543,2026-01-09,BL1,2025,REGULAR_SEASON,16.0,Eintracht Frankfurt,Borussia Dortmund,3,3,D,,BL1,existing_project_data
+league_2b73c0f402890e9b,2026-01-09,BUNDESLIGA,2025-26,LEAGUE,,Eintracht Frankfurt,Borussia Dortmund,3,3,D,Germany,Bundesliga,football-data.co.uk
+540559,2026-01-17,BL1,2025,REGULAR_SEASON,18.0,RB Leipzig,FC Bayern München,1,5,A,,BL1,existing_project_data
+league_ef5753308d889429,2026-01-17,BUNDESLIGA,2025-26,LEAGUE,,RB Leipzig,FC Bayern München,1,5,A,Germany,Bundesliga,football-data.co.uk
+537606,2026-01-18,DED,2025,REGULAR_SEASON,19.0,Feyenoord Rotterdam,Sparta Rotterdam,3,4,A,,DED,existing_project_data
+league_6c8a7a57fc7e0635,2026-01-18,EREDIVISIE,2025-26,LEAGUE,,Feyenoord Rotterdam,Sparta Rotterdam,3,4,A,Netherlands,Eredivisie,football-data.co.uk
+537026,2026-01-25,SA,2025,REGULAR_SEASON,22.0,AS Roma,AC Milan,1,1,D,,SA,existing_project_data
+league_29def7970d3364e6,2026-01-25,SERIE_A,2025-26,LEAGUE,,AS Roma,AC Milan,1,1,D,Italy,Serie A,football-data.co.uk
+540578,2026-01-31,BL1,2025,REGULAR_SEASON,20.0,Eintracht Frankfurt,Bayer 04 Leverkusen,1,3,A,,BL1,existing_project_data
+league_6ec3f709710a57e4,2026-01-31,BUNDESLIGA,2025-26,LEAGUE,,Eintracht Frankfurt,Bayer 04 Leverkusen,1,3,A,Germany,Bundesliga,football-data.co.uk
+540586,2026-02-07,BL1,2025,REGULAR_SEASON,21.0,Borussia Mönchengladbach,Bayer 04 Leverkusen,1,1,D,,BL1,existing_project_data
+league_c9d73da2b7b3deae,2026-02-07,BUNDESLIGA,2025-26,LEAGUE,,Borussia Mönchengladbach,Bayer 04 Leverkusen,1,1,D,Germany,Bundesliga,football-data.co.uk
+540598,2026-02-14,BL1,2025,REGULAR_SEASON,22.0,Eintracht Frankfurt,Borussia Mönchengladbach,3,0,H,,BL1,existing_project_data
+league_47cf4df144934a9d,2026-02-14,BUNDESLIGA,2025-26,LEAGUE,,Eintracht Frankfurt,Borussia Mönchengladbach,3,0,H,Germany,Bundesliga,football-data.co.uk
+537643,2026-02-15,DED,2025,REGULAR_SEASON,23.0,Feyenoord Rotterdam,Go Ahead Eagles,1,0,H,,DED,existing_project_data
+league_c7a8feee1f732484,2026-02-15,EREDIVISIE,2025-26,LEAGUE,,Feyenoord Rotterdam,Go Ahead Eagles,1,0,H,Netherlands,Eredivisie,football-data.co.uk
+540605,2026-02-21,BL1,2025,REGULAR_SEASON,23.0,FC Bayern München,Eintracht Frankfurt,3,2,H,,BL1,existing_project_data
+league_421fa7e9720ba138,2026-02-21,BUNDESLIGA,2025-26,LEAGUE,,FC Bayern München,Eintracht Frankfurt,3,2,H,Germany,Bundesliga,football-data.co.uk
+540606,2026-02-21,BL1,2025,REGULAR_SEASON,23.0,RB Leipzig,Borussia Dortmund,2,2,D,,BL1,existing_project_data
+league_3e1cad6f63abf3e1,2026-02-21,BUNDESLIGA,2025-26,LEAGUE,,RB Leipzig,Borussia Dortmund,2,2,D,Germany,Bundesliga,football-data.co.uk
+540613,2026-02-28,BL1,2025,REGULAR_SEASON,24.0,Borussia Dortmund,FC Bayern München,2,3,A,,BL1,existing_project_data
+league_f13963eeb393d078,2026-02-28,BUNDESLIGA,2025-26,LEAGUE,,Borussia Dortmund,FC Bayern München,2,3,A,Germany,Bundesliga,football-data.co.uk
+540627,2026-03-06,BL1,2025,REGULAR_SEASON,25.0,FC Bayern München,Borussia Mönchengladbach,4,1,H,,BL1,existing_project_data
+league_2ae626ea12bef73b,2026-03-06,BUNDESLIGA,2025-26,LEAGUE,,FC Bayern München,Borussia Mönchengladbach,4,1,H,Germany,Bundesliga,football-data.co.uk
+537671,2026-03-08,DED,2025,REGULAR_SEASON,26.0,NAC Breda,Feyenoord Rotterdam,3,3,D,,DED,existing_project_data
+league_ecc8ecafd3019afb,2026-03-08,EREDIVISIE,2025-26,LEAGUE,,NAC Breda,Feyenoord Rotterdam,3,3,D,Netherlands,Eredivisie,football-data.co.uk
+542626,2026-03-08,FL1,2025,REGULAR_SEASON,25.0,Olympique Lyonnais,Paris FC,1,1,D,,FL1,existing_project_data
+league_6431a0c7dd476641,2026-03-08,LIGUE_1,2025-26,LEAGUE,,Olympique Lyonnais,Paris FC,1,1,D,France,Ligue 1,football-data.co.uk
+540631,2026-03-14,BL1,2025,REGULAR_SEASON,26.0,Bayer 04 Leverkusen,FC Bayern München,1,1,D,,BL1,existing_project_data
+league_00c1cd4e5f3ff6a1,2026-03-14,BUNDESLIGA,2025-26,LEAGUE,,Bayer 04 Leverkusen,FC Bayern München,1,1,D,Germany,Bundesliga,football-data.co.uk
+537679,2026-03-15,DED,2025,REGULAR_SEASON,27.0,Go Ahead Eagles,NAC Breda,6,0,H,,DED,existing_project_data
+league_0b459792b4fad737,2026-03-15,EREDIVISIE,2025-26,LEAGUE,,Go Ahead Eagles,NAC Breda,6,0,H,Netherlands,Eredivisie,football-data.co.uk
+537099,2026-03-15,SA,2025,REGULAR_SEASON,29.0,SS Lazio,AC Milan,1,0,H,,SA,existing_project_data
+league_b5a8f58d1bc0c16f,2026-03-15,SERIE_A,2025-26,LEAGUE,,SS Lazio,AC Milan,1,0,H,Italy,Serie A,football-data.co.uk
+league_9ea365ffa3e45768,2026-03-22,LA_LIGA,2025-26,LEAGUE,,Real Madrid CF,Club Atlético de Madrid,3,2,H,Spain,La Liga,football-data.co.uk
+544498,2026-03-22,PD,2025,REGULAR_SEASON,29.0,Real Madrid CF,Club Atlético de Madrid,3,2,H,,PD,existing_project_data
+league_a64df37295b10980,2026-04-04,LA_LIGA,2025-26,LEAGUE,,Club Atlético de Madrid,FC Barcelona,1,2,A,Spain,La Liga,football-data.co.uk
+544502,2026-04-04,PD,2025,REGULAR_SEASON,30.0,Club Atlético de Madrid,FC Barcelona,1,2,A,,PD,existing_project_data
+537698,2026-04-05,DED,2025,REGULAR_SEASON,29.0,NAC Breda,Sparta Rotterdam,0,0,D,,DED,existing_project_data
+league_0f9028a377decb68,2026-04-05,EREDIVISIE,2025-26,LEAGUE,,NAC Breda,Sparta Rotterdam,0,0,D,Netherlands,Eredivisie,football-data.co.uk
+540659,2026-04-11,BL1,2025,REGULAR_SEASON,29.0,Borussia Dortmund,Bayer 04 Leverkusen,0,1,A,,BL1,existing_project_data
+league_ceb5074929c3704c,2026-04-11,BUNDESLIGA,2025-26,LEAGUE,,Borussia Dortmund,Bayer 04 Leverkusen,0,1,A,Germany,Bundesliga,football-data.co.uk
+540663,2026-04-11,BL1,2025,REGULAR_SEASON,29.0,RB Leipzig,Borussia Mönchengladbach,1,0,H,,BL1,existing_project_data
+league_0f1e4990992beea0,2026-04-11,BUNDESLIGA,2025-26,LEAGUE,,RB Leipzig,Borussia Mönchengladbach,1,0,H,Germany,Bundesliga,football-data.co.uk
+540669,2026-04-18,BL1,2025,REGULAR_SEASON,30.0,Eintracht Frankfurt,RB Leipzig,1,3,A,,BL1,existing_project_data
+league_5bcd8700fb2e1b07,2026-04-18,BUNDESLIGA,2025-26,LEAGUE,,Eintracht Frankfurt,RB Leipzig,1,3,A,Germany,Bundesliga,football-data.co.uk
+542672,2026-04-19,FL1,2025,REGULAR_SEASON,30.0,Paris Saint-Germain FC,Olympique Lyonnais,1,2,A,,FL1,existing_project_data
+league_87e758468831a966,2026-04-19,LIGUE_1,2025-26,LEAGUE,,Paris Saint-Germain FC,Olympique Lyonnais,1,2,A,France,Ligue 1,football-data.co.uk
+540687,2026-05-02,BL1,2025,REGULAR_SEASON,32.0,Bayer 04 Leverkusen,RB Leipzig,4,1,H,,BL1,existing_project_data
+league_69703243f42c5185,2026-05-02,BUNDESLIGA,2025-26,LEAGUE,,Bayer 04 Leverkusen,RB Leipzig,4,1,H,Germany,Bundesliga,football-data.co.uk
+540685,2026-05-03,BL1,2025,REGULAR_SEASON,32.0,Borussia Mönchengladbach,Borussia Dortmund,1,0,H,,BL1,existing_project_data
+league_a66ec2cc84684cf8,2026-05-03,BUNDESLIGA,2025-26,LEAGUE,,Borussia Mönchengladbach,Borussia Dortmund,1,0,H,Germany,Bundesliga,football-data.co.uk
+537728,2026-05-03,DED,2025,REGULAR_SEASON,32.0,Sparta Rotterdam,Go Ahead Eagles,2,2,D,,DED,existing_project_data
+league_f8dab7136af5a32e,2026-05-03,EREDIVISIE,2025-26,LEAGUE,,Sparta Rotterdam,Go Ahead Eagles,2,2,D,Netherlands,Eredivisie,football-data.co.uk
+540696,2026-05-08,BL1,2025,REGULAR_SEASON,33.0,Borussia Dortmund,Eintracht Frankfurt,3,2,H,,BL1,existing_project_data
+league_6dad00a1e72032b6,2026-05-08,BUNDESLIGA,2025-26,LEAGUE,,Borussia Dortmund,Eintracht Frankfurt,3,2,H,Germany,Bundesliga,football-data.co.uk
+545991,2026-05-10,PPL,2025,REGULAR_SEASON,33.0,AVS,FC Porto,3,1,H,,PPL,existing_project_data
+league_b9c92296cdfb838a,2026-05-10,PRIMEIRA_LIGA,2025-26,LEAGUE,,AVS,FC Porto,3,1,H,Portugal,Primeira Liga,football-data.co.uk
+league_b3d1b2448263fe5c,2026-05-10,LA_LIGA,2025-26,LEAGUE,,FC Barcelona,Real Madrid CF,2,0,H,Spain,La Liga,football-data.co.uk
+544553,2026-05-10,PD,2025,REGULAR_SEASON,35.0,FC Barcelona,Real Madrid CF,2,0,H,,PD,existing_project_data
+537175,2026-05-17,SA,2025,REGULAR_SEASON,37.0,AS Roma,SS Lazio,2,0,H,,SA,existing_project_data
+league_834746f2f5bf86dd,2026-05-17,SERIE_A,2025-26,LEAGUE,,AS Roma,SS Lazio,2,0,H,Italy,Serie A,football-data.co.uk
+542705,2026-05-17,FL1,2025,REGULAR_SEASON,34.0,Paris FC,Paris Saint-Germain FC,2,1,H,,FL1,existing_project_data
+league_74cb6f03df8acfdd,2026-05-17,LIGUE_1,2025-26,LEAGUE,,Paris FC,Paris Saint-Germain FC,2,1,H,France,Ligue 1,football-data.co.uk
