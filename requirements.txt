@@ -7,5 +7,5 @@ requests
 python-dotenv
 scikit-learn
 joblib
-pytest
 tomli
+rapidfuzz
