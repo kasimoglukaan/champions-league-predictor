@@ -8,16 +8,30 @@ class ValueBet:
     market_name: str
     selection: str
 
+    bookmaker_key: str
     bookmaker: str
     decimal_odds: float
 
     model_probability: float
-    implied_probability: float
+
+    raw_implied_probability: float
+    fair_market_probability: float
+    bookmaker_margin: float
 
     edge: float
     expected_value: float
 
     point: Optional[float] = None
+
+    @property
+    def implied_probability(self) -> float:
+        """
+        Backward-compatible alias used by the UI.
+
+        The value returned here is the bookmaker-margin-adjusted
+        market probability rather than the raw 1 / odds value.
+        """
+        return self.fair_market_probability
 
     @property
     def edge_percent(self) -> float:
@@ -28,11 +42,22 @@ class ValueBet:
         return self.expected_value * 100.0
 
     @property
+    def bookmaker_margin_percent(self) -> float:
+        return self.bookmaker_margin * 100.0
+
+    @property
     def fair_odds(self) -> float:
         if self.model_probability <= 0:
             return 0.0
 
         return 1.0 / self.model_probability
+
+    @property
+    def market_fair_odds(self) -> float:
+        if self.fair_market_probability <= 0:
+            return 0.0
+
+        return 1.0 / self.fair_market_probability
 
     @property
     def confidence_label(self) -> str:
@@ -71,6 +96,4 @@ class ValueBetReport:
 
     @property
     def has_value_bet(self) -> bool:
-        return bool(
-            self.opportunities
-        )
+        return bool(self.opportunities)

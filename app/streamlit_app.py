@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+import html
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -22,15 +25,16 @@ from src.models.bookmaker_odds import (
     MatchOdds,
     OddsEvent,
 )
-from src.services.betting_insight_service import (
-    BettingInsightService,
-)
 from src.services.ml_prediction_service import (
     MLPredictionService,
 )
 from src.services.odds_api_service import (
     OddsAPIError,
     OddsAPIService,
+)
+from src.services.team_matching_service import (
+    TeamMatchResult,
+    TeamMatchingService,
 )
 from src.services.value_bet_service import (
     ValueBetService,
@@ -51,6 +55,543 @@ MODEL_PATH = (
 )
 
 
+PAGE_CSS = """
+<style>
+    :root {
+        --background: #07110e;
+        --surface: #0d1c17;
+        --surface-light: #12251e;
+        --border: rgba(255, 255, 255, 0.08);
+        --primary: #38df8f;
+        --primary-light: #71efb2;
+        --text: #f5f7f6;
+        --muted: #91a69e;
+        --danger: #f47c7c;
+        --warning: #f6d365;
+    }
+
+    [data-testid="stAppViewContainer"] {
+        background:
+            radial-gradient(
+                circle at 15% 0%,
+                rgba(31, 125, 88, 0.14),
+                transparent 34%
+            ),
+            radial-gradient(
+                circle at 90% 10%,
+                rgba(16, 79, 56, 0.12),
+                transparent 28%
+            ),
+            var(--background);
+        color: var(--text);
+    }
+
+    [data-testid="stHeader"] {
+        background: rgba(7, 17, 14, 0.88);
+        backdrop-filter: blur(12px);
+    }
+
+    [data-testid="stSidebar"] {
+        background: #081711;
+        border-right: 1px solid var(--border);
+    }
+
+    [data-testid="stSidebar"] > div:first-child {
+        padding-top: 1.2rem;
+    }
+
+    .block-container {
+        max-width: 1380px;
+        padding-top: 1.8rem;
+        padding-bottom: 4rem;
+    }
+
+    .brand {
+        margin-bottom: 2rem;
+    }
+
+    .brand-name {
+        color: #ffffff;
+        font-size: 1.55rem;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+    }
+
+    .brand-accent {
+        color: var(--primary);
+    }
+
+    .brand-subtitle {
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.45;
+        margin-top: 0.3rem;
+    }
+
+    .sidebar-section {
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 800;
+        margin-top: 0.7rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .match-hero {
+        background:
+            linear-gradient(
+                120deg,
+                rgba(16, 70, 51, 0.98),
+                rgba(10, 37, 29, 0.98)
+            );
+        border: 1px solid rgba(56, 223, 143, 0.22);
+        border-radius: 22px;
+        padding: 27px 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 22px 55px rgba(0, 0, 0, 0.25);
+    }
+
+    .competition-row {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 14px;
+    }
+
+    .competition-name {
+        color: var(--primary);
+        font-size: 0.76rem;
+        font-weight: 850;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+    }
+
+    .upcoming-pill {
+        color: var(--primary-light);
+        background: rgba(56, 223, 143, 0.10);
+        border: 1px solid rgba(56, 223, 143, 0.27);
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 0.68rem;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .match-title {
+        color: #ffffff;
+        font-size: clamp(1.8rem, 3vw, 2.65rem);
+        font-weight: 900;
+        letter-spacing: -0.045em;
+        line-height: 1.1;
+    }
+
+    .versus {
+        color: #7f968d;
+        font-weight: 600;
+        padding: 0 8px;
+    }
+
+    .match-meta {
+        color: #afc0ba;
+        font-size: 0.87rem;
+        margin-top: 13px;
+    }
+
+    .empty-state {
+        background: rgba(13, 28, 23, 0.96);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 38px 30px;
+        text-align: center;
+        margin-top: 16px;
+    }
+
+    .empty-icon {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .empty-title {
+        color: #ffffff;
+        font-size: 1.25rem;
+        font-weight: 850;
+    }
+
+    .empty-text {
+        color: var(--muted);
+        font-size: 0.88rem;
+        margin-top: 7px;
+    }
+
+    .section-title {
+        color: #ffffff;
+        font-size: 1.22rem;
+        font-weight: 850;
+        letter-spacing: -0.02em;
+        margin-top: 10px;
+        margin-bottom: 14px;
+    }
+
+    .section-kicker {
+        color: var(--muted);
+        font-size: 0.7rem;
+        font-weight: 850;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        margin-top: 22px;
+        margin-bottom: 9px;
+    }
+
+    .section-description {
+        color: #8ea39b;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        margin-top: -4px;
+        margin-bottom: 15px;
+    }
+
+    .best-bet-card {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(25, 100, 72, 0.98),
+                rgba(13, 52, 38, 0.98)
+            );
+        border: 1px solid rgba(56, 223, 143, 0.28);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.23);
+    }
+
+    .card-label {
+        color: #9bb0a8;
+        font-size: 0.69rem;
+        font-weight: 850;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+    }
+
+    .bet-selection {
+        color: #ffffff;
+        font-size: 1.75rem;
+        font-weight: 900;
+        letter-spacing: -0.035em;
+        margin-top: 9px;
+        line-height: 1.12;
+    }
+
+    .bet-market {
+        color: #b7c8c1;
+        font-size: 0.82rem;
+        margin-top: 6px;
+    }
+
+    .value-explanation {
+        background: rgba(3, 27, 18, 0.24);
+        border-left: 3px solid var(--primary);
+        color: #b7cac2;
+        font-size: 0.79rem;
+        line-height: 1.45;
+        padding: 10px 12px;
+        border-radius: 0 10px 10px 0;
+        margin-top: 14px;
+    }
+
+    .odds-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 18px;
+        margin-bottom: 21px;
+    }
+
+    .odds-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 72px;
+        background: var(--primary);
+        color: #052116;
+        font-size: 1.3rem;
+        font-weight: 950;
+        padding: 8px 15px;
+        border-radius: 11px;
+    }
+
+    .confidence-badge {
+        display: inline-flex;
+        padding: 6px 11px;
+        border-radius: 999px;
+        font-size: 0.68rem;
+        font-weight: 850;
+        letter-spacing: 0.07em;
+    }
+
+    .confidence-strong {
+        color: #7af2b7;
+        background: rgba(56, 223, 143, 0.11);
+        border: 1px solid rgba(56, 223, 143, 0.28);
+    }
+
+    .confidence-moderate {
+        color: #f6dc77;
+        background: rgba(246, 211, 101, 0.10);
+        border: 1px solid rgba(246, 211, 101, 0.23);
+    }
+
+    .confidence-small {
+        color: #9dc7ff;
+        background: rgba(99, 164, 255, 0.10);
+        border: 1px solid rgba(99, 164, 255, 0.23);
+    }
+
+    .bet-stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .bet-stat {
+        background: rgba(4, 28, 19, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 13px;
+        padding: 12px;
+    }
+
+    .bet-stat-value {
+        color: #ffffff;
+        font-size: 1.15rem;
+        font-weight: 850;
+        margin-top: 4px;
+    }
+
+    .positive {
+        color: var(--primary-light);
+    }
+
+    .bookmaker-note {
+        color: #aac0b7;
+        font-size: 0.79rem;
+        margin-top: 16px;
+    }
+
+    .no-value-card {
+        background: rgba(63, 28, 27, 0.34);
+        border: 1px solid rgba(244, 124, 124, 0.18);
+        border-radius: 20px;
+        padding: 25px;
+    }
+
+    .no-value-title {
+        color: #ffd0d0;
+        font-size: 1.25rem;
+        font-weight: 850;
+    }
+
+    .no-value-text {
+        color: #d9aaaa;
+        font-size: 0.84rem;
+        margin-top: 8px;
+    }
+
+    .probability-card {
+        background: rgba(13, 28, 23, 0.97);
+        border: 1px solid var(--border);
+        border-radius: 17px;
+        padding: 20px;
+        min-height: 130px;
+    }
+
+    .probability-value {
+        color: #ffffff;
+        font-size: 1.72rem;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        margin-top: 7px;
+    }
+
+    .probability-team {
+        color: #a5b7b0;
+        font-size: 0.82rem;
+        margin-top: 5px;
+    }
+
+    .alternative-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+        background: rgba(13, 28, 23, 0.75);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin-bottom: 9px;
+    }
+
+    .alternative-selection {
+        color: #ffffff;
+        font-weight: 800;
+    }
+
+    .alternative-meta {
+        color: var(--muted);
+        font-size: 0.76rem;
+        margin-top: 3px;
+    }
+
+    .alternative-odds {
+        color: #ffffff;
+        font-size: 1.08rem;
+        font-weight: 900;
+        text-align: right;
+    }
+
+    .alternative-edge {
+        color: var(--primary-light);
+        font-size: 0.76rem;
+        font-weight: 800;
+        text-align: right;
+        margin-top: 2px;
+    }
+
+    .matching-alert {
+        background: rgba(74, 35, 31, 0.50);
+        border: 1px solid rgba(244, 124, 124, 0.22);
+        border-radius: 18px;
+        padding: 22px;
+        margin-top: 15px;
+        margin-bottom: 18px;
+    }
+
+    .matching-alert-title {
+        color: #ffd1d1;
+        font-size: 1.15rem;
+        font-weight: 850;
+    }
+
+    .matching-alert-text {
+        color: #d5aaaa;
+        font-size: 0.84rem;
+        line-height: 1.5;
+        margin-top: 8px;
+    }
+
+    .matching-success {
+        color: var(--primary-light);
+        font-weight: 800;
+    }
+
+    .matching-rejected {
+        color: #ff9b9b;
+        font-weight: 800;
+    }
+
+    div[data-testid="stMetric"] {
+        background: rgba(13, 28, 23, 0.97);
+        border: 1px solid var(--border);
+        padding: 17px;
+        border-radius: 16px;
+    }
+
+    div[data-testid="stMetricLabel"] {
+        color: var(--muted);
+    }
+
+    div[data-testid="stMetricValue"] {
+        color: #ffffff;
+        font-weight: 850;
+    }
+
+    div[data-baseweb="select"] > div {
+        background: #10231c;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 12px;
+    }
+
+    .stButton > button {
+        background:
+            linear-gradient(
+                135deg,
+                #40e597,
+                #29c878
+            );
+        color: #052116;
+        border: none;
+        border-radius: 12px;
+        font-weight: 900;
+        min-height: 47px;
+        box-shadow:
+            0 11px 26px
+            rgba(35, 201, 117, 0.17);
+    }
+
+    .stButton > button:hover {
+        background:
+            linear-gradient(
+                135deg,
+                #6aefad,
+                #39d98a
+            );
+        color: #041c12;
+    }
+
+    [data-testid="stDataFrame"] {
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    button[data-baseweb="tab"] {
+        color: #8da199;
+        font-weight: 750;
+    }
+
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: var(--primary);
+    }
+
+    hr {
+        border-color: var(--border);
+    }
+
+    .sidebar-note {
+        color: #70867d;
+        font-size: 0.72rem;
+        line-height: 1.5;
+        text-align: center;
+        margin-top: 24px;
+    }
+
+    .footer-note {
+        color: #70857d;
+        font-size: 0.74rem;
+        line-height: 1.5;
+        text-align: center;
+        margin-top: 32px;
+    }
+
+    #MainMenu {
+        visibility: hidden;
+    }
+
+    footer {
+        visibility: hidden;
+    }
+
+    @media (max-width: 800px) {
+        .bet-stat-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .match-title {
+            font-size: 1.75rem;
+        }
+    }
+</style>
+"""
+
+
 @st.cache_resource
 def load_prediction_service(
 ) -> MLPredictionService:
@@ -65,29 +606,34 @@ def load_prediction_service(
 
 
 @st.cache_resource
-def load_betting_insight_service(
-) -> BettingInsightService:
-    return BettingInsightService(
-        strong_threshold=0.72,
-        moderate_threshold=0.62,
-    )
-
-
-@st.cache_resource
-def load_value_bet_service(
+def load_value_service(
 ) -> ValueBetService:
     return ValueBetService(
         minimum_model_probability=0.45,
         minimum_edge=0.03,
         minimum_expected_value=0.03,
         maximum_decimal_odds=8.00,
+        maximum_bookmaker_margin=0.15,
     )
 
 
-def get_api_key() -> Optional[str]:
+@st.cache_resource
+def load_team_matching_service(
+) -> TeamMatchingService:
+    return TeamMatchingService(
+        minimum_score=0.84,
+        minimum_margin=0.12,
+        candidate_limit=5,
+    )
+
+
+def get_api_key(
+) -> Optional[str]:
     try:
         api_key = str(
-            st.secrets["ODDS_API_KEY"]
+            st.secrets[
+                "ODDS_API_KEY"
+            ]
         ).strip()
 
     except (
@@ -96,10 +642,7 @@ def get_api_key() -> Optional[str]:
     ):
         return None
 
-    if not api_key:
-        return None
-
-    return api_key
+    return api_key or None
 
 
 @st.cache_data(
@@ -108,14 +651,15 @@ def get_api_key() -> Optional[str]:
 )
 def get_active_leagues(
     api_key: str,
-) -> dict:
+) -> dict[str, str]:
     service = OddsAPIService(
         api_key=api_key,
         region="eu",
     )
 
     return (
-        service.get_active_soccer_leagues()
+        service
+        .get_active_soccer_leagues()
     )
 
 
@@ -126,7 +670,7 @@ def get_active_leagues(
 def get_league_events(
     api_key: str,
     sport_key: str,
-) -> list:
+) -> list[OddsEvent]:
     service = OddsAPIService(
         api_key=api_key,
         region="eu",
@@ -169,27 +713,12 @@ def get_live_event_odds(
     )
 
 
-def find_model_team(
-    api_team_name: str,
-    model_teams: list,
-) -> tuple:
-    best_team = None
-    best_score = 0.0
-
-    for model_team in model_teams:
-        score = (
-            OddsAPIService
-            ._team_similarity(
-                api_team_name,
-                model_team,
-            )
-        )
-
-        if score > best_score:
-            best_score = score
-            best_team = model_team
-
-    return best_team, best_score
+def safe_text(
+    value: object,
+) -> str:
+    return html.escape(
+        str(value)
+    )
 
 
 def format_event_time(
@@ -200,8 +729,7 @@ def format_event_time(
 
     try:
         parsed_time = (
-            datetime
-            .fromisoformat(
+            datetime.fromisoformat(
                 commence_time.replace(
                     "Z",
                     "+00:00",
@@ -210,28 +738,785 @@ def format_event_time(
         )
 
         return parsed_time.strftime(
-            "%d %b %Y, %H:%M UTC"
+            "%d %B %Y · %H:%M UTC"
         )
 
     except ValueError:
         return commence_time
 
 
-def create_match_result_table(
+def confidence_class(
+    confidence_label: str,
+) -> str:
+    normalized = (
+        confidence_label.upper()
+    )
+
+    if normalized == "STRONG":
+        return "confidence-strong"
+
+    if normalized == "MODERATE":
+        return "confidence-moderate"
+
+    return "confidence-small"
+
+
+def render_brand(
+) -> None:
+    st.sidebar.markdown(
+        (
+            '<div class="brand">'
+            '<div class="brand-name">'
+            'Edge'
+            '<span class="brand-accent">'
+            'XI'
+            '</span>'
+            '</div>'
+            '<div class="brand-subtitle">'
+            'Football analytics and '
+            'market intelligence'
+            '</div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def render_match_hero(
+    event: OddsEvent,
+    league_name: str,
+) -> None:
+    home_team = safe_text(
+        event.home_team
+    )
+
+    away_team = safe_text(
+        event.away_team
+    )
+
+    competition = safe_text(
+        league_name
+    )
+
+    kick_off = safe_text(
+        format_event_time(
+            event.commence_time
+        )
+    )
+
+    markup = (
+        '<div class="match-hero">'
+        '<div class="competition-row">'
+        '<div class="competition-name">'
+        f'{competition}'
+        '</div>'
+        '<div class="upcoming-pill">'
+        'Upcoming'
+        '</div>'
+        '</div>'
+        '<div class="match-title">'
+        f'{home_team}'
+        '<span class="versus">'
+        'vs'
+        '</span>'
+        f'{away_team}'
+        '</div>'
+        '<div class="match-meta">'
+        f'Kick-off: {kick_off}'
+        ' &nbsp;·&nbsp; '
+        'Live bookmaker market comparison'
+        '</div>'
+        '</div>'
+    )
+
+    st.markdown(
+        markup,
+        unsafe_allow_html=True,
+    )
+
+
+def render_empty_state(
+) -> None:
+    st.markdown(
+        (
+            '<div class="empty-state">'
+            '<div class="empty-icon">'
+            '📊'
+            '</div>'
+            '<div class="empty-title">'
+            'Match analysis is ready'
+            '</div>'
+            '<div class="empty-text">'
+            'Select a fixture and press '
+            'Run Match Analysis to view '
+            'model probabilities, live odds '
+            'and value selections.'
+            '</div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def render_best_bet(
+    report,
+) -> None:
+    if (
+        not report.has_value_bet
+        or report.best_opportunity
+        is None
+    ):
+        st.markdown(
+            (
+                '<div class="no-value-card">'
+                '<div class="no-value-title">'
+                'No qualifying live-odds '
+                'value selection'
+                '</div>'
+                '<div class="no-value-text">'
+                'The available bookmaker prices '
+                'do not currently pass the model '
+                'probability, edge and expected-value '
+                'requirements. Avoid forcing a selection.'
+                '</div>'
+                '</div>'
+            ),
+            unsafe_allow_html=True,
+        )
+
+        return
+
+    bet = report.best_opportunity
+
+    selection = safe_text(
+        bet.selection
+    )
+
+    market = safe_text(
+        bet.market_name
+    )
+
+    bookmaker = safe_text(
+        bet.bookmaker
+    )
+
+    confidence = safe_text(
+        bet.confidence_label
+    )
+
+    badge_class = confidence_class(
+        bet.confidence_label
+    )
+
+    markup = (
+        '<div class="best-bet-card">'
+        '<div class="card-label">'
+        'Live odds value pick'
+        '</div>'
+        '<div class="bet-selection">'
+        f'{selection}'
+        '</div>'
+        '<div class="bet-market">'
+        f'{market}'
+        '</div>'
+        '<div class="value-explanation">'
+        'This selection combines the model '
+        'probability with current bookmaker '
+        'odds. It is not the model prediction '
+        'alone.'
+        '</div>'
+        '<div class="odds-row">'
+        '<div class="odds-badge">'
+        f'{bet.decimal_odds:.2f}'
+        '</div>'
+        '<div class="confidence-badge '
+        f'{badge_class}">'
+        f'{confidence}'
+        '</div>'
+        '</div>'
+        '<div class="bet-stat-grid">'
+        '<div class="bet-stat">'
+        '<div class="card-label">'
+        'Model probability'
+        '</div>'
+        '<div class="bet-stat-value">'
+        f'{bet.model_probability:.1%}'
+        '</div>'
+        '</div>'
+        '<div class="bet-stat">'
+        '<div class="card-label">'
+        'Model edge'
+        '</div>'
+        '<div class="bet-stat-value positive">'
+        f'{bet.edge:+.1%}'
+        '</div>'
+        '</div>'
+        '<div class="bet-stat">'
+        '<div class="card-label">'
+        'Expected value'
+        '</div>'
+        '<div class="bet-stat-value positive">'
+        f'{bet.expected_value:+.1%}'
+        '</div>'
+        '</div>'
+        '</div>'
+        '<div class="bookmaker-note">'
+        'Best available price: '
+        f'<strong>{bookmaker}</strong>'
+        '</div>'
+        '</div>'
+    )
+
+    st.markdown(
+        markup,
+        unsafe_allow_html=True,
+    )
+
+
+def render_probability_cards(
     prediction,
+    event: OddsEvent,
+) -> None:
+    cards = [
+        (
+            "Home win",
+            event.home_team,
+            prediction
+            .poisson_home_probability,
+        ),
+        (
+            "Draw",
+            "Match draw",
+            prediction
+            .poisson_draw_probability,
+        ),
+        (
+            "Away win",
+            event.away_team,
+            prediction
+            .poisson_away_probability,
+        ),
+    ]
+
+    columns = st.columns(3)
+
+    for (
+        column,
+        (
+            label,
+            team,
+            probability,
+        ),
+    ) in zip(
+        columns,
+        cards,
+    ):
+        with column:
+            st.markdown(
+                (
+                    '<div class="probability-card">'
+                    '<div class="card-label">'
+                    f'{safe_text(label)}'
+                    '</div>'
+                    '<div class="probability-value">'
+                    f'{probability:.1%}'
+                    '</div>'
+                    '<div class="probability-team">'
+                    f'{safe_text(team)}'
+                    '</div>'
+                    '</div>'
+                ),
+                unsafe_allow_html=True,
+            )
+
+
+def render_alternatives(
+    report,
+) -> None:
+    alternatives = (
+        report.opportunities[1:5]
+    )
+
+    if not alternatives:
+        st.info(
+            "No additional live-odds value "
+            "selections passed the filters."
+        )
+
+        return
+
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'Alternative live-odds value picks'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    for bet in alternatives:
+        st.markdown(
+            (
+                '<div class="alternative-row">'
+                '<div>'
+                '<div class="alternative-selection">'
+                f'{safe_text(bet.selection)}'
+                '</div>'
+                '<div class="alternative-meta">'
+                f'{safe_text(bet.market_name)}'
+                ' · '
+                f'{safe_text(bet.bookmaker)}'
+                '</div>'
+                '</div>'
+                '<div>'
+                '<div class="alternative-odds">'
+                f'{bet.decimal_odds:.2f}'
+                '</div>'
+                '<div class="alternative-edge">'
+                f'Edge {bet.edge:+.1%}'
+                '</div>'
+                '</div>'
+                '</div>'
+            ),
+            unsafe_allow_html=True,
+        )
+
+
+def create_market_dataframe(
+    prediction,
+    event: OddsEvent,
 ) -> pd.DataFrame:
     return pd.DataFrame(
+        [
+            {
+                "Market": "Match result",
+                "Selection": event.home_team,
+                "Probability": (
+                    prediction
+                    .poisson_home_probability
+                ),
+            },
+            {
+                "Market": "Match result",
+                "Selection": "Draw",
+                "Probability": (
+                    prediction
+                    .poisson_draw_probability
+                ),
+            },
+            {
+                "Market": "Match result",
+                "Selection": event.away_team,
+                "Probability": (
+                    prediction
+                    .poisson_away_probability
+                ),
+            },
+            {
+                "Market": (
+                    "Both teams to score"
+                ),
+                "Selection": "Yes",
+                "Probability": (
+                    prediction
+                    .btts_yes_probability
+                ),
+            },
+            {
+                "Market": (
+                    "Both teams to score"
+                ),
+                "Selection": "No",
+                "Probability": (
+                    prediction
+                    .btts_no_probability
+                ),
+            },
+            {
+                "Market": "Total goals",
+                "Selection": "Over 1.5",
+                "Probability": (
+                    prediction
+                    .over_1_5_probability
+                ),
+            },
+            {
+                "Market": "Total goals",
+                "Selection": "Over 2.5",
+                "Probability": (
+                    prediction
+                    .over_2_5_probability
+                ),
+            },
+            {
+                "Market": "Total goals",
+                "Selection": "Under 2.5",
+                "Probability": (
+                    prediction
+                    .under_2_5_probability
+                ),
+            },
+            {
+                "Market": "Total goals",
+                "Selection": "Under 3.5",
+                "Probability": (
+                    prediction
+                    .under_3_5_probability
+                ),
+            },
+        ]
+    )
+
+
+def create_best_odds_dataframe(
+    match_odds: MatchOdds,
+) -> pd.DataFrame:
+    rows = []
+
+    result_selections = [
+        match_odds.home_team,
+        "Draw",
+        match_odds.away_team,
+    ]
+
+    for selection in result_selections:
+        price = match_odds.get_best_price(
+            market_key="h2h",
+            selection=selection,
+        )
+
+        if price is None:
+            continue
+
+        rows.append(
+            {
+                "Market": "Match result",
+                "Selection": selection,
+                "Best odds": price.odds,
+                "Bookmaker": (
+                    price.bookmaker_title
+                ),
+                "Implied probability": (
+                    price
+                    .implied_probability
+                ),
+            }
+        )
+
+    totals = [
+        (
+            "Over",
+            1.5,
+            "Over 1.5",
+        ),
+        (
+            "Under",
+            1.5,
+            "Under 1.5",
+        ),
+        (
+            "Over",
+            2.5,
+            "Over 2.5",
+        ),
+        (
+            "Under",
+            2.5,
+            "Under 2.5",
+        ),
+        (
+            "Over",
+            3.5,
+            "Over 3.5",
+        ),
+        (
+            "Under",
+            3.5,
+            "Under 3.5",
+        ),
+    ]
+
+    for (
+        selection,
+        point,
+        display_name,
+    ) in totals:
+        price = match_odds.get_best_price(
+            market_key="totals",
+            selection=selection,
+            point=point,
+        )
+
+        if price is None:
+            continue
+
+        rows.append(
+            {
+                "Market": "Total goals",
+                "Selection": display_name,
+                "Best odds": price.odds,
+                "Bookmaker": (
+                    price.bookmaker_title
+                ),
+                "Implied probability": (
+                    price
+                    .implied_probability
+                ),
+            }
+        )
+
+    return pd.DataFrame(
+        rows
+    )
+
+
+def create_value_dataframe(
+    report,
+) -> pd.DataFrame:
+    rows = []
+
+    candidates = (
+        report.opportunities
+        + report.rejected_markets
+    )
+
+    for bet in candidates:
+        rating = (
+            bet.confidence_label
+            if bet in report.opportunities
+            else "NO VALUE"
+        )
+
+        rows.append(
+            {
+                "Market": (
+                    bet.market_name
+                ),
+                "Selection": (
+                    bet.selection
+                ),
+                "Odds": (
+                    bet.decimal_odds
+                ),
+                "Bookmaker": (
+                    bet.bookmaker
+                ),
+                "Model probability": (
+                    bet.model_probability
+                ),
+                "Market probability": (
+                    bet
+                    .fair_market_probability
+                ),
+                "Edge": (
+                    bet.edge
+                ),
+                "Expected value": (
+                    bet.expected_value
+                ),
+                "Rating": (
+                    rating
+                ),
+            }
+        )
+
+    if not rows:
+        return pd.DataFrame()
+
+    return (
+        pd.DataFrame(
+            rows
+        )
+        .sort_values(
+            by="Expected value",
+            ascending=False,
+        )
+    )
+
+
+def create_matching_candidate_dataframe(
+    result: TeamMatchResult,
+) -> pd.DataFrame:
+    rows = []
+
+    for candidate in result.candidates:
+        rows.append(
+            {
+                "Candidate": (
+                    candidate.team_name
+                ),
+                "Score": (
+                    candidate.score
+                ),
+                "Distinctive overlap": (
+                    ", ".join(
+                        candidate
+                        .distinctive_overlap
+                    )
+                    or "None"
+                ),
+            }
+        )
+
+    return pd.DataFrame(
+        rows
+    )
+
+
+def render_rejected_team_matching(
+    home_match: TeamMatchResult,
+    away_match: TeamMatchResult,
+) -> None:
+    st.markdown(
+        (
+            '<div class="matching-alert">'
+            '<div class="matching-alert-title">'
+            'Unsafe team matching prevented'
+            '</div>'
+            '<div class="matching-alert-text">'
+            'The system could not match one or both '
+            'teams safely with the model dataset. '
+            'The prediction was cancelled instead of '
+            'using a potentially incorrect team.'
+            '</div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    home_column, away_column = (
+        st.columns(2)
+    )
+
+    for (
+        column,
+        title,
+        match_result,
+    ) in [
+        (
+            home_column,
+            "Home-team matching",
+            home_match,
+        ),
+        (
+            away_column,
+            "Away-team matching",
+            away_match,
+        ),
+    ]:
+        with column:
+            st.markdown(
+                f"### {title}"
+            )
+
+            if match_result.accepted:
+                st.success(
+                    "Safe match found: "
+                    f"{match_result.matched_team_name}"
+                )
+
+            else:
+                st.error(
+                    match_result.reason
+                )
+
+            summary_frame = pd.DataFrame(
+                [
+                    {
+                        "API team": (
+                            match_result
+                            .api_team_name
+                        ),
+                        "Selected model team": (
+                            match_result
+                            .matched_team_name
+                            or "Rejected"
+                        ),
+                        "Best score": (
+                            match_result.score
+                        ),
+                        "Second-best score": (
+                            match_result
+                            .second_best_score
+                        ),
+                        "Score margin": (
+                            match_result
+                            .score_margin
+                        ),
+                    }
+                ]
+            )
+
+            st.dataframe(
+                summary_frame.style.format(
+                    {
+                        "Best score": (
+                            "{:.1%}"
+                        ),
+                        "Second-best score": (
+                            "{:.1%}"
+                        ),
+                        "Score margin": (
+                            "{:.1%}"
+                        ),
+                    }
+                ),
+                width="stretch",
+                hide_index=True,
+            )
+
+            candidate_frame = (
+                create_matching_candidate_dataframe(
+                    match_result
+                )
+            )
+
+            if not candidate_frame.empty:
+                st.caption(
+                    "Highest-scoring candidates"
+                )
+
+                st.dataframe(
+                    candidate_frame.style.format(
+                        {
+                            "Score": "{:.1%}",
+                        }
+                    ),
+                    width="stretch",
+                    hide_index=True,
+                )
+
+
+def render_model_markets(
+    prediction,
+    event: OddsEvent,
+) -> None:
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'Model match outlook'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        (
+            '<div class="section-description">'
+            'All probabilities in this section '
+            'come from the model and simulation. '
+            'Bookmaker odds are not used here.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    result_frame = pd.DataFrame(
         {
-            "Result": [
-                (
-                    f"{prediction.home_team} "
-                    "win"
-                ),
+            "Selection": [
+                event.home_team,
                 "Draw",
-                (
-                    f"{prediction.away_team} "
-                    "win"
-                ),
+                event.away_team,
             ],
             "Probability": [
                 (
@@ -250,349 +1535,10 @@ def create_match_result_table(
         }
     )
 
-
-def create_goal_market_table(
-    prediction,
-) -> pd.DataFrame:
-    return pd.DataFrame(
-        {
-            "Market": [
-                (
-                    "Both teams to score "
-                    "— Yes"
-                ),
-                (
-                    "Both teams to score "
-                    "— No"
-                ),
-                "Over 1.5 goals",
-                "Over 2.5 goals",
-                "Under 2.5 goals",
-                "Under 3.5 goals",
-            ],
-            "Probability": [
-                (
-                    prediction
-                    .btts_yes_probability
-                ),
-                (
-                    prediction
-                    .btts_no_probability
-                ),
-                (
-                    prediction
-                    .over_1_5_probability
-                ),
-                (
-                    prediction
-                    .over_2_5_probability
-                ),
-                (
-                    prediction
-                    .under_2_5_probability
-                ),
-                (
-                    prediction
-                    .under_3_5_probability
-                ),
-            ],
-        }
-    )
-
-
-def create_best_h2h_odds_table(
-    match_odds: MatchOdds,
-) -> pd.DataFrame:
-    selections = [
-        match_odds.home_team,
-        "Draw",
-        match_odds.away_team,
-    ]
-
-    rows = []
-
-    for selection in selections:
-        best_price = (
-            match_odds.get_best_price(
-                market_key="h2h",
-                selection=selection,
-            )
-        )
-
-        if best_price is None:
-            continue
-
-        rows.append(
-            {
-                "Selection": selection,
-                "Best odds": (
-                    best_price.odds
-                ),
-                "Bookmaker": (
-                    best_price
-                    .bookmaker_title
-                ),
-                "Implied probability": (
-                    best_price
-                    .implied_probability
-                ),
-            }
-        )
-
-    return pd.DataFrame(
-        rows
-    )
-
-
-def create_best_totals_odds_table(
-    match_odds: MatchOdds,
-) -> pd.DataFrame:
-    requested_markets = [
-        (
-            "Over",
-            1.5,
-            "Over 1.5 goals",
-        ),
-        (
-            "Under",
-            1.5,
-            "Under 1.5 goals",
-        ),
-        (
-            "Over",
-            2.5,
-            "Over 2.5 goals",
-        ),
-        (
-            "Under",
-            2.5,
-            "Under 2.5 goals",
-        ),
-        (
-            "Over",
-            3.5,
-            "Over 3.5 goals",
-        ),
-        (
-            "Under",
-            3.5,
-            "Under 3.5 goals",
-        ),
-    ]
-
-    rows = []
-
-    for (
-        api_selection,
-        point,
-        display_selection,
-    ) in requested_markets:
-        best_price = (
-            match_odds.get_best_price(
-                market_key="totals",
-                selection=api_selection,
-                point=point,
-            )
-        )
-
-        if best_price is None:
-            continue
-
-        rows.append(
-            {
-                "Selection": (
-                    display_selection
-                ),
-                "Best odds": (
-                    best_price.odds
-                ),
-                "Bookmaker": (
-                    best_price
-                    .bookmaker_title
-                ),
-                "Implied probability": (
-                    best_price
-                    .implied_probability
-                ),
-            }
-        )
-
-    return pd.DataFrame(
-        rows
-    )
-
-
-def display_match_prediction(
-    prediction,
-    api_event: OddsEvent,
-) -> None:
-    st.subheader(
-        "Match prediction"
-    )
-
-    home_column, draw_column, away_column = (
-        st.columns(3)
-    )
-
-    with home_column:
-        st.metric(
-            (
-                f"{api_event.home_team} "
-                "win"
-            ),
-            (
-                f"{prediction.poisson_home_probability:.1%}"
-            ),
-        )
-
-    with draw_column:
-        st.metric(
-            "Draw",
-            (
-                f"{prediction.poisson_draw_probability:.1%}"
-            ),
-        )
-
-    with away_column:
-        st.metric(
-            (
-                f"{api_event.away_team} "
-                "win"
-            ),
-            (
-                f"{prediction.poisson_away_probability:.1%}"
-            ),
-        )
-
-    score_column, goals_column = (
-        st.columns(2)
-    )
-
-    with score_column:
-        st.metric(
-            "Most likely score",
-            (
-                f"{prediction.most_likely_home_goals}"
-                "-"
-                f"{prediction.most_likely_away_goals}"
-            ),
-        )
-
-    with goals_column:
-        st.metric(
-            "Expected goals",
-            (
-                f"{prediction.expected_home_goals:.2f}"
-                " – "
-                f"{prediction.expected_away_goals:.2f}"
-            ),
-        )
-
-    result_table = (
-        create_match_result_table(
-            prediction
-        )
-    )
-
-    result_table["Result"] = [
-        f"{api_event.home_team} win",
-        "Draw",
-        f"{api_event.away_team} win",
-    ]
-
     st.bar_chart(
-        result_table,
-        x="Result",
+        result_frame,
+        x="Selection",
         y="Probability",
-    )
-
-
-def display_goal_markets(
-    prediction,
-) -> None:
-    st.subheader(
-        "Goal markets"
-    )
-
-    btts_yes_column, btts_no_column = (
-        st.columns(2)
-    )
-
-    with btts_yes_column:
-        st.metric(
-            (
-                "Both teams to score "
-                "— Yes"
-            ),
-            (
-                f"{prediction.btts_yes_probability:.1%}"
-            ),
-        )
-
-    with btts_no_column:
-        st.metric(
-            (
-                "Both teams to score "
-                "— No"
-            ),
-            (
-                f"{prediction.btts_no_probability:.1%}"
-            ),
-        )
-
-    (
-        over_1_5_column,
-        over_2_5_column,
-        under_3_5_column,
-    ) = st.columns(3)
-
-    with over_1_5_column:
-        st.metric(
-            "Over 1.5 goals",
-            (
-                f"{prediction.over_1_5_probability:.1%}"
-            ),
-        )
-
-    with over_2_5_column:
-        st.metric(
-            "Over 2.5 goals",
-            (
-                f"{prediction.over_2_5_probability:.1%}"
-            ),
-        )
-
-    with under_3_5_column:
-        st.metric(
-            "Under 3.5 goals",
-            (
-                f"{prediction.under_3_5_probability:.1%}"
-            ),
-        )
-
-    goal_market_table = (
-        create_goal_market_table(
-            prediction
-        )
-    )
-
-    st.dataframe(
-        goal_market_table.style.format(
-            {
-                "Probability": "{:.1%}",
-            }
-        ),
-        width="stretch",
-        hide_index=True,
-    )
-
-
-def display_double_chance(
-    prediction,
-    api_event: OddsEvent,
-) -> None:
-    st.subheader(
-        "Double chance"
     )
 
     home_or_draw = (
@@ -609,319 +1555,275 @@ def display_double_chance(
         .poisson_draw_probability
     )
 
-    home_column, away_column = (
-        st.columns(2)
+    metric_columns = (
+        st.columns(4)
     )
 
-    with home_column:
-        st.metric(
-            (
-                f"{api_event.home_team} "
-                "or draw (1X)"
-            ),
-            f"{home_or_draw:.1%}",
-        )
-
-    with away_column:
-        st.metric(
-            (
-                f"{api_event.away_team} "
-                "or draw (X2)"
-            ),
-            f"{away_or_draw:.1%}",
-        )
-
-
-def display_model_signal(
-    prediction,
-    betting_service,
-) -> None:
-    st.subheader(
-        "Strongest model signal"
-    )
-
-    report = betting_service.generate(
-        home_team=prediction.home_team,
-        away_team=prediction.away_team,
-        home_win_probability=(
-            prediction
-            .poisson_home_probability
-        ),
-        draw_probability=(
-            prediction
-            .poisson_draw_probability
-        ),
-        away_win_probability=(
-            prediction
-            .poisson_away_probability
-        ),
-        btts_probability=(
-            prediction
-            .btts_probability
-        ),
-        over_1_5_probability=(
-            prediction
-            .over_1_5_probability
-        ),
-        over_2_5_probability=(
-            prediction
-            .over_2_5_probability
-        ),
-        under_2_5_probability=(
-            prediction
-            .under_2_5_probability
-        ),
-        under_3_5_probability=(
-            prediction
-            .under_3_5_probability
+    metric_columns[0].metric(
+        "Likely score",
+        (
+            f"{prediction.most_likely_home_goals}"
+            "-"
+            f"{prediction.most_likely_away_goals}"
         ),
     )
 
-    if (
-        report.no_strong_signal
-        or report.best_insight is None
-    ):
-        st.warning(
-            "No sufficiently strong model "
-            "signal was identified."
-        )
-
-        return
-
-    best_insight = report.best_insight
-
-    st.success(
-        f"### {best_insight.selection}\n\n"
-        f"**Market:** "
-        f"{best_insight.market}\n\n"
-        f"**Probability:** "
-        f"{best_insight.probability:.1%}\n\n"
-        f"**Signal:** "
-        f"{best_insight.confidence_label}"
+    metric_columns[1].metric(
+        "Expected goals",
+        (
+            f"{prediction.expected_home_goals:.2f}"
+            " – "
+            f"{prediction.expected_away_goals:.2f}"
+        ),
     )
 
-
-def display_live_odds(
-    match_odds: MatchOdds,
-) -> None:
-    st.subheader(
-        "Live bookmaker odds"
+    metric_columns[2].metric(
+        "1X model probability",
+        f"{home_or_draw:.1%}",
     )
 
-    st.caption(
-        "The tables show the highest available "
-        "decimal price returned by the connected "
-        "odds provider for each selection."
+    metric_columns[3].metric(
+        "X2 model probability",
+        f"{away_or_draw:.1%}",
     )
 
     st.markdown(
-        "### Match result odds"
+        (
+            '<div class="section-title">'
+            'All model market probabilities'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
     )
 
-    h2h_table = (
-        create_best_h2h_odds_table(
-            match_odds
-        )
-    )
-
-    if h2h_table.empty:
-        st.info(
-            "No match-result odds were returned."
-        )
-
-    else:
-        st.dataframe(
-            h2h_table.style.format(
-                {
-                    "Best odds": "{:.2f}",
-                    (
-                        "Implied probability"
-                    ): "{:.1%}",
-                }
-            ),
-            width="stretch",
-            hide_index=True,
-        )
-
-    st.markdown(
-        "### Total-goal odds"
-    )
-
-    totals_table = (
-        create_best_totals_odds_table(
-            match_odds
-        )
-    )
-
-    if totals_table.empty:
-        st.info(
-            "No total-goal odds were returned."
-        )
-
-    else:
-        st.dataframe(
-            totals_table.style.format(
-                {
-                    "Best odds": "{:.2f}",
-                    (
-                        "Implied probability"
-                    ): "{:.1%}",
-                }
-            ),
-            width="stretch",
-            hide_index=True,
-        )
-
-    credit_columns = st.columns(3)
-
-    with credit_columns[0]:
-        st.metric(
-            "API request cost",
-            (
-                match_odds.request_cost
-                if (
-                    match_odds
-                    .request_cost
-                    is not None
-                )
-                else "Unknown"
-            ),
-        )
-
-    with credit_columns[1]:
-        st.metric(
-            "Credits used",
-            (
-                match_odds.requests_used
-                if (
-                    match_odds
-                    .requests_used
-                    is not None
-                )
-                else "Unknown"
-            ),
-        )
-
-    with credit_columns[2]:
-        st.metric(
-            "Credits remaining",
-            (
-                match_odds
-                .requests_remaining
-                if (
-                    match_odds
-                    .requests_remaining
-                    is not None
-                )
-                else "Unknown"
-            ),
-        )
-
-
-def display_value_analysis(
-    prediction,
-    match_odds: MatchOdds,
-    value_service: ValueBetService,
-) -> None:
-    st.subheader(
-        "Value analysis"
-    )
-
-    st.caption(
-        "Model probabilities are compared with "
-        "the implied probability of the best "
-        "available bookmaker price."
-    )
-
-    report = value_service.analyse(
-        prediction=prediction,
-        match_odds=match_odds,
-    )
-
-    all_candidates = (
-        report.opportunities
-        + report.rejected_markets
-    )
-
-    if not all_candidates:
-        st.info(
-            "There are not enough matching odds "
-            "to perform a value analysis."
-        )
-
-        return
-
-    analysis_rows = []
-
-    for value_bet in all_candidates:
-        is_value = (
-            value_bet
-            in report.opportunities
-        )
-
-        analysis_rows.append(
-            {
-                "Market": (
-                    value_bet.market_name
-                ),
-                "Selection": (
-                    value_bet.selection
-                ),
-                "Bookmaker": (
-                    value_bet.bookmaker
-                ),
-                "Odds": (
-                    value_bet.decimal_odds
-                ),
-                "Model probability": (
-                    value_bet
-                    .model_probability
-                ),
-                "Market probability": (
-                    value_bet
-                    .implied_probability
-                ),
-                "Edge": (
-                    value_bet.edge
-                ),
-                "Expected value": (
-                    value_bet
-                    .expected_value
-                ),
-                "Assessment": (
-                    value_bet
-                    .confidence_label
-                    if is_value
-                    else "AVOID"
-                ),
-            }
-        )
-
-    analysis_dataframe = pd.DataFrame(
-        analysis_rows
-    )
-
-    analysis_dataframe = (
-        analysis_dataframe.sort_values(
-            by="Expected value",
-            ascending=False,
+    market_frame = (
+        create_market_dataframe(
+            prediction,
+            event,
         )
     )
 
     st.dataframe(
-        analysis_dataframe.style.format(
+        market_frame.style.format(
             {
-                "Odds": "{:.2f}",
-                (
-                    "Model probability"
-                ): "{:.1%}",
-                (
-                    "Market probability"
-                ): "{:.1%}",
-                "Edge": "{:+.1%}",
-                (
-                    "Expected value"
-                ): "{:+.1%}",
+                "Probability": (
+                    "{:.1%}"
+                ),
+            }
+        ),
+        width="stretch",
+        hide_index=True,
+    )
+
+
+def render_live_odds_analysis(
+    match_odds: MatchOdds,
+    report,
+) -> None:
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'Best live bookmaker prices'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        (
+            '<div class="section-description">'
+            'These prices come from the connected '
+            'odds provider and are not generated '
+            'by the prediction model.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    odds_frame = (
+        create_best_odds_dataframe(
+            match_odds
+        )
+    )
+
+    if odds_frame.empty:
+        st.info(
+            "No supported bookmaker "
+            "odds were returned."
+        )
+
+    else:
+        st.dataframe(
+            odds_frame.style.format(
+                {
+                    "Best odds": (
+                        "{:.2f}"
+                    ),
+                    (
+                        "Implied probability"
+                    ): "{:.1%}",
+                }
+            ),
+            width="stretch",
+            hide_index=True,
+        )
+
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'Model and bookmaker comparison'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        (
+            '<div class="section-description">'
+            'This table compares model probabilities '
+            'with bookmaker-market probabilities to '
+            'calculate edge and expected value.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    value_frame = (
+        create_value_dataframe(
+            report
+        )
+    )
+
+    if value_frame.empty:
+        st.info(
+            "There is not enough data "
+            "for a value comparison."
+        )
+
+    else:
+        st.dataframe(
+            value_frame.style.format(
+                {
+                    "Odds": (
+                        "{:.2f}"
+                    ),
+                    (
+                        "Model probability"
+                    ): "{:.1%}",
+                    (
+                        "Market probability"
+                    ): "{:.1%}",
+                    "Edge": (
+                        "{:+.1%}"
+                    ),
+                    (
+                        "Expected value"
+                    ): "{:+.1%}",
+                }
+            ),
+            width="stretch",
+            hide_index=True,
+        )
+
+
+def render_model_details(
+    prediction,
+    selected_event: OddsEvent,
+    home_match: TeamMatchResult,
+    away_match: TeamMatchResult,
+    match_odds: MatchOdds,
+) -> None:
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'Prediction diagnostics'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    diagnostic_columns = (
+        st.columns(4)
+    )
+
+    diagnostic_columns[0].metric(
+        "Home xG estimate",
+        (
+            f"{prediction.expected_home_goals:.2f}"
+        ),
+    )
+
+    diagnostic_columns[1].metric(
+        "Away xG estimate",
+        (
+            f"{prediction.expected_away_goals:.2f}"
+        ),
+    )
+
+    diagnostic_columns[2].metric(
+        "Home team match",
+        f"{home_match.score:.1%}",
+    )
+
+    diagnostic_columns[3].metric(
+        "Away team match",
+        f"{away_match.score:.1%}",
+    )
+
+    matching_frame = pd.DataFrame(
+        [
+            {
+                "API team": (
+                    selected_event
+                    .home_team
+                ),
+                "Model team": (
+                    home_match
+                    .matched_team_name
+                ),
+                "Similarity": (
+                    home_match.score
+                ),
+                "Margin over second": (
+                    home_match
+                    .score_margin
+                ),
+                "Matching method": (
+                    home_match.reason
+                ),
+            },
+            {
+                "API team": (
+                    selected_event
+                    .away_team
+                ),
+                "Model team": (
+                    away_match
+                    .matched_team_name
+                ),
+                "Similarity": (
+                    away_match.score
+                ),
+                "Margin over second": (
+                    away_match
+                    .score_margin
+                ),
+                "Matching method": (
+                    away_match.reason
+                ),
+            },
+        ]
+    )
+
+    st.dataframe(
+        matching_frame.style.format(
+            {
+                "Similarity": (
+                    "{:.1%}"
+                ),
+                "Margin over second": (
+                    "{:.1%}"
+                ),
             }
         ),
         width="stretch",
@@ -929,139 +1831,75 @@ def display_value_analysis(
     )
 
     st.markdown(
-        "## Suggested coupon"
+        (
+            '<div class="section-title">'
+            'Odds API information'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
     )
 
-    if (
-        not report.has_value_bet
-        or report.best_opportunity is None
-    ):
-        st.warning(
-            "No positive-value selection passed "
-            "the current safety filters. The model "
-            "does not recommend forcing a coupon "
-            "for this match."
-        )
+    api_columns = st.columns(3)
 
-        return
-
-    best_bet = report.best_opportunity
-
-    st.success(
-        f"### ✅ {best_bet.selection}\n\n"
-        f"**Market:** "
-        f"{best_bet.market_name}\n\n"
-        f"**Bookmaker:** "
-        f"{best_bet.bookmaker}\n\n"
-        f"**Decimal odds:** "
-        f"{best_bet.decimal_odds:.2f}\n\n"
-        f"**Model probability:** "
-        f"{best_bet.model_probability:.1%}\n\n"
-        f"**Market probability:** "
-        f"{best_bet.implied_probability:.1%}\n\n"
-        f"**Model edge:** "
-        f"{best_bet.edge:+.1%}\n\n"
-        f"**Estimated expected value:** "
-        f"{best_bet.expected_value:+.1%}\n\n"
-        f"**Signal:** "
-        f"{best_bet.confidence_label}"
+    api_columns[0].metric(
+        "Request cost",
+        (
+            match_odds.request_cost
+            if match_odds.request_cost
+            is not None
+            else "Unknown"
+        ),
     )
 
-    st.info(
-        "The suggested coupon contains one "
-        "selection. Combining correlated markets "
-        "from the same match would require a "
-        "joint-probability model; therefore the "
-        "application does not multiply these "
-        "probabilities as though they were "
-        "independent."
+    api_columns[1].metric(
+        "Credits used",
+        (
+            match_odds.requests_used
+            if match_odds.requests_used
+            is not None
+            else "Unknown"
+        ),
     )
 
-    alternatives = (
-        report.opportunities[1:4]
+    api_columns[2].metric(
+        "Credits remaining",
+        (
+            match_odds
+            .requests_remaining
+            if match_odds
+            .requests_remaining
+            is not None
+            else "Unknown"
+        ),
     )
 
-    if alternatives:
-        st.markdown(
-            "### Alternative value selections"
-        )
 
-        alternative_rows = []
-
-        for opportunity in alternatives:
-            alternative_rows.append(
-                {
-                    "Selection": (
-                        opportunity.selection
-                    ),
-                    "Odds": (
-                        opportunity
-                        .decimal_odds
-                    ),
-                    "Bookmaker": (
-                        opportunity
-                        .bookmaker
-                    ),
-                    "Edge": (
-                        opportunity.edge
-                    ),
-                    "Expected value": (
-                        opportunity
-                        .expected_value
-                    ),
-                }
-            )
-
-        alternative_dataframe = (
-            pd.DataFrame(
-                alternative_rows
-            )
-        )
-
-        st.dataframe(
-            (
-                alternative_dataframe
-                .style.format(
-                    {
-                        "Odds": "{:.2f}",
-                        "Edge": "{:+.1%}",
-                        (
-                            "Expected value"
-                        ): "{:+.1%}",
-                    }
-                )
-            ),
-            width="stretch",
-            hide_index=True,
-        )
-
-
-def main() -> None:
+def main(
+) -> None:
     st.set_page_config(
         page_title=(
-            "Football Value Predictor"
+            "EdgeXI Football Analytics"
         ),
         page_icon="⚽",
         layout="wide",
+        initial_sidebar_state=(
+            "expanded"
+        ),
     )
 
-    st.title(
-        "⚽ Football Value Predictor"
+    st.markdown(
+        PAGE_CSS,
+        unsafe_allow_html=True,
     )
 
-    st.write(
-        "Select an active league and an upcoming "
-        "match to compare model probabilities "
-        "with live bookmaker prices."
-    )
+    render_brand()
 
     api_key = get_api_key()
 
     if api_key is None:
         st.error(
-            "ODDS_API_KEY could not be found. "
-            "Add it to "
-            ".streamlit/secrets.toml."
+            "ODDS_API_KEY was not found "
+            "in .streamlit/secrets.toml."
         )
 
         st.stop()
@@ -1071,76 +1909,82 @@ def main() -> None:
             load_prediction_service()
         )
 
-        betting_service = (
-            load_betting_insight_service()
-        )
-
         value_service = (
-            load_value_bet_service()
+            load_value_service()
         )
 
-        with st.spinner(
-            "Loading active football leagues..."
-        ):
-            active_leagues = (
-                get_active_leagues(
-                    api_key
-                )
+        team_matching_service = (
+            load_team_matching_service()
+        )
+
+        active_leagues = (
+            get_active_leagues(
+                api_key
             )
+        )
 
     except Exception as error:
         st.error(
-            "The application could not start: "
-            f"{error}"
+            "Application startup "
+            f"failed: {error}"
         )
 
         st.stop()
 
     if not active_leagues:
         st.warning(
-            "No active football leagues were "
-            "returned by the odds provider."
+            "No active football "
+            "competitions were returned."
         )
 
         st.stop()
+
+    st.sidebar.markdown(
+        (
+            '<div class="sidebar-section">'
+            'Match centre'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
 
     league_keys = list(
         active_leagues.keys()
     )
 
-    selected_sport_key = st.selectbox(
-        "League",
-        options=league_keys,
-        format_func=lambda key: (
-            active_leagues[key]
-        ),
+    selected_sport_key = (
+        st.sidebar.selectbox(
+            "Competition",
+            options=league_keys,
+            format_func=lambda key: (
+                active_leagues[key]
+            ),
+        )
     )
 
     try:
-        with st.spinner(
-            "Loading upcoming matches..."
-        ):
-            league_events = (
-                get_league_events(
-                    api_key=api_key,
-                    sport_key=(
-                        selected_sport_key
-                    ),
-                )
+        league_events = (
+            get_league_events(
+                api_key=api_key,
+                sport_key=(
+                    selected_sport_key
+                ),
             )
+        )
 
     except OddsAPIError as error:
         st.error(
-            f"Could not load matches: {error}"
+            "Could not load fixtures: "
+            f"{error}"
         )
 
         st.stop()
 
     if not league_events:
         st.info(
-            "There are currently no upcoming "
-            "matches listed for this league. "
-            "Select another league."
+            "There are currently no "
+            "upcoming fixtures for this "
+            "competition."
         )
 
         st.stop()
@@ -1151,16 +1995,16 @@ def main() -> None:
         )
     )
 
-    selected_event_index = st.selectbox(
-        "Upcoming match",
-        options=event_indexes,
-        format_func=lambda index: (
-            f"{league_events[index].home_team} "
-            f"vs "
-            f"{league_events[index].away_team} "
-            f"— "
-            f"{format_event_time(league_events[index].commence_time)}"
-        ),
+    selected_event_index = (
+        st.sidebar.selectbox(
+            "Fixture",
+            options=event_indexes,
+            format_func=lambda index: (
+                f"{league_events[index].home_team} "
+                "vs "
+                f"{league_events[index].away_team}"
+            ),
+        )
     )
 
     selected_event = (
@@ -1169,28 +2013,55 @@ def main() -> None:
         ]
     )
 
-    st.caption(
-        f"Competition: "
-        f"{active_leagues[selected_sport_key]} "
-        f"| Kick-off: "
-        f"{format_event_time(selected_event.commence_time)}"
+    st.sidebar.caption(
+        format_event_time(
+            selected_event
+            .commence_time
+        )
     )
 
-    analyse_button = st.button(
-        "Analyse Match",
-        type="primary",
-        width="stretch",
+    st.sidebar.markdown(
+        "<br>",
+        unsafe_allow_html=True,
+    )
+
+    analyse_button = (
+        st.sidebar.button(
+            "Run Match Analysis",
+            type="primary",
+            width="stretch",
+        )
+    )
+
+    st.sidebar.markdown(
+        (
+            '<div class="sidebar-note">'
+            'Odds data is cached briefly '
+            'to reduce API usage and '
+            'unnecessary requests.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    render_match_hero(
+        selected_event,
+        active_leagues[
+            selected_sport_key
+        ],
     )
 
     if not analyse_button:
+        render_empty_state()
+
         return
 
     model_teams = (
         prediction_service.get_teams()
     )
 
-    model_home_team, home_score = (
-        find_model_team(
+    home_match = (
+        team_matching_service.match(
             api_team_name=(
                 selected_event.home_team
             ),
@@ -1198,8 +2069,8 @@ def main() -> None:
         )
     )
 
-    model_away_team, away_score = (
-        find_model_team(
+    away_match = (
+        team_matching_service.match(
             api_team_name=(
                 selected_event.away_team
             ),
@@ -1208,63 +2079,54 @@ def main() -> None:
     )
 
     if (
-        model_home_team is None
-        or model_away_team is None
-        or home_score < 0.60
-        or away_score < 0.60
+        not home_match.accepted
+        or not away_match.accepted
     ):
-        st.error(
-            "The selected API teams could not "
-            "be matched reliably with teams in "
-            "the model dataset."
-        )
-
-        st.write(
-            {
-                "API home team": (
-                    selected_event.home_team
-                ),
-                "Best model home match": (
-                    model_home_team
-                ),
-                "Home similarity": (
-                    round(
-                        home_score,
-                        3,
-                    )
-                ),
-                "API away team": (
-                    selected_event.away_team
-                ),
-                "Best model away match": (
-                    model_away_team
-                ),
-                "Away similarity": (
-                    round(
-                        away_score,
-                        3,
-                    )
-                ),
-            }
+        render_rejected_team_matching(
+            home_match=home_match,
+            away_match=away_match,
         )
 
         st.stop()
 
-    if model_home_team == model_away_team:
+    model_home_team = (
+        home_match.matched_team_name
+    )
+
+    model_away_team = (
+        away_match.matched_team_name
+    )
+
+    if (
+        model_home_team is None
+        or model_away_team is None
+    ):
         st.error(
-            "Both API teams were matched to the "
-            "same model team. The prediction was "
-            "cancelled."
+            "Safe team matching did not "
+            "return two valid model teams."
+        )
+
+        st.stop()
+
+    if (
+        model_home_team
+        == model_away_team
+    ):
+        st.error(
+            "Both API teams matched the same "
+            "model team. The analysis was cancelled."
         )
 
         st.stop()
 
     try:
         with st.spinner(
-            "Running model and loading live odds..."
+            "Running the model and "
+            "scanning live prices..."
         ):
             prediction = (
-                prediction_service.predict(
+                prediction_service
+                .predict(
                     home_team=(
                         model_home_team
                     ),
@@ -1278,123 +2140,227 @@ def main() -> None:
                 get_live_event_odds(
                     api_key=api_key,
                     event_id=(
-                        selected_event.event_id
+                        selected_event
+                        .event_id
                     ),
                     sport_key=(
-                        selected_event.sport_key
+                        selected_event
+                        .sport_key
                     ),
                     sport_title=(
-                        selected_event.sport_title
+                        selected_event
+                        .sport_title
                     ),
                     commence_time=(
                         selected_event
                         .commence_time
                     ),
                     home_team=(
-                        selected_event.home_team
+                        selected_event
+                        .home_team
                     ),
                     away_team=(
-                        selected_event.away_team
+                        selected_event
+                        .away_team
+                    ),
+                )
+            )
+
+            value_report = (
+                value_service.analyse(
+                    prediction=prediction,
+                    match_odds=(
+                        match_odds
                     ),
                 )
             )
 
     except Exception as error:
         st.error(
-            f"Match analysis failed: {error}"
+            "Match analysis failed: "
+            f"{error}"
         )
 
         st.stop()
 
-    st.header(
-        f"{selected_event.home_team} "
-        f"vs "
-        f"{selected_event.away_team}"
+    top_left, top_right = (
+        st.columns(
+            [
+                1.55,
+                1,
+            ]
+        )
     )
 
-    with st.expander(
-        "Team-name matching details"
-    ):
-        st.write(
-            {
-                (
-                    selected_event.home_team
-                ): {
-                    "Model team": (
-                        model_home_team
-                    ),
-                    "Similarity": (
-                        round(
-                            home_score,
-                            3,
-                        )
-                    ),
-                },
-                (
-                    selected_event.away_team
-                ): {
-                    "Model team": (
-                        model_away_team
-                    ),
-                    "Similarity": (
-                        round(
-                            away_score,
-                            3,
-                        )
-                    ),
-                },
-            }
+    with top_left:
+        render_best_bet(
+            value_report
         )
 
-    display_match_prediction(
-        prediction=prediction,
-        api_event=selected_event,
-    )
+    with top_right:
+        st.markdown(
+            (
+                '<div class="section-kicker">'
+                'Model goal forecast'
+                '</div>'
+            ),
+            unsafe_allow_html=True,
+        )
 
-    st.divider()
+        st.markdown(
+            (
+                '<div class="section-description">'
+                'These values come only from '
+                'the model and score simulation. '
+                'Bookmaker odds are not used.'
+                '</div>'
+            ),
+            unsafe_allow_html=True,
+        )
 
-    display_goal_markets(
-        prediction
-    )
+        metric_columns = (
+            st.columns(2)
+        )
 
-    st.divider()
+        metric_columns[0].metric(
+            "Most likely score",
+            (
+                f"{prediction.most_likely_home_goals}"
+                "-"
+                f"{prediction.most_likely_away_goals}"
+            ),
+        )
 
-    display_double_chance(
-        prediction=prediction,
-        api_event=selected_event,
-    )
+        metric_columns[1].metric(
+            "Expected total goals",
+            (
+                f"{prediction.expected_home_goals + prediction.expected_away_goals:.2f}"
+            ),
+        )
 
-    st.divider()
+        second_metric_columns = (
+            st.columns(2)
+        )
 
-    display_model_signal(
-        prediction=prediction,
-        betting_service=(
-            betting_service
+        second_metric_columns[0].metric(
+            "Model BTTS Yes",
+            (
+                f"{prediction.btts_yes_probability:.1%}"
+            ),
+        )
+
+        second_metric_columns[1].metric(
+            "Model Over 2.5",
+            (
+                f"{prediction.over_2_5_probability:.1%}"
+            ),
+        )
+
+    st.markdown(
+        (
+            '<div class="section-kicker">'
+            'Model match-result prediction'
+            '</div>'
         ),
+        unsafe_allow_html=True,
     )
 
-    st.divider()
-
-    display_live_odds(
-        match_odds
+    st.markdown(
+        (
+            '<div class="section-description">'
+            'The 1X2 probabilities below are '
+            'generated by the model and simulation, '
+            'without considering bookmaker prices.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
     )
 
-    st.divider()
-
-    display_value_analysis(
-        prediction=prediction,
-        match_odds=match_odds,
-        value_service=value_service,
+    render_probability_cards(
+        prediction,
+        selected_event,
     )
 
-    st.divider()
+    st.markdown(
+        "<br>",
+        unsafe_allow_html=True,
+    )
 
-    st.warning(
-        "This application is an experimental "
-        "data-science project. Model estimates "
-        "can be wrong, bookmaker prices can "
-        "change, and positive expected value is "
-        "not a guarantee of profit."
+    (
+        value_picks_tab,
+        model_markets_tab,
+        live_odds_tab,
+        model_details_tab,
+    ) = st.tabs(
+        [
+            "⭐ Live Odds Value Picks",
+            "📊 Model Predictions",
+            "💰 Live Odds Analysis",
+            "🧠 Model Details",
+        ]
+    )
+
+    with value_picks_tab:
+        st.caption(
+            "Selections in this section "
+            "combine model probabilities "
+            "with current bookmaker prices."
+        )
+
+        render_best_bet(
+            value_report
+        )
+
+        render_alternatives(
+            value_report
+        )
+
+    with model_markets_tab:
+        st.caption(
+            "This section contains model "
+            "and simulation probabilities "
+            "only. It does not use odds."
+        )
+
+        render_model_markets(
+            prediction,
+            selected_event,
+        )
+
+    with live_odds_tab:
+        st.caption(
+            "This section displays bookmaker "
+            "prices and compares them with "
+            "the model probabilities."
+        )
+
+        render_live_odds_analysis(
+            match_odds,
+            value_report,
+        )
+
+    with model_details_tab:
+        render_model_details(
+            prediction=prediction,
+            selected_event=(
+                selected_event
+            ),
+            home_match=home_match,
+            away_match=away_match,
+            match_odds=match_odds,
+        )
+
+    st.markdown(
+        (
+            '<div class="footer-note">'
+            'EdgeXI is an experimental '
+            'football analytics project. '
+            'Model estimates and positive '
+            'expected value do not guarantee '
+            'profitable results.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
     )
 
 
