@@ -1,0 +1,141 @@
+{
+  "expanded_dataset_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/processed/all_matches_expanded_clean.csv",
+  "original_dataset_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/raw/all_matches.csv",
+  "test_start_date": "2024-09-17T00:00:00+00:00",
+  "test_matches": 378,
+  "baseline_training_matches": 2767,
+  "candidate_training_matches": 31743,
+  "feature_count": 23,
+  "baseline": {
+    "accuracy": 0.5714285714285714,
+    "log_loss": 0.9581126152453798,
+    "away_precision": 0.5067567567567568,
+    "away_recall": 0.5859375,
+    "draw_precision": 1.0,
+    "draw_recall": 0.03389830508474576,
+    "draw_f1": 0.06557377049180328,
+    "home_precision": 0.6096491228070176,
+    "home_recall": 0.7277486910994765,
+    "predicted_draws": 2,
+    "correct_draws": 2,
+    "classification_report": {
+      "A": {
+        "precision": 0.5067567567567568,
+        "recall": 0.5859375,
+        "f1-score": 0.5434782608695652,
+        "support": 128.0
+      },
+      "D": {
+        "precision": 1.0,
+        "recall": 0.03389830508474576,
+        "f1-score": 0.06557377049180328,
+        "support": 59.0
+      },
+      "H": {
+        "precision": 0.6096491228070176,
+        "recall": 0.7277486910994765,
+        "f1-score": 0.6634844868735084,
+        "support": 191.0
+      },
+      "accuracy": 0.5714285714285714,
+      "macro avg": {
+        "precision": 0.7054686265212581,
+        "recall": 0.4491948320614074,
+        "f1-score": 0.42417883941162565,
+        "support": 378.0
+      },
+      "weighted avg": {
+        "precision": 0.6357350458227652,
+        "recall": 0.5714285714285714,
+        "f1-score": 0.5295227694263513,
+        "support": 378.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        75,
+        0,
+        53
+      ],
+      [
+        21,
+        2,
+        36
+      ],
+      [
+        52,
+        0,
+        139
+      ]
+    ]
+  },
+  "candidate": {
+    "accuracy": 0.5687830687830688,
+    "log_loss": 0.9347915432578804,
+    "away_precision": 0.5142857142857142,
+    "away_recall": 0.5625,
+    "draw_precision": 0.0,
+    "draw_recall": 0.0,
+    "draw_f1": 0.0,
+    "home_precision": 0.6008403361344538,
+    "home_recall": 0.7486910994764397,
+    "predicted_draws": 0,
+    "correct_draws": 0,
+    "classification_report": {
+      "A": {
+        "precision": 0.5142857142857142,
+        "recall": 0.5625,
+        "f1-score": 0.5373134328358209,
+        "support": 128.0
+      },
+      "D": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 59.0
+      },
+      "H": {
+        "precision": 0.6008403361344538,
+        "recall": 0.7486910994764397,
+        "f1-score": 0.6666666666666666,
+        "support": 191.0
+      },
+      "accuracy": 0.5687830687830688,
+      "macro avg": {
+        "precision": 0.37170868347338937,
+        "recall": 0.43706369982547993,
+        "f1-score": 0.4013266998341625,
+        "support": 378.0
+      },
+      "weighted avg": {
+        "precision": 0.4777488773287092,
+        "recall": 0.5687830687830688,
+        "f1-score": 0.5188080760220064,
+        "support": 378.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        72,
+        0,
+        56
+      ],
+      [
+        20,
+        0,
+        39
+      ],
+      [
+        48,
+        0,
+        143
+      ]
+    ]
+  },
+  "comparison": {
+    "accuracy_difference": -0.002645502645502562,
+    "log_loss_difference": -0.023321071987499442,
+    "draw_recall_difference": -0.03389830508474576,
+    "recommendation": "KEEP_BASELINE"
+  }
+}
