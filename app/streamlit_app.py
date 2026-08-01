@@ -1425,7 +1425,9 @@ def create_matching_candidate_dataframe(
 def render_rejected_team_matching(
     home_match: TeamMatchResult,
     away_match: TeamMatchResult,
-) -> None:
+    model_teams: list[str],
+    event_id: str,
+) -> Optional[tuple[str, str]]:
     st.markdown(
         (
             '<div class="matching-alert">'
@@ -1433,10 +1435,9 @@ def render_rejected_team_matching(
             'Unsafe team matching prevented'
             '</div>'
             '<div class="matching-alert-text">'
-            'The system could not match one or both '
-            'teams safely with the model dataset. '
-            'The prediction was cancelled instead of '
-            'using a potentially incorrect team.'
+            'The automatic matcher could not confirm one or both '
+            'teams safely. Review the candidates below and select '
+            'the correct model teams manually to continue.'
             '</div>'
             '</div>'
         ),
@@ -1544,6 +1545,139 @@ def render_rejected_team_matching(
                     width="stretch",
                     hide_index=True,
                 )
+
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'Manual team selection'
+            '</div>'
+            '<div class="section-description">'
+            'Only use this override when you are certain which model '
+            'team corresponds to the bookmaker team. The selected '
+            'teams will be used for this analysis only.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    def selection_options(
+        match_result: TeamMatchResult,
+    ) -> list[str]:
+        preferred = []
+
+        if (
+            match_result.accepted
+            and match_result.matched_team_name
+        ):
+            preferred.append(
+                match_result.matched_team_name
+            )
+
+        preferred.extend(
+            candidate.team_name
+            for candidate in match_result.candidates
+        )
+
+        ordered = []
+        seen = set()
+
+        for team_name in [
+            *preferred,
+            *model_teams,
+        ]:
+            cleaned = str(team_name).strip()
+
+            if (
+                cleaned
+                and cleaned not in seen
+            ):
+                ordered.append(cleaned)
+                seen.add(cleaned)
+
+        return ordered
+
+    home_options = selection_options(
+        home_match
+    )
+
+    away_options = selection_options(
+        away_match
+    )
+
+    if not home_options or not away_options:
+        st.error(
+            "The model team list is empty, so a manual "
+            "selection cannot be made."
+        )
+
+        return None
+
+    selection_columns = st.columns(2)
+
+    with selection_columns[0]:
+        manual_home_team = st.selectbox(
+            f"Model team for {home_match.api_team_name}",
+            options=home_options,
+            key=(
+                "manual_home_team_"
+                f"{event_id}"
+            ),
+            help=(
+                "The highest-scoring candidates appear first. "
+                "You can also search the full model team list."
+            ),
+        )
+
+    with selection_columns[1]:
+        manual_away_team = st.selectbox(
+            f"Model team for {away_match.api_team_name}",
+            options=away_options,
+            key=(
+                "manual_away_team_"
+                f"{event_id}"
+            ),
+            help=(
+                "The highest-scoring candidates appear first. "
+                "You can also search the full model team list."
+            ),
+        )
+
+    confirmation = st.checkbox(
+        (
+            "I have checked both teams and confirm that "
+            "these manual selections are correct."
+        ),
+        key=(
+            "manual_team_confirmation_"
+            f"{event_id}"
+        ),
+    )
+
+    continue_button = st.button(
+        "Use Selected Teams and Continue Analysis",
+        type="primary",
+        width="stretch",
+        disabled=not confirmation,
+        key=(
+            "manual_team_continue_"
+            f"{event_id}"
+        ),
+    )
+
+    if not continue_button:
+        return None
+
+    if manual_home_team == manual_away_team:
+        st.error(
+            "Home and away teams cannot use the same model team."
+        )
+
+        return None
+
+    return (
+        manual_home_team,
+        manual_away_team,
+    )
 
 
 def render_model_markets(
@@ -2445,6 +2579,22 @@ def main(
         )
     )
 
+    selected_event_id = str(
+        selected_event.event_id
+    )
+
+    if analyse_button:
+        st.session_state[
+            "analysis_requested_event_id"
+        ] = selected_event_id
+
+    analysis_requested = (
+        st.session_state.get(
+            "analysis_requested_event_id"
+        )
+        == selected_event_id
+    )
+
     st.sidebar.markdown(
         (
             '<div class="sidebar-note">'
@@ -2463,7 +2613,7 @@ def main(
         ],
     )
 
-    if not analyse_button:
+    if not analysis_requested:
         render_empty_state()
 
         return
@@ -2494,20 +2644,31 @@ def main(
         not home_match.accepted
         or not away_match.accepted
     ):
-        render_rejected_team_matching(
-            home_match=home_match,
-            away_match=away_match,
+        manual_selection = (
+            render_rejected_team_matching(
+                home_match=home_match,
+                away_match=away_match,
+                model_teams=model_teams,
+                event_id=selected_event_id,
+            )
         )
 
-        st.stop()
+        if manual_selection is None:
+            return
 
-    model_home_team = (
-        home_match.matched_team_name
-    )
+        (
+            model_home_team,
+            model_away_team,
+        ) = manual_selection
 
-    model_away_team = (
-        away_match.matched_team_name
-    )
+    else:
+        model_home_team = (
+            home_match.matched_team_name
+        )
+
+        model_away_team = (
+            away_match.matched_team_name
+        )
 
     if (
         model_home_team is None
@@ -2625,6 +2786,11 @@ def main(
         )
 
         st.stop()
+
+    st.session_state.pop(
+        "analysis_requested_event_id",
+        None,
+    )
 
     if history_saved:
         st.success(
