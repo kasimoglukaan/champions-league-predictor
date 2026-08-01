@@ -1,0 +1,228 @@
+{
+  "experiment_name": "hybrid_probability_calibration",
+  "data_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/raw/all_matches.csv",
+  "model_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/saved_models/match_model.joblib",
+  "calibrator_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/saved_models/hybrid_probability_calibrator.joblib",
+  "ml_weight": 0.5,
+  "poisson_weight": 0.5,
+  "total_cl_matches": 378,
+  "calibration_match_count": 250,
+  "final_test_match_count": 128,
+  "calibration_start": "2024-09-17T16:45:00+00:00",
+  "calibration_end": "2025-11-04T20:00:00+00:00",
+  "final_test_start": "2025-11-04T20:00:00+00:00",
+  "final_test_end": "2026-05-30T16:00:00+00:00",
+  "recommendation": "Platt calibrated",
+  "results": {
+    "Uncalibrated hybrid": {
+      "match_count": 128,
+      "accuracy": 0.5390625,
+      "log_loss": 1.0694384870413662,
+      "brier_score": 0.6338625284474512,
+      "ece": 0.16029446555013585,
+      "classwise_ece": {
+        "A": 0.1746568516632443,
+        "D": 0.06146889346903314,
+        "H": 0.1488353675282229
+      },
+      "macro_f1": 0.3823041654472734,
+      "weighted_f1": 0.4955621707638279,
+      "draw_recall": 0.0,
+      "away_recall": 0.5555555555555556,
+      "home_recall": 0.6984126984126984,
+      "predicted_away_wins": 57,
+      "predicted_draws": 0,
+      "predicted_home_wins": 71,
+      "confusion_matrix": [
+        [
+          25,
+          0,
+          20
+        ],
+        [
+          13,
+          0,
+          7
+        ],
+        [
+          19,
+          0,
+          44
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.43859649122807015,
+          "recall": 0.5555555555555556,
+          "f1-score": 0.49019607843137253,
+          "support": 45.0
+        },
+        "D": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 20.0
+        },
+        "H": {
+          "precision": 0.6197183098591549,
+          "recall": 0.6984126984126984,
+          "f1-score": 0.6567164179104478,
+          "support": 63.0
+        },
+        "accuracy": 0.5390625,
+        "macro avg": {
+          "precision": 0.35277160036240834,
+          "recall": 0.41798941798941797,
+          "f1-score": 0.3823041654472734,
+          "support": 128.0
+        },
+        "weighted avg": {
+          "precision": 0.45921168458117123,
+          "recall": 0.5390625,
+          "f1-score": 0.4955621707638279,
+          "support": 128.0
+        }
+      }
+    },
+    "Platt calibrated": {
+      "match_count": 128,
+      "accuracy": 0.53125,
+      "log_loss": 1.026710090659026,
+      "brier_score": 0.6116272979049853,
+      "ece": 0.10756633921110359,
+      "classwise_ece": {
+        "A": 0.1378696602053524,
+        "D": 0.05027525645486517,
+        "H": 0.08381296356500223
+      },
+      "macro_f1": 0.3615888615888616,
+      "weighted_f1": 0.4763801443488943,
+      "draw_recall": 0.0,
+      "away_recall": 0.4,
+      "home_recall": 0.7936507936507936,
+      "predicted_away_wins": 43,
+      "predicted_draws": 0,
+      "predicted_home_wins": 85,
+      "confusion_matrix": [
+        [
+          18,
+          0,
+          27
+        ],
+        [
+          12,
+          0,
+          8
+        ],
+        [
+          13,
+          0,
+          50
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.4186046511627907,
+          "recall": 0.4,
+          "f1-score": 0.4090909090909091,
+          "support": 45.0
+        },
+        "D": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 20.0
+        },
+        "H": {
+          "precision": 0.5882352941176471,
+          "recall": 0.7936507936507936,
+          "f1-score": 0.6756756756756757,
+          "support": 63.0
+        },
+        "accuracy": 0.53125,
+        "macro avg": {
+          "precision": 0.33561331509347925,
+          "recall": 0.3978835978835979,
+          "f1-score": 0.3615888615888616,
+          "support": 128.0
+        },
+        "weighted avg": {
+          "precision": 0.43668775649794805,
+          "recall": 0.53125,
+          "f1-score": 0.4763801443488943,
+          "support": 128.0
+        }
+      }
+    },
+    "Isotonic calibrated": {
+      "match_count": 128,
+      "accuracy": 0.5625,
+      "log_loss": 1.2808477644584566,
+      "brier_score": 0.6014870583474867,
+      "ece": 0.12991286001728336,
+      "classwise_ece": {
+        "A": 0.11588682185185492,
+        "D": 0.0742801628797522,
+        "H": 0.10018346991298346
+      },
+      "macro_f1": 0.472234880129617,
+      "weighted_f1": 0.5422772129186603,
+      "draw_recall": 0.15,
+      "away_recall": 0.5555555555555556,
+      "home_recall": 0.6984126984126984,
+      "predicted_away_wins": 54,
+      "predicted_draws": 4,
+      "predicted_home_wins": 70,
+      "confusion_matrix": [
+        [
+          25,
+          1,
+          19
+        ],
+        [
+          10,
+          3,
+          7
+        ],
+        [
+          19,
+          0,
+          44
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.46296296296296297,
+          "recall": 0.5555555555555556,
+          "f1-score": 0.5050505050505051,
+          "support": 45.0
+        },
+        "D": {
+          "precision": 0.75,
+          "recall": 0.15,
+          "f1-score": 0.25,
+          "support": 20.0
+        },
+        "H": {
+          "precision": 0.6285714285714286,
+          "recall": 0.6984126984126984,
+          "f1-score": 0.6616541353383458,
+          "support": 63.0
+        },
+        "accuracy": 0.5625,
+        "macro avg": {
+          "precision": 0.6138447971781306,
+          "recall": 0.46798941798941796,
+          "f1-score": 0.472234880129617,
+          "support": 128.0
+        },
+        "weighted avg": {
+          "precision": 0.5893229166666667,
+          "recall": 0.5625,
+          "f1-score": 0.5422772129186603,
+          "support": 128.0
+        }
+      }
+    }
+  }
+}
