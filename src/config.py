@@ -31,3 +31,9 @@ EXPANDED_CANDIDATE_MODEL = (
     / "saved_models"
     / "expanded_match_model_candidate.joblib"
 )
+
+PREDICTION_HISTORY_DATABASE = (
+    PROJECT_ROOT
+    / "data"
+    / "prediction_history.db"
+)
