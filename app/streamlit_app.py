@@ -2093,6 +2093,77 @@ def render_prediction_history(
         hide_index=True,
     )
 
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'Delete a saved prediction'
+            '</div>'
+            '<div class="section-description">'
+            'Use this only for analyses saved by mistake. '
+            'Deletion is permanent and immediately updates '
+            'all history metrics.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    deletion_ids = (
+        history_frame[
+            "prediction_id"
+        ]
+        .astype(int)
+        .tolist()
+    )
+
+    deletion_lookup = {
+        int(row.prediction_id): (
+            f"#{int(row.prediction_id)} · "
+            f"{row.api_home_team} vs "
+            f"{row.api_away_team} · "
+            f"{row.status}"
+        )
+        for row in history_frame.itertuples(
+            index=False
+        )
+    }
+
+    deletion_prediction_id = st.selectbox(
+        "Saved prediction",
+        options=deletion_ids,
+        format_func=lambda value: (
+            deletion_lookup[value]
+        ),
+        key="delete_prediction_id",
+    )
+
+    confirm_deletion = st.checkbox(
+        "I understand that this record will be permanently deleted.",
+        key="confirm_prediction_deletion",
+    )
+
+    delete_submitted = st.button(
+        "Delete Selected Prediction",
+        type="secondary",
+        width="stretch",
+        disabled=(
+            not confirm_deletion
+        ),
+        key="delete_selected_prediction_button",
+    )
+
+    if delete_submitted:
+        history_service.delete_prediction(
+            prediction_id=int(
+                deletion_prediction_id
+            )
+        )
+
+        st.success(
+            "The selected prediction was deleted."
+        )
+
+        st.rerun()
+
     pending_frame = history_frame[
         history_frame["status"]
         == "PENDING"
