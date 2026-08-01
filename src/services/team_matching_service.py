@@ -457,6 +457,16 @@ class TeamMatchingService:
             "rasenballsport leipzig",
         },
         {
+            "union saint gilloise",
+            "union saint-gilloise",
+            "royale union saint gilloise",
+            "royale union saint-gilloise",
+            "r union saint gilloise",
+            "r union saint-gilloise",
+            "union sg",
+            "usg",
+        },
+        {
             "real madrid",
             "real madrid cf",
         },
