@@ -1,0 +1,398 @@
+{
+  "experiment_name": "production_champions_league_ensemble",
+  "data_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/raw/all_matches.csv",
+  "model_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/saved_models/match_model.joblib",
+  "test_start_date": "2024-07-01",
+  "test_matches": 378,
+  "test_start": "2024-09-17T16:45:00+00:00",
+  "test_end": "2026-05-30T16:00:00+00:00",
+  "best_accuracy_configuration": "50 ML / 50 Poisson",
+  "best_log_loss_configuration": "40 ML / 60 Poisson",
+  "best_brier_configuration": "60 ML / 40 Poisson",
+  "results": {
+    "ML only": {
+      "match_count": 378,
+      "accuracy": 0.582010582010582,
+      "log_loss": 1.00746248572528,
+      "brier_score": 0.5751350053310867,
+      "macro_f1": 0.464036554359135,
+      "weighted_f1": 0.5539508107864483,
+      "draw_recall": 0.1016949152542373,
+      "away_recall": 0.5859375,
+      "home_recall": 0.7277486910994765,
+      "predicted_away_wins": 151,
+      "predicted_draws": 11,
+      "predicted_home_wins": 216,
+      "confusion_matrix": [
+        [
+          75,
+          2,
+          51
+        ],
+        [
+          27,
+          6,
+          26
+        ],
+        [
+          49,
+          3,
+          139
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.4966887417218543,
+          "recall": 0.5859375,
+          "f1-score": 0.5376344086021505,
+          "support": 128.0
+        },
+        "D": {
+          "precision": 0.5454545454545454,
+          "recall": 0.1016949152542373,
+          "f1-score": 0.17142857142857143,
+          "support": 59.0
+        },
+        "H": {
+          "precision": 0.6435185185185185,
+          "recall": 0.7277486910994765,
+          "f1-score": 0.683046683046683,
+          "support": 191.0
+        },
+        "accuracy": 0.582010582010582,
+        "macro avg": {
+          "precision": 0.5618872685649728,
+          "recall": 0.4717937021179046,
+          "f1-score": 0.464036554359135,
+          "support": 378.0
+        },
+        "weighted avg": {
+          "precision": 0.5784921009504036,
+          "recall": 0.582010582010582,
+          "f1-score": 0.5539508107864483,
+          "support": 378.0
+        }
+      }
+    },
+    "Poisson only": {
+      "match_count": 378,
+      "accuracy": 0.5740740740740741,
+      "log_loss": 0.9821742739124736,
+      "brier_score": 0.5777933423280424,
+      "macro_f1": 0.40964085297418634,
+      "weighted_f1": 0.527809755402348,
+      "draw_recall": 0.0,
+      "away_recall": 0.6484375,
+      "home_recall": 0.7015706806282722,
+      "predicted_away_wins": 169,
+      "predicted_draws": 0,
+      "predicted_home_wins": 209,
+      "confusion_matrix": [
+        [
+          83,
+          0,
+          45
+        ],
+        [
+          29,
+          0,
+          30
+        ],
+        [
+          57,
+          0,
+          134
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.4911242603550296,
+          "recall": 0.6484375,
+          "f1-score": 0.5589225589225589,
+          "support": 128.0
+        },
+        "D": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 59.0
+        },
+        "H": {
+          "precision": 0.6411483253588517,
+          "recall": 0.7015706806282722,
+          "f1-score": 0.67,
+          "support": 191.0
+        },
+        "accuracy": 0.5740740740740741,
+        "macro avg": {
+          "precision": 0.37742419523796045,
+          "recall": 0.4500027268760907,
+          "f1-score": 0.40964085297418634,
+          "support": 378.0
+        },
+        "weighted avg": {
+          "precision": 0.49027310970630805,
+          "recall": 0.5740740740740741,
+          "f1-score": 0.527809755402348,
+          "support": 378.0
+        }
+      }
+    },
+    "70 ML / 30 Poisson": {
+      "match_count": 378,
+      "accuracy": 0.5740740740740741,
+      "log_loss": 0.986181400516355,
+      "brier_score": 0.570898172757336,
+      "macro_f1": 0.42572802162047574,
+      "weighted_f1": 0.5332489651440732,
+      "draw_recall": 0.03389830508474576,
+      "away_recall": 0.59375,
+      "home_recall": 0.7277486910994765,
+      "predicted_away_wins": 156,
+      "predicted_draws": 2,
+      "predicted_home_wins": 220,
+      "confusion_matrix": [
+        [
+          76,
+          0,
+          52
+        ],
+        [
+          28,
+          2,
+          29
+        ],
+        [
+          52,
+          0,
+          139
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.48717948717948717,
+          "recall": 0.59375,
+          "f1-score": 0.5352112676056338,
+          "support": 128.0
+        },
+        "D": {
+          "precision": 1.0,
+          "recall": 0.03389830508474576,
+          "f1-score": 0.06557377049180328,
+          "support": 59.0
+        },
+        "H": {
+          "precision": 0.6318181818181818,
+          "recall": 0.7277486910994765,
+          "f1-score": 0.6763990267639902,
+          "support": 191.0
+        },
+        "accuracy": 0.5740740740740741,
+        "macro avg": {
+          "precision": 0.7063325563325563,
+          "recall": 0.4517989987280741,
+          "f1-score": 0.42572802162047574,
+          "support": 378.0
+        },
+        "weighted avg": {
+          "precision": 0.6403075319741987,
+          "recall": 0.5740740740740741,
+          "f1-score": 0.5332489651440732,
+          "support": 378.0
+        }
+      }
+    },
+    "60 ML / 40 Poisson": {
+      "match_count": 378,
+      "accuracy": 0.5846560846560847,
+      "log_loss": 0.9822349863650544,
+      "brier_score": 0.5704448159323405,
+      "macro_f1": 0.4342059666521569,
+      "weighted_f1": 0.5432277391073335,
+      "draw_recall": 0.03389830508474576,
+      "away_recall": 0.6171875,
+      "home_recall": 0.7329842931937173,
+      "predicted_away_wins": 158,
+      "predicted_draws": 2,
+      "predicted_home_wins": 218,
+      "confusion_matrix": [
+        [
+          79,
+          0,
+          49
+        ],
+        [
+          28,
+          2,
+          29
+        ],
+        [
+          51,
+          0,
+          140
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.5,
+          "recall": 0.6171875,
+          "f1-score": 0.5524475524475524,
+          "support": 128.0
+        },
+        "D": {
+          "precision": 1.0,
+          "recall": 0.03389830508474576,
+          "f1-score": 0.06557377049180328,
+          "support": 59.0
+        },
+        "H": {
+          "precision": 0.6422018348623854,
+          "recall": 0.7329842931937173,
+          "f1-score": 0.684596577017115,
+          "support": 191.0
+        },
+        "accuracy": 0.5846560846560847,
+        "macro avg": {
+          "precision": 0.7140672782874619,
+          "recall": 0.46135669942615437,
+          "f1-score": 0.4342059666521569,
+          "support": 378.0
+        },
+        "weighted avg": {
+          "precision": 0.6498956361341682,
+          "recall": 0.5846560846560847,
+          "f1-score": 0.5432277391073335,
+          "support": 378.0
+        }
+      }
+    },
+    "50 ML / 50 Poisson": {
+      "match_count": 378,
+      "accuracy": 0.58994708994709,
+      "log_loss": 0.9794425127734705,
+      "brier_score": 0.570470919457139,
+      "macro_f1": 0.43917025498584444,
+      "weighted_f1": 0.5485746883467574,
+      "draw_recall": 0.03389830508474576,
+      "away_recall": 0.640625,
+      "home_recall": 0.7277486910994765,
+      "predicted_away_wins": 162,
+      "predicted_draws": 2,
+      "predicted_home_wins": 214,
+      "confusion_matrix": [
+        [
+          82,
+          0,
+          46
+        ],
+        [
+          28,
+          2,
+          29
+        ],
+        [
+          52,
+          0,
+          139
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.5061728395061729,
+          "recall": 0.640625,
+          "f1-score": 0.5655172413793104,
+          "support": 128.0
+        },
+        "D": {
+          "precision": 1.0,
+          "recall": 0.03389830508474576,
+          "f1-score": 0.06557377049180328,
+          "support": 59.0
+        },
+        "H": {
+          "precision": 0.6495327102803738,
+          "recall": 0.7277486910994765,
+          "f1-score": 0.6864197530864198,
+          "support": 191.0
+        },
+        "accuracy": 0.58994708994709,
+        "macro avg": {
+          "precision": 0.7185685165955156,
+          "recall": 0.4674239987280741,
+          "f1-score": 0.43917025498584444,
+          "support": 378.0
+        },
+        "weighted avg": {
+          "precision": 0.6556901352389988,
+          "recall": 0.58994708994709,
+          "f1-score": 0.5485746883467574,
+          "support": 378.0
+        }
+      }
+    },
+    "40 ML / 60 Poisson": {
+      "match_count": 378,
+      "accuracy": 0.582010582010582,
+      "log_loss": 0.9777201121455545,
+      "brier_score": 0.5709764833317316,
+      "macro_f1": 0.41381003165574803,
+      "weighted_f1": 0.5344999555298677,
+      "draw_recall": 0.0,
+      "away_recall": 0.6328125,
+      "home_recall": 0.7277486910994765,
+      "predicted_away_wins": 163,
+      "predicted_draws": 0,
+      "predicted_home_wins": 215,
+      "confusion_matrix": [
+        [
+          81,
+          0,
+          47
+        ],
+        [
+          30,
+          0,
+          29
+        ],
+        [
+          52,
+          0,
+          139
+        ]
+      ],
+      "classification_report": {
+        "A": {
+          "precision": 0.49693251533742333,
+          "recall": 0.6328125,
+          "f1-score": 0.5567010309278351,
+          "support": 128.0
+        },
+        "D": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 59.0
+        },
+        "H": {
+          "precision": 0.6465116279069767,
+          "recall": 0.7277486910994765,
+          "f1-score": 0.6847290640394089,
+          "support": 191.0
+        },
+        "accuracy": 0.582010582010582,
+        "macro avg": {
+          "precision": 0.3811480477481333,
+          "recall": 0.4535203970331588,
+          "f1-score": 0.41381003165574803,
+          "support": 378.0
+        },
+        "weighted avg": {
+          "precision": 0.4949499547445046,
+          "recall": 0.582010582010582,
+          "f1-score": 0.5344999555298677,
+          "support": 378.0
+        }
+      }
+    }
+  }
+}
