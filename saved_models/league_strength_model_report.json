@@ -1,0 +1,197 @@
+{
+  "experiment_name": "league_strength_home_away",
+  "expanded_dataset_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/processed/all_matches_expanded_clean.csv",
+  "original_dataset_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/data/raw/all_matches.csv",
+  "candidate_model_path": "/Users/kaankasimoglu/CodeProjects/champions-league-predictor/saved_models/league_strength_model_candidate.joblib",
+  "test_start_date": "2024-09-17T00:00:00+00:00",
+  "test_end_date": "2026-05-30T00:00:00+00:00",
+  "test_matches": 378,
+  "baseline_training_matches": 2767,
+  "candidate_training_matches": 31743,
+  "feature_count": 38,
+  "feature_columns": [
+    "home_elo",
+    "away_elo",
+    "elo_difference",
+    "absolute_elo_difference",
+    "squared_elo_difference",
+    "close_elo_match",
+    "home_league_strength",
+    "away_league_strength",
+    "league_strength_difference",
+    "cross_league_match",
+    "home_form_points",
+    "away_form_points",
+    "form_difference",
+    "home_goals_scored",
+    "away_goals_scored",
+    "home_goals_conceded",
+    "away_goals_conceded",
+    "home_attack_matchup",
+    "away_attack_matchup",
+    "attack_matchup_difference",
+    "home_goal_difference",
+    "away_goal_difference",
+    "home_win_rate",
+    "away_win_rate",
+    "home_home_form_points",
+    "away_away_form_points",
+    "home_away_form_difference",
+    "home_home_goals_scored",
+    "away_away_goals_scored",
+    "home_home_goals_conceded",
+    "away_away_goals_conceded",
+    "home_home_goal_difference",
+    "away_away_goal_difference",
+    "home_home_win_rate",
+    "away_away_win_rate",
+    "home_rest_days",
+    "away_rest_days",
+    "is_champions_league"
+  ],
+  "baseline": {
+    "accuracy": 0.5714285714285714,
+    "log_loss": 0.9645731029588549,
+    "away_precision": 0.5070422535211268,
+    "away_recall": 0.5625,
+    "away_f1": 0.5333333333333333,
+    "draw_precision": 0.6,
+    "draw_recall": 0.05084745762711865,
+    "draw_f1": 0.09375,
+    "home_precision": 0.6103896103896104,
+    "home_recall": 0.7382198952879581,
+    "home_f1": 0.6682464454976303,
+    "macro_f1": 0.43177659294365456,
+    "weighted_f1": 0.5328915020018891,
+    "predicted_away_wins": 142,
+    "predicted_draws": 5,
+    "predicted_home_wins": 231,
+    "correct_draws": 3,
+    "classification_report": {
+      "A": {
+        "precision": 0.5070422535211268,
+        "recall": 0.5625,
+        "f1-score": 0.5333333333333333,
+        "support": 128.0
+      },
+      "D": {
+        "precision": 0.6,
+        "recall": 0.05084745762711865,
+        "f1-score": 0.09375,
+        "support": 59.0
+      },
+      "H": {
+        "precision": 0.6103896103896104,
+        "recall": 0.7382198952879581,
+        "f1-score": 0.6682464454976303,
+        "support": 191.0
+      },
+      "accuracy": 0.5714285714285714,
+      "macro avg": {
+        "precision": 0.5724772879702457,
+        "recall": 0.45052245097169225,
+        "f1-score": 0.43177659294365456,
+        "support": 378.0
+      },
+      "weighted avg": {
+        "precision": 0.5737720212569307,
+        "recall": 0.5714285714285714,
+        "f1-score": 0.5328915020018891,
+        "support": 378.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        72,
+        1,
+        55
+      ],
+      [
+        21,
+        3,
+        35
+      ],
+      [
+        49,
+        1,
+        141
+      ]
+    ]
+  },
+  "candidate": {
+    "accuracy": 0.5714285714285714,
+    "log_loss": 0.9495676933805436,
+    "away_precision": 0.5177304964539007,
+    "away_recall": 0.5703125,
+    "away_f1": 0.5427509293680297,
+    "draw_precision": 1.0,
+    "draw_recall": 0.01694915254237288,
+    "draw_f1": 0.03333333333333333,
+    "home_precision": 0.6016949152542372,
+    "home_recall": 0.743455497382199,
+    "home_f1": 0.6651053864168618,
+    "macro_f1": 0.4137298830394083,
+    "weighted_f1": 0.5250632656915214,
+    "predicted_away_wins": 141,
+    "predicted_draws": 1,
+    "predicted_home_wins": 236,
+    "correct_draws": 1,
+    "classification_report": {
+      "A": {
+        "precision": 0.5177304964539007,
+        "recall": 0.5703125,
+        "f1-score": 0.5427509293680297,
+        "support": 128.0
+      },
+      "D": {
+        "precision": 1.0,
+        "recall": 0.01694915254237288,
+        "f1-score": 0.03333333333333333,
+        "support": 59.0
+      },
+      "H": {
+        "precision": 0.6016949152542372,
+        "recall": 0.743455497382199,
+        "f1-score": 0.6651053864168618,
+        "support": 191.0
+      },
+      "accuracy": 0.5714285714285714,
+      "macro avg": {
+        "precision": 0.7064751372360459,
+        "recall": 0.4435723833081906,
+        "f1-score": 0.4137298830394083,
+        "support": 378.0
+      },
+      "weighted avg": {
+        "precision": 0.6354318316393085,
+        "recall": 0.5714285714285714,
+        "f1-score": 0.5250632656915214,
+        "support": 378.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        73,
+        0,
+        55
+      ],
+      [
+        19,
+        1,
+        39
+      ],
+      [
+        49,
+        0,
+        142
+      ]
+    ]
+  },
+  "comparison": {
+    "accuracy_difference": 0.0,
+    "log_loss_difference": -0.015005409578311313,
+    "macro_f1_difference": -0.018046709904246283,
+    "draw_recall_difference": -0.03389830508474577,
+    "recommendation": "REVIEW_CANDIDATE"
+  }
+}

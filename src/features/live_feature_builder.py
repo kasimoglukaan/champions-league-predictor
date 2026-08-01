@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections import defaultdict, deque
-from typing import Deque, Dict, Tuple
+from typing import Deque, Dict
 
 import numpy as np
 import pandas as pd
@@ -7,9 +9,14 @@ import pandas as pd
 from src.features.feature_builder import (
     FeatureBuilder,
 )
-
-
-MatchHistory = Tuple[int, int, int]
+from src.features.league_strength import (
+    LeagueStrengthResolver,
+)
+from src.features.match_statistics import (
+    MatchHistory,
+    append_result,
+    summarize_history,
+)
 
 
 class LiveFeatureBuilder:
@@ -20,6 +27,11 @@ class LiveFeatureBuilder:
         home_advantage: float = 60.0,
         form_window: int = 8,
     ) -> None:
+        if form_window < 1:
+            raise ValueError(
+                "form_window must be at least 1."
+            )
+
         self.initial_elo = initial_elo
         self.k_factor = k_factor
         self.home_advantage = (
@@ -34,7 +46,25 @@ class LiveFeatureBuilder:
             lambda: self.initial_elo
         )
 
-        self.histories: Dict[
+        self.overall_histories: Dict[
+            str,
+            Deque[MatchHistory],
+        ] = defaultdict(
+            lambda: deque(
+                maxlen=self.form_window
+            )
+        )
+
+        self.home_histories: Dict[
+            str,
+            Deque[MatchHistory],
+        ] = defaultdict(
+            lambda: deque(
+                maxlen=self.form_window
+            )
+        )
+
+        self.away_histories: Dict[
             str,
             Deque[MatchHistory],
         ] = defaultdict(
@@ -48,11 +78,27 @@ class LiveFeatureBuilder:
             pd.Timestamp,
         ] = {}
 
+        self.team_leagues: Dict[
+            str,
+            str,
+        ] = {}
+
         self.latest_data_date = (
-            pd.Timestamp.now(tz="UTC")
+            pd.Timestamp.now(
+                tz="UTC"
+            )
         )
 
         self.is_fitted = False
+
+    @property
+    def histories(
+        self,
+    ) -> Dict[
+        str,
+        Deque[MatchHistory],
+    ]:
+        return self.overall_histories
 
     def fit(
         self,
@@ -68,14 +114,18 @@ class LiveFeatureBuilder:
 
         missing_columns = (
             required_columns
-            - set(matches.columns)
+            - set(
+                matches.columns
+            )
         )
 
         if missing_columns:
             raise ValueError(
                 "Missing match columns: "
                 + ", ".join(
-                    sorted(missing_columns)
+                    sorted(
+                        missing_columns
+                    )
                 )
             )
 
@@ -87,21 +137,44 @@ class LiveFeatureBuilder:
             errors="raise",
         )
 
+        if (
+            "competition"
+            not in dataframe.columns
+        ):
+            dataframe[
+                "competition"
+            ] = "UNKNOWN"
+
         dataframe = dataframe.sort_values(
             "date"
-        ).reset_index(drop=True)
+        ).reset_index(
+            drop=True
+        )
 
         self.ratings = defaultdict(
             lambda: self.initial_elo
         )
 
-        self.histories = defaultdict(
+        self.overall_histories = defaultdict(
+            lambda: deque(
+                maxlen=self.form_window
+            )
+        )
+
+        self.home_histories = defaultdict(
+            lambda: deque(
+                maxlen=self.form_window
+            )
+        )
+
+        self.away_histories = defaultdict(
             lambda: deque(
                 maxlen=self.form_window
             )
         )
 
         self.last_match_dates = {}
+        self.team_leagues = {}
 
         for row in dataframe.itertuples(
             index=False
@@ -122,6 +195,10 @@ class LiveFeatureBuilder:
                 row.away_goals
             )
 
+            competition = str(
+                row.competition
+            )
+
             self._update_elo(
                 home_team=home_team,
                 away_team=away_team,
@@ -129,16 +206,60 @@ class LiveFeatureBuilder:
                 away_goals=away_goals,
             )
 
-            self._append_history(
-                team=home_team,
-                goals_scored=home_goals,
-                goals_conceded=away_goals,
+            append_result(
+                history=(
+                    self.overall_histories[
+                        home_team
+                    ]
+                ),
+                goals_scored=(
+                    home_goals
+                ),
+                goals_conceded=(
+                    away_goals
+                ),
             )
 
-            self._append_history(
-                team=away_team,
-                goals_scored=away_goals,
-                goals_conceded=home_goals,
+            append_result(
+                history=(
+                    self.overall_histories[
+                        away_team
+                    ]
+                ),
+                goals_scored=(
+                    away_goals
+                ),
+                goals_conceded=(
+                    home_goals
+                ),
+            )
+
+            append_result(
+                history=(
+                    self.home_histories[
+                        home_team
+                    ]
+                ),
+                goals_scored=(
+                    home_goals
+                ),
+                goals_conceded=(
+                    away_goals
+                ),
+            )
+
+            append_result(
+                history=(
+                    self.away_histories[
+                        away_team
+                    ]
+                ),
+                goals_scored=(
+                    away_goals
+                ),
+                goals_conceded=(
+                    home_goals
+                ),
             )
 
             self.last_match_dates[
@@ -149,9 +270,32 @@ class LiveFeatureBuilder:
                 away_team
             ] = row.date
 
+            if (
+                LeagueStrengthResolver
+                .is_domestic(
+                    competition
+                )
+            ):
+                canonical_league = (
+                    LeagueStrengthResolver
+                    .canonical_competition(
+                        competition
+                    )
+                )
+
+                self.team_leagues[
+                    home_team
+                ] = canonical_league
+
+                self.team_leagues[
+                    away_team
+                ] = canonical_league
+
         if not dataframe.empty:
             self.latest_data_date = (
-                dataframe["date"].max()
+                dataframe[
+                    "date"
+                ].max()
             )
 
         self.is_fitted = True
@@ -175,26 +319,96 @@ class LiveFeatureBuilder:
             )
 
         home_elo = float(
-            self.ratings[home_team]
+            self.ratings[
+                home_team
+            ]
         )
 
         away_elo = float(
-            self.ratings[away_team]
+            self.ratings[
+                away_team
+            ]
         )
 
         home_stats = (
-            self._history_features(
-                self.histories[
+            summarize_history(
+                self.overall_histories[
                     home_team
                 ]
             )
         )
 
         away_stats = (
-            self._history_features(
-                self.histories[
+            summarize_history(
+                self.overall_histories[
                     away_team
                 ]
+            )
+        )
+
+        home_home_stats = (
+            summarize_history(
+                self.home_histories[
+                    home_team
+                ]
+            )
+        )
+
+        away_away_stats = (
+            summarize_history(
+                self.away_histories[
+                    away_team
+                ]
+            )
+        )
+
+        home_league = (
+            self.team_leagues.get(
+                home_team
+            )
+        )
+
+        away_league = (
+            self.team_leagues.get(
+                away_team
+            )
+        )
+
+        home_league_strength = (
+            LeagueStrengthResolver
+            .resolve_team_strength(
+                team_league=(
+                    home_league
+                ),
+                current_competition=(
+                    competition
+                ),
+            )
+        )
+
+        away_league_strength = (
+            LeagueStrengthResolver
+            .resolve_team_strength(
+                team_league=(
+                    away_league
+                ),
+                current_competition=(
+                    competition
+                ),
+            )
+        )
+
+        league_strength_difference = (
+            home_league_strength
+            - away_league_strength
+        )
+
+        cross_league_match = int(
+            bool(
+                home_league
+                and away_league
+                and home_league
+                != away_league
             )
         )
 
@@ -205,7 +419,8 @@ class LiveFeatureBuilder:
         )
 
         absolute_elo_difference = abs(
-            home_elo - away_elo
+            home_elo
+            - away_elo
         )
 
         squared_elo_difference = (
@@ -213,18 +428,23 @@ class LiveFeatureBuilder:
         )
 
         close_elo_match = int(
-            absolute_elo_difference < 75
+            absolute_elo_difference
+            < 75
         )
 
         home_attack_matchup = (
-            home_stats["goals_scored"]
+            home_stats[
+                "goals_scored"
+            ]
             - away_stats[
                 "goals_conceded"
             ]
         )
 
         away_attack_matchup = (
-            away_stats["goals_scored"]
+            away_stats[
+                "goals_scored"
+            ]
             - home_stats[
                 "goals_conceded"
             ]
@@ -236,14 +456,22 @@ class LiveFeatureBuilder:
         )
 
         prediction_date = max(
-            pd.Timestamp.now(tz="UTC"),
+            pd.Timestamp.now(
+                tz="UTC"
+            ),
             self.latest_data_date
-            + pd.Timedelta(days=1),
+            + pd.Timedelta(
+                days=1
+            ),
         )
 
         feature_row = {
-            "home_elo": home_elo,
-            "away_elo": away_elo,
+            "home_elo": (
+                home_elo
+            ),
+            "away_elo": (
+                away_elo
+            ),
             "elo_difference": (
                 elo_difference
             ),
@@ -258,15 +486,36 @@ class LiveFeatureBuilder:
                 close_elo_match
             ),
 
+            "home_league_strength": (
+                home_league_strength
+            ),
+            "away_league_strength": (
+                away_league_strength
+            ),
+            "league_strength_difference": (
+                league_strength_difference
+            ),
+            "cross_league_match": (
+                cross_league_match
+            ),
+
             "home_form_points": (
-                home_stats["points"]
+                home_stats[
+                    "points"
+                ]
             ),
             "away_form_points": (
-                away_stats["points"]
+                away_stats[
+                    "points"
+                ]
             ),
             "form_difference": (
-                home_stats["points"]
-                - away_stats["points"]
+                home_stats[
+                    "points"
+                ]
+                - away_stats[
+                    "points"
+                ]
             ),
 
             "home_goals_scored": (
@@ -312,10 +561,76 @@ class LiveFeatureBuilder:
             ),
 
             "home_win_rate": (
-                home_stats["win_rate"]
+                home_stats[
+                    "win_rate"
+                ]
             ),
             "away_win_rate": (
-                away_stats["win_rate"]
+                away_stats[
+                    "win_rate"
+                ]
+            ),
+
+            "home_home_form_points": (
+                home_home_stats[
+                    "points"
+                ]
+            ),
+            "away_away_form_points": (
+                away_away_stats[
+                    "points"
+                ]
+            ),
+            "home_away_form_difference": (
+                home_home_stats[
+                    "points"
+                ]
+                - away_away_stats[
+                    "points"
+                ]
+            ),
+
+            "home_home_goals_scored": (
+                home_home_stats[
+                    "goals_scored"
+                ]
+            ),
+            "away_away_goals_scored": (
+                away_away_stats[
+                    "goals_scored"
+                ]
+            ),
+            "home_home_goals_conceded": (
+                home_home_stats[
+                    "goals_conceded"
+                ]
+            ),
+            "away_away_goals_conceded": (
+                away_away_stats[
+                    "goals_conceded"
+                ]
+            ),
+
+            "home_home_goal_difference": (
+                home_home_stats[
+                    "goal_difference"
+                ]
+            ),
+            "away_away_goal_difference": (
+                away_away_stats[
+                    "goal_difference"
+                ]
+            ),
+
+            "home_home_win_rate": (
+                home_home_stats[
+                    "win_rate"
+                ]
+            ),
+            "away_away_win_rate": (
+                away_away_stats[
+                    "win_rate"
+                ]
             ),
 
             "home_rest_days": (
@@ -336,16 +651,24 @@ class LiveFeatureBuilder:
             ),
 
             "is_champions_league": int(
-                competition == "CL"
+                LeagueStrengthResolver
+                .is_champions_league(
+                    competition
+                )
             ),
         }
 
         dataframe = pd.DataFrame(
-            [feature_row]
+            [
+                feature_row
+            ]
         )
 
         dataframe = dataframe.replace(
-            [np.inf, -np.inf],
+            [
+                np.inf,
+                -np.inf,
+            ],
             np.nan,
         )
 
@@ -353,140 +676,128 @@ class LiveFeatureBuilder:
             FeatureBuilder.FEATURE_COLUMNS
         ]
 
-    def get_teams(self) -> list:
+    def get_teams(
+        self,
+    ) -> list:
         teams = set(
             self.ratings.keys()
         )
 
         teams.update(
-            self.histories.keys()
+            self.overall_histories.keys()
         )
 
-        return sorted(teams)
+        return sorted(
+            teams
+        )
 
     def get_team_summary(
         self,
         team_name: str,
     ) -> dict:
-        statistics = (
-            self._history_features(
-                self.histories[
+        overall_statistics = (
+            summarize_history(
+                self.overall_histories[
                     team_name
                 ]
             )
         )
 
+        home_statistics = (
+            summarize_history(
+                self.home_histories[
+                    team_name
+                ]
+            )
+        )
+
+        away_statistics = (
+            summarize_history(
+                self.away_histories[
+                    team_name
+                ]
+            )
+        )
+
+        league = (
+            self.team_leagues.get(
+                team_name
+            )
+        )
+
         return {
-            "team": team_name,
+            "team": (
+                team_name
+            ),
             "elo": round(
                 self.ratings[
                     team_name
                 ],
                 1,
             ),
+            "league": (
+                league
+                or "UNKNOWN"
+            ),
+            "league_strength": round(
+                LeagueStrengthResolver
+                .resolve_team_strength(
+                    team_league=league,
+                    current_competition=(
+                        "UNKNOWN"
+                    ),
+                ),
+                3,
+            ),
             "form_points": round(
-                statistics["points"],
+                overall_statistics[
+                    "points"
+                ],
                 2,
             ),
             "goals_scored": round(
-                statistics[
+                overall_statistics[
                     "goals_scored"
                 ],
                 2,
             ),
             "goals_conceded": round(
-                statistics[
+                overall_statistics[
                     "goals_conceded"
                 ],
                 2,
             ),
             "win_rate": round(
-                statistics["win_rate"],
+                overall_statistics[
+                    "win_rate"
+                ],
+                3,
+            ),
+            "home_form_points": round(
+                home_statistics[
+                    "points"
+                ],
+                2,
+            ),
+            "home_win_rate": round(
+                home_statistics[
+                    "win_rate"
+                ],
+                3,
+            ),
+            "away_form_points": round(
+                away_statistics[
+                    "points"
+                ],
+                2,
+            ),
+            "away_win_rate": round(
+                away_statistics[
+                    "win_rate"
+                ],
                 3,
             ),
         }
-
-    def _history_features(
-        self,
-        history: Deque[MatchHistory],
-    ) -> dict:
-        if not history:
-            return {
-                "points": 1.0,
-                "goals_scored": 1.2,
-                "goals_conceded": 1.2,
-                "goal_difference": 0.0,
-                "win_rate": 0.33,
-            }
-
-        matches = list(history)
-
-        points = np.mean(
-            [
-                match[2]
-                for match in matches
-            ]
-        )
-
-        goals_scored = np.mean(
-            [
-                match[0]
-                for match in matches
-            ]
-        )
-
-        goals_conceded = np.mean(
-            [
-                match[1]
-                for match in matches
-            ]
-        )
-
-        wins = sum(
-            1
-            for match in matches
-            if match[2] == 3
-        )
-
-        return {
-            "points": float(points),
-            "goals_scored": float(
-                goals_scored
-            ),
-            "goals_conceded": float(
-                goals_conceded
-            ),
-            "goal_difference": float(
-                goals_scored
-                - goals_conceded
-            ),
-            "win_rate": float(
-                wins / len(matches)
-            ),
-        }
-
-    def _append_history(
-        self,
-        team: str,
-        goals_scored: int,
-        goals_conceded: int,
-    ) -> None:
-        if goals_scored > goals_conceded:
-            points = 3
-
-        elif goals_scored == goals_conceded:
-            points = 1
-
-        else:
-            points = 0
-
-        self.histories[team].append(
-            (
-                goals_scored,
-                goals_conceded,
-                points,
-            )
-        )
 
     def _update_elo(
         self,
@@ -526,12 +837,15 @@ class LiveFeatureBuilder:
             actual_home = 0.0
 
         goal_margin = abs(
-            home_goals - away_goals
+            home_goals
+            - away_goals
         )
 
         margin_multiplier = (
             1.0
-            + np.log1p(goal_margin)
+            + np.log1p(
+                goal_margin
+            )
             if goal_margin > 0
             else 1.0
         )
@@ -545,12 +859,16 @@ class LiveFeatureBuilder:
             )
         )
 
-        self.ratings[home_team] = (
+        self.ratings[
+            home_team
+        ] = (
             home_rating
             + rating_change
         )
 
-        self.ratings[away_team] = (
+        self.ratings[
+            away_team
+        ] = (
             away_rating
             - rating_change
         )
@@ -577,6 +895,9 @@ class LiveFeatureBuilder:
         return float(
             max(
                 1,
-                min(difference, 30),
+                min(
+                    difference,
+                    30,
+                ),
             )
         )

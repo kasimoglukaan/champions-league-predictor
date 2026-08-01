@@ -30,8 +30,17 @@ if str(PROJECT_ROOT) not in sys.path:
     )
 
 
+from src.features.feature_builder import (
+    FeatureBuilder,
+)
+from src.features.league_strength import (
+    LeagueStrengthResolver,
+)
 from src.features.live_feature_builder import (
     LiveFeatureBuilder,
+)
+from src.features.match_statistics import (
+    append_result,
 )
 
 
@@ -52,13 +61,13 @@ ORIGINAL_DATA_PATH = (
 CANDIDATE_MODEL_PATH = (
     PROJECT_ROOT
     / "saved_models"
-    / "expanded_match_model_candidate.joblib"
+    / "league_strength_model_candidate.joblib"
 )
 
 REPORT_PATH = (
     PROJECT_ROOT
     / "saved_models"
-    / "expanded_model_report.json"
+    / "league_strength_model_report.json"
 )
 
 
@@ -87,31 +96,6 @@ def determine_winner(
         return "A"
 
     return "D"
-
-
-def normalize_competition(
-    competition: object,
-) -> str:
-    return (
-        str(competition)
-        .strip()
-        .upper()
-    )
-
-
-def is_champions_league(
-    competition: object,
-) -> bool:
-    normalized = normalize_competition(
-        competition
-    )
-
-    return normalized in {
-        "CL",
-        "CHAMPIONS_LEAGUE",
-        "UEFA_CHAMPIONS_LEAGUE",
-        "UEFA CHAMPIONS LEAGUE",
-    }
 
 
 def load_matches(
@@ -144,7 +128,9 @@ def load_matches(
         raise ValueError(
             "Dataset is missing required columns: "
             + ", ".join(
-                sorted(missing_columns)
+                sorted(
+                    missing_columns
+                )
             )
         )
 
@@ -181,7 +167,9 @@ def load_matches(
     )
 
     if "competition" not in matches.columns:
-        matches["competition"] = "UNKNOWN"
+        matches["competition"] = (
+            "UNKNOWN"
+        )
 
     matches["competition"] = (
         matches["competition"]
@@ -199,8 +187,14 @@ def load_matches(
     ).copy()
 
     matches = matches[
-        (matches["home_team"] != "")
-        & (matches["away_team"] != "")
+        (
+            matches["home_team"]
+            != ""
+        )
+        & (
+            matches["away_team"]
+            != ""
+        )
         & (
             matches["home_team"]
             != matches["away_team"]
@@ -241,7 +235,9 @@ def load_matches(
 
         invalid_winner_mask = (
             ~matches["winner"]
-            .isin(LABEL_ORDER)
+            .isin(
+                LABEL_ORDER
+            )
         )
 
         if invalid_winner_mask.any():
@@ -266,15 +262,41 @@ def load_matches(
                 )
             ]
 
-    return (
-        matches.sort_values(
-            by=[
-                "date",
+    sort_columns = [
+        "date",
+    ]
+
+    if "match_id" in matches.columns:
+        sort_columns.append(
+            "match_id"
+        )
+
+    else:
+        sort_columns.extend(
+            [
                 "home_team",
                 "away_team",
             ]
         )
-        .reset_index(drop=True)
+
+    return (
+        matches.sort_values(
+            by=sort_columns
+        )
+        .reset_index(
+            drop=True
+        )
+    )
+
+
+def is_champions_league(
+    competition: object,
+) -> bool:
+    return (
+        LeagueStrengthResolver
+        .is_champions_league(
+            competition
+        )
     )
 
 
@@ -289,8 +311,12 @@ def select_test_matches(
                 is_champions_league
             )
         ]
-        .sort_values("date")
-        .reset_index(drop=True)
+        .sort_values(
+            by="date"
+        )
+        .reset_index(
+            drop=True
+        )
     )
 
     if (
@@ -307,9 +333,13 @@ def select_test_matches(
 
     return (
         champions_league_matches
-        .tail(TEST_MATCH_COUNT)
+        .tail(
+            TEST_MATCH_COUNT
+        )
         .copy()
-        .reset_index(drop=True)
+        .reset_index(
+            drop=True
+        )
     )
 
 
@@ -328,16 +358,31 @@ def create_training_matches(
             "before the test period."
         )
 
-    return (
-        training_matches
-        .sort_values(
-            by=[
-                "date",
+    sort_columns = [
+        "date",
+    ]
+
+    if "match_id" in training_matches.columns:
+        sort_columns.append(
+            "match_id"
+        )
+
+    else:
+        sort_columns.extend(
+            [
                 "home_team",
                 "away_team",
             ]
         )
-        .reset_index(drop=True)
+
+    return (
+        training_matches
+        .sort_values(
+            by=sort_columns
+        )
+        .reset_index(
+            drop=True
+        )
     )
 
 
@@ -353,7 +398,12 @@ def create_empty_feature_builder(
     empty_matches = pd.DataFrame(
         {
             "date": pd.Series(
-                dtype="datetime64[ns, UTC]"
+                dtype=(
+                    "datetime64[ns, UTC]"
+                )
+            ),
+            "competition": pd.Series(
+                dtype=str
             ),
             "home_team": pd.Series(
                 dtype=str
@@ -419,6 +469,10 @@ def build_feature_before_match(
         match.away_team
     )
 
+    competition = str(
+        match.competition
+    )
+
     match_date = pd.Timestamp(
         match.date
     )
@@ -427,16 +481,10 @@ def build_feature_before_match(
         builder.build_match_features(
             home_team=home_team,
             away_team=away_team,
-            competition=str(
-                match.competition
-            ),
+            competition=competition,
         )
     )
 
-    # LiveFeatureBuilder uses the current date for
-    # rest-day calculations. During historical
-    # training we must replace those values with
-    # the actual pre-match rest periods.
     feature_row.loc[
         0,
         "home_rest_days",
@@ -460,7 +508,7 @@ def build_feature_before_match(
         "is_champions_league",
     ] = int(
         is_champions_league(
-            match.competition
+            competition
         )
     )
 
@@ -477,6 +525,10 @@ def update_builder_after_match(
 
     away_team = str(
         match.away_team
+    )
+
+    competition = str(
+        match.competition
     )
 
     home_goals = int(
@@ -498,14 +550,42 @@ def update_builder_after_match(
         away_goals=away_goals,
     )
 
-    builder._append_history(
-        team=home_team,
+    append_result(
+        history=(
+            builder.overall_histories[
+                home_team
+            ]
+        ),
         goals_scored=home_goals,
         goals_conceded=away_goals,
     )
 
-    builder._append_history(
-        team=away_team,
+    append_result(
+        history=(
+            builder.overall_histories[
+                away_team
+            ]
+        ),
+        goals_scored=away_goals,
+        goals_conceded=home_goals,
+    )
+
+    append_result(
+        history=(
+            builder.home_histories[
+                home_team
+            ]
+        ),
+        goals_scored=home_goals,
+        goals_conceded=away_goals,
+    )
+
+    append_result(
+        history=(
+            builder.away_histories[
+                away_team
+            ]
+        ),
         goals_scored=away_goals,
         goals_conceded=home_goals,
     )
@@ -517,6 +597,27 @@ def update_builder_after_match(
     builder.last_match_dates[
         away_team
     ] = match_date
+
+    if (
+        LeagueStrengthResolver
+        .is_domestic(
+            competition
+        )
+    ):
+        canonical_league = (
+            LeagueStrengthResolver
+            .canonical_competition(
+                competition
+            )
+        )
+
+        builder.team_leagues[
+            home_team
+        ] = canonical_league
+
+        builder.team_leagues[
+            away_team
+        ] = canonical_league
 
     builder.latest_data_date = max(
         builder.latest_data_date,
@@ -560,7 +661,9 @@ def generate_training_features(
         )
 
         labels.append(
-            str(match.winner)
+            str(
+                match.winner
+            )
         )
 
         update_builder_after_match(
@@ -578,6 +681,11 @@ def generate_training_features(
                 f"{total_matches:,}"
             )
 
+    if not feature_rows:
+        raise ValueError(
+            "No training features were generated."
+        )
+
     features = pd.concat(
         feature_rows,
         ignore_index=True,
@@ -589,13 +697,43 @@ def generate_training_features(
     )
 
     features = features.replace(
-        [np.inf, -np.inf],
+        [
+            np.inf,
+            -np.inf,
+        ],
         np.nan,
     )
 
     features = features.fillna(
         0.0
     )
+
+    expected_columns = list(
+        FeatureBuilder.FEATURE_COLUMNS
+    )
+
+    actual_columns = list(
+        features.columns
+    )
+
+    if (
+        actual_columns
+        != expected_columns
+    ):
+        raise ValueError(
+            "Generated training columns do not "
+            "match FeatureBuilder.FEATURE_COLUMNS.\n"
+            f"Expected: {expected_columns}\n"
+            f"Actual: {actual_columns}"
+        )
+
+    if len(features) != len(
+        labels_series
+    ):
+        raise ValueError(
+            "Training feature and label counts "
+            "do not match."
+        )
 
     return (
         features,
@@ -629,14 +767,19 @@ def generate_test_features(
         )
 
         labels.append(
-            str(match.winner)
+            str(
+                match.winner
+            )
         )
 
-        # The next test match is allowed to use
-        # results from earlier test matches.
         update_builder_after_match(
             builder=builder,
             match=match,
+        )
+
+    if not feature_rows:
+        raise ValueError(
+            "No test features were generated."
         )
 
     features = pd.concat(
@@ -645,7 +788,10 @@ def generate_test_features(
     )
 
     features = features.replace(
-        [np.inf, -np.inf],
+        [
+            np.inf,
+            -np.inf,
+        ],
         np.nan,
     )
 
@@ -657,6 +803,33 @@ def generate_test_features(
         labels,
         name="winner",
     )
+
+    expected_columns = list(
+        FeatureBuilder.FEATURE_COLUMNS
+    )
+
+    actual_columns = list(
+        features.columns
+    )
+
+    if (
+        actual_columns
+        != expected_columns
+    ):
+        raise ValueError(
+            "Generated test columns do not "
+            "match FeatureBuilder.FEATURE_COLUMNS.\n"
+            f"Expected: {expected_columns}\n"
+            f"Actual: {actual_columns}"
+        )
+
+    if len(features) != len(
+        labels_series
+    ):
+        raise ValueError(
+            "Test feature and label counts "
+            "do not match."
+        )
 
     return (
         features,
@@ -705,7 +878,9 @@ def reorder_probabilities(
     if missing_labels:
         raise ValueError(
             "Classifier output is missing labels: "
-            + ", ".join(missing_labels)
+            + ", ".join(
+                missing_labels
+            )
         )
 
     return np.column_stack(
@@ -754,25 +929,32 @@ def calculate_metrics(
         labels=LABEL_ORDER,
     )
 
+    accuracy = accuracy_score(
+        actual_labels,
+        predicted_labels,
+    )
+
+    probability_log_loss = log_loss(
+        actual_labels,
+        ordered_probabilities,
+        labels=LABEL_ORDER,
+    )
+
     return {
         "accuracy": float(
-            accuracy_score(
-                actual_labels,
-                predicted_labels,
-            )
+            accuracy
         ),
         "log_loss": float(
-            log_loss(
-                actual_labels,
-                ordered_probabilities,
-                labels=LABEL_ORDER,
-            )
+            probability_log_loss
         ),
         "away_precision": float(
             report["A"]["precision"]
         ),
         "away_recall": float(
             report["A"]["recall"]
+        ),
+        "away_f1": float(
+            report["A"]["f1-score"]
         ),
         "draw_precision": float(
             report["D"]["precision"]
@@ -789,10 +971,35 @@ def calculate_metrics(
         "home_recall": float(
             report["H"]["recall"]
         ),
+        "home_f1": float(
+            report["H"]["f1-score"]
+        ),
+        "macro_f1": float(
+            report[
+                "macro avg"
+            ]["f1-score"]
+        ),
+        "weighted_f1": float(
+            report[
+                "weighted avg"
+            ]["f1-score"]
+        ),
+        "predicted_away_wins": int(
+            (
+                predicted_labels
+                == "A"
+            ).sum()
+        ),
         "predicted_draws": int(
             (
                 predicted_labels
                 == "D"
+            ).sum()
+        ),
+        "predicted_home_wins": int(
+            (
+                predicted_labels
+                == "H"
             ).sum()
         ),
         "correct_draws": int(
@@ -807,7 +1014,9 @@ def calculate_metrics(
                 )
             ).sum()
         ),
-        "classification_report": report,
+        "classification_report": (
+            report
+        ),
         "confusion_matrix": (
             matrix.tolist()
         ),
@@ -848,15 +1057,27 @@ def train_and_evaluate(
         test_matches=test_matches,
     )
 
-    if list(
+    training_columns = list(
         training_features.columns
-    ) != list(
+    )
+
+    test_columns = list(
         test_features.columns
+    )
+
+    if (
+        training_columns
+        != test_columns
     ):
         raise ValueError(
             "Training and test feature "
             "columns do not match."
         )
+
+    print(
+        f"Feature count: "
+        f"{len(training_columns)}"
+    )
 
     pipeline = create_pipeline()
 
@@ -879,7 +1100,8 @@ def train_and_evaluate(
 
     classes = [
         str(label)
-        for label in classifier.classes_
+        for label
+        in classifier.classes_
     ]
 
     metrics = calculate_metrics(
@@ -890,9 +1112,7 @@ def train_and_evaluate(
 
     return (
         pipeline,
-        list(
-            training_features.columns
-        ),
+        training_columns,
         metrics,
     )
 
@@ -911,7 +1131,7 @@ def save_candidate_model(
             LABEL_ORDER
         ),
         "model_type": (
-            "expanded_multileague_logistic"
+            "league_strength_home_away_logistic"
         ),
         "training_matches": (
             training_match_count
@@ -919,12 +1139,24 @@ def save_candidate_model(
         "data_path": str(
             EXPANDED_DATA_PATH
         ),
-        "initial_elo": INITIAL_ELO,
-        "k_factor": K_FACTOR,
+        "initial_elo": (
+            INITIAL_ELO
+        ),
+        "k_factor": (
+            K_FACTOR
+        ),
         "home_advantage": (
             HOME_ADVANTAGE
         ),
-        "form_window": FORM_WINDOW,
+        "form_window": (
+            FORM_WINDOW
+        ),
+        "feature_count": len(
+            feature_columns
+        ),
+        "features": (
+            feature_columns
+        ),
     }
 
     CANDIDATE_MODEL_PATH.parent.mkdir(
@@ -957,10 +1189,32 @@ def print_metrics(
     )
 
     print(
+        f"Macro F1: "
+        f"{metrics['macro_f1']:.2%}"
+    )
+
+    print(
+        f"Weighted F1: "
+        f"{metrics['weighted_f1']:.2%}"
+    )
+
+    print()
+    print(
+        f"Away precision: "
+        f"{metrics['away_precision']:.2%}"
+    )
+
+    print(
         f"Away recall: "
         f"{metrics['away_recall']:.2%}"
     )
 
+    print(
+        f"Away F1: "
+        f"{metrics['away_f1']:.2%}"
+    )
+
+    print()
     print(
         f"Draw precision: "
         f"{metrics['draw_precision']:.2%}"
@@ -976,9 +1230,26 @@ def print_metrics(
         f"{metrics['draw_f1']:.2%}"
     )
 
+    print()
+    print(
+        f"Home precision: "
+        f"{metrics['home_precision']:.2%}"
+    )
+
     print(
         f"Home recall: "
         f"{metrics['home_recall']:.2%}"
+    )
+
+    print(
+        f"Home F1: "
+        f"{metrics['home_f1']:.2%}"
+    )
+
+    print()
+    print(
+        f"Predicted away wins: "
+        f"{metrics['predicted_away_wins']}"
     )
 
     print(
@@ -987,12 +1258,19 @@ def print_metrics(
     )
 
     print(
+        f"Predicted home wins: "
+        f"{metrics['predicted_home_wins']}"
+    )
+
+    print(
         f"Correct draws: "
         f"{metrics['correct_draws']}"
     )
 
     print()
-    print("Confusion matrix [A, D, H]:")
+    print(
+        "Confusion matrix [A, D, H]:"
+    )
 
     print(
         np.asarray(
@@ -1003,12 +1281,53 @@ def print_metrics(
     )
 
 
+def determine_recommendation(
+    baseline_metrics: dict[str, Any],
+    candidate_metrics: dict[str, Any],
+) -> str:
+    accuracy_difference = (
+        candidate_metrics["accuracy"]
+        - baseline_metrics["accuracy"]
+    )
+
+    log_loss_difference = (
+        candidate_metrics["log_loss"]
+        - baseline_metrics["log_loss"]
+    )
+
+    macro_f1_difference = (
+        candidate_metrics["macro_f1"]
+        - baseline_metrics["macro_f1"]
+    )
+
+    if (
+        accuracy_difference > 0
+        and log_loss_difference < 0
+        and macro_f1_difference >= 0
+    ):
+        return "PROMOTE_CANDIDATE"
+
+    if (
+        accuracy_difference >= 0
+        and log_loss_difference < 0
+    ):
+        return "REVIEW_CANDIDATE"
+
+    if (
+        accuracy_difference > 0
+        or macro_f1_difference > 0
+    ):
+        return "REVIEW_CANDIDATE"
+
+    return "KEEP_BASELINE"
+
+
 def main() -> None:
     print()
     print("=" * 82)
     print(
-        "EXPANDED MULTI-LEAGUE "
-        "MODEL EXPERIMENT"
+        "LEAGUE STRENGTH AND "
+        "HOME/AWAY MODEL EXPERIMENT"
     )
     print("=" * 82)
 
@@ -1025,7 +1344,9 @@ def main() -> None:
     )
 
     test_start_date = (
-        test_matches["date"].min()
+        test_matches[
+            "date"
+        ].min()
     )
 
     baseline_training_matches = (
@@ -1072,6 +1393,11 @@ def main() -> None:
     )
 
     print(
+        f"Feature count: "
+        f"{len(FeatureBuilder.FEATURE_COLUMNS)}"
+    )
+
+    print(
         "Test date range: "
         f"{test_matches['date'].min()} "
         "to "
@@ -1086,9 +1412,12 @@ def main() -> None:
         training_matches=(
             baseline_training_matches
         ),
-        test_matches=test_matches,
+        test_matches=(
+            test_matches
+        ),
         title=(
-            "BUILDING ORIGINAL-DATA BASELINE"
+            "BUILDING ORIGINAL-DATA BASELINE "
+            "WITH NEW FEATURES"
         ),
     )
 
@@ -1100,9 +1429,12 @@ def main() -> None:
         training_matches=(
             expanded_training_matches
         ),
-        test_matches=test_matches,
+        test_matches=(
+            test_matches
+        ),
         title=(
-            "BUILDING EXPANDED-DATA CANDIDATE"
+            "BUILDING EXPANDED-DATA CANDIDATE "
+            "WITH LEAGUE AND VENUE FEATURES"
         ),
     )
 
@@ -1116,13 +1448,21 @@ def main() -> None:
         )
 
     print_metrics(
-        title="ORIGINAL-DATA BASELINE",
-        metrics=baseline_metrics,
+        title=(
+            "ORIGINAL-DATA BASELINE"
+        ),
+        metrics=(
+            baseline_metrics
+        ),
     )
 
     print_metrics(
-        title="EXPANDED-DATA CANDIDATE",
-        metrics=candidate_metrics,
+        title=(
+            "LEAGUE-STRENGTH CANDIDATE"
+        ),
+        metrics=(
+            candidate_metrics
+        ),
     )
 
     accuracy_difference = (
@@ -1135,9 +1475,25 @@ def main() -> None:
         - baseline_metrics["log_loss"]
     )
 
+    macro_f1_difference = (
+        candidate_metrics["macro_f1"]
+        - baseline_metrics["macro_f1"]
+    )
+
     draw_recall_difference = (
         candidate_metrics["draw_recall"]
         - baseline_metrics["draw_recall"]
+    )
+
+    recommendation = (
+        determine_recommendation(
+            baseline_metrics=(
+                baseline_metrics
+            ),
+            candidate_metrics=(
+                candidate_metrics
+            ),
+        )
     )
 
     print()
@@ -1156,47 +1512,49 @@ def main() -> None:
     )
 
     print(
+        "Macro-F1 difference: "
+        f"{macro_f1_difference:+.2%}"
+    )
+
+    print(
         "Draw-recall difference: "
         f"{draw_recall_difference:+.2%}"
     )
 
+    print(
+        f"Recommendation: "
+        f"{recommendation}"
+    )
+
     if (
-        accuracy_difference > 0
-        and log_loss_difference < 0
+        recommendation
+        == "PROMOTE_CANDIDATE"
     ):
-        recommendation = (
-            "PROMOTE_CANDIDATE"
-        )
-
         print(
-            "Recommendation: "
-            "candidate improves both "
-            "accuracy and log loss."
+            "The candidate improves accuracy, "
+            "log loss and macro F1."
         )
 
-    elif accuracy_difference > 0:
-        recommendation = (
-            "REVIEW_CANDIDATE"
-        )
-
+    elif (
+        recommendation
+        == "REVIEW_CANDIDATE"
+    ):
         print(
-            "Recommendation: candidate "
-            "improves accuracy, but probability "
-            "calibration needs review."
+            "The candidate improves at least "
+            "one important metric, but should "
+            "not replace production automatically."
         )
 
     else:
-        recommendation = (
-            "KEEP_BASELINE"
-        )
-
         print(
-            "Recommendation: do not replace "
-            "the current model yet."
+            "The candidate does not improve "
+            "the baseline sufficiently."
         )
 
     save_candidate_model(
-        pipeline=candidate_pipeline,
+        pipeline=(
+            candidate_pipeline
+        ),
         feature_columns=(
             candidate_feature_columns
         ),
@@ -1206,17 +1564,31 @@ def main() -> None:
     )
 
     report = {
+        "experiment_name": (
+            "league_strength_home_away"
+        ),
         "expanded_dataset_path": str(
             EXPANDED_DATA_PATH
         ),
         "original_dataset_path": str(
             ORIGINAL_DATA_PATH
         ),
+        "candidate_model_path": str(
+            CANDIDATE_MODEL_PATH
+        ),
         "test_start_date": (
-            test_start_date.isoformat()
+            test_start_date
+            .isoformat()
+        ),
+        "test_end_date": (
+            test_matches[
+                "date"
+            ].max().isoformat()
         ),
         "test_matches": int(
-            len(test_matches)
+            len(
+                test_matches
+            )
         ),
         "baseline_training_matches": int(
             len(
@@ -1233,6 +1605,9 @@ def main() -> None:
                 candidate_feature_columns
             )
         ),
+        "feature_columns": (
+            candidate_feature_columns
+        ),
         "baseline": (
             baseline_metrics
         ),
@@ -1245,6 +1620,9 @@ def main() -> None:
             ),
             "log_loss_difference": float(
                 log_loss_difference
+            ),
+            "macro_f1_difference": float(
+                macro_f1_difference
             ),
             "draw_recall_difference": float(
                 draw_recall_difference
@@ -1272,12 +1650,22 @@ def main() -> None:
         )
 
     print()
-    print("Candidate model saved to:")
-    print(CANDIDATE_MODEL_PATH)
+    print(
+        "Candidate model saved to:"
+    )
+
+    print(
+        CANDIDATE_MODEL_PATH
+    )
 
     print()
-    print("Report saved to:")
-    print(REPORT_PATH)
+    print(
+        "Experiment report saved to:"
+    )
+
+    print(
+        REPORT_PATH
+    )
 
     print("=" * 82)
 
