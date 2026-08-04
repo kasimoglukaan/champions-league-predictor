@@ -9,6 +9,8 @@ class PredictionHistoryRecord:
     prediction_id: Optional[int]
 
     event_id: str
+    sport_key: str
+
     created_at: str
     competition: str
     kickoff_time: str

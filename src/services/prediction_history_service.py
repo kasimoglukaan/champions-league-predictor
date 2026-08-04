@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import re
 from typing import Optional
+import unicodedata
 
 import pandas as pd
 
@@ -82,6 +84,9 @@ class PredictionHistoryService:
 
             event_id=str(
                 event.event_id
+            ),
+            sport_key=str(
+                event.sport_key
             ),
             created_at=(
                 datetime.now(
@@ -259,9 +264,37 @@ class PredictionHistoryService:
             status="PENDING",
         )
 
-        return self.repository.insert(
-            record
+        prediction_id = (
+            self.repository.insert(
+                record
+            )
         )
+
+        self.repository.replace_market_probabilities(
+            prediction_id=prediction_id,
+            probabilities=(
+                self._all_model_probabilities(
+                    prediction=prediction,
+                    home_team=str(
+                        event.home_team
+                    ),
+                    away_team=str(
+                        event.away_team
+                    ),
+                    hybrid_home_probability=(
+                        hybrid_home_probability
+                    ),
+                    hybrid_draw_probability=(
+                        hybrid_draw_probability
+                    ),
+                    hybrid_away_probability=(
+                        hybrid_away_probability
+                    ),
+                )
+            ),
+        )
+
+        return prediction_id
 
     def settle_prediction(
         self,
@@ -397,6 +430,63 @@ class PredictionHistoryService:
             ),
         )
 
+        probability_frame = (
+            self.repository
+            .list_market_probabilities(
+                prediction_id=prediction_id
+            )
+        )
+
+        probability_outcomes = []
+
+        for probability_row in (
+            probability_frame.itertuples(
+                index=False
+            )
+        ):
+            probability_outcomes.append(
+                {
+                    "market_key": (
+                        probability_row.market_key
+                    ),
+                    "selection": (
+                        probability_row.selection
+                    ),
+                    "outcome_correct": (
+                        self._evaluate_model_probability(
+                            market_key=str(
+                                probability_row.market_key
+                            ),
+                            selection=str(
+                                probability_row.selection
+                            ),
+                            api_home_team=str(
+                                row[
+                                    "api_home_team"
+                                ]
+                            ),
+                            api_away_team=str(
+                                row[
+                                    "api_away_team"
+                                ]
+                            ),
+                            actual_home_goals=(
+                                actual_home_goals
+                            ),
+                            actual_away_goals=(
+                                actual_away_goals
+                            ),
+                        )
+                    ),
+                }
+            )
+
+        if probability_outcomes:
+            self.repository.update_market_probability_outcomes(
+                prediction_id=prediction_id,
+                outcomes=probability_outcomes,
+            )
+
     def list_predictions(
         self,
         status: Optional[str] = None,
@@ -414,12 +504,150 @@ class PredictionHistoryService:
             )
         )
 
+
+    def list_market_probabilities(
+        self,
+        prediction_id: Optional[int] = None,
+    ) -> pd.DataFrame:
+        return (
+            self.repository
+            .list_market_probabilities(
+                prediction_id=prediction_id
+            )
+        )
+
+
+    def probability_performance_records(
+        self,
+    ) -> pd.DataFrame:
+        return (
+            self.repository
+            .probability_performance_records()
+        )
+
+    def market_probability_summary(
+        self,
+    ) -> pd.DataFrame:
+        return (
+            self.repository
+            .market_probability_summary()
+        )
+
     def summary(
         self,
     ) -> dict:
-        return (
+        summary = (
             self.repository.summary()
         )
+
+        performance_frame = (
+            self.repository
+            .probability_performance_records()
+        )
+
+        secondary_total = 0
+        secondary_correct = 0
+
+        if not performance_frame.empty:
+            for row in (
+                performance_frame
+                .itertuples(
+                    index=False
+                )
+            ):
+                probability = float(
+                    row.probability
+                )
+
+                if probability < 0.50:
+                    continue
+
+                if self._is_primary_probability(
+                    market_name=str(
+                        row.market_name
+                    ),
+                    selection=str(
+                        row.selection
+                    ),
+                    recommended_market=(
+                        row.recommended_market
+                    ),
+                    recommended_selection=(
+                        row.recommended_selection
+                    ),
+                ):
+                    continue
+
+                secondary_total += 1
+                secondary_correct += int(
+                    bool(
+                        row.outcome_correct
+                    )
+                )
+
+        secondary_hit_rate = (
+            secondary_correct
+            / secondary_total
+            if secondary_total > 0
+            else 0.0
+        )
+
+        primary_total = int(
+            summary["won_bets"]
+            + summary["lost_bets"]
+        )
+
+        primary_correct = int(
+            summary["won_bets"]
+        )
+
+        overall_total = (
+            primary_total
+            + secondary_total
+        )
+
+        overall_correct = (
+            primary_correct
+            + secondary_correct
+        )
+
+        overall_forecast_hit_rate = (
+            overall_correct
+            / overall_total
+            if overall_total > 0
+            else 0.0
+        )
+
+        return {
+            **summary,
+            "primary_recommendation_total": (
+                primary_total
+            ),
+            "primary_recommendation_correct": (
+                primary_correct
+            ),
+            "primary_recommendation_hit_rate": (
+                summary["bet_hit_rate"]
+            ),
+            "secondary_prediction_total": (
+                secondary_total
+            ),
+            "secondary_prediction_correct": (
+                secondary_correct
+            ),
+            "secondary_prediction_hit_rate": (
+                secondary_hit_rate
+            ),
+            "overall_forecast_total": (
+                overall_total
+            ),
+            "overall_forecast_correct": (
+                overall_correct
+            ),
+            "overall_forecast_hit_rate": (
+                overall_forecast_hit_rate
+            ),
+        }
 
     def list_competitions(
         self,
@@ -496,6 +724,354 @@ class PredictionHistoryService:
             draw_probability / total,
             away_probability / total,
         )
+
+
+    @staticmethod
+    def _all_model_probabilities(
+        prediction,
+        home_team: str,
+        away_team: str,
+        hybrid_home_probability: float,
+        hybrid_draw_probability: float,
+        hybrid_away_probability: float,
+    ) -> list[dict]:
+        btts_yes = float(
+            prediction.btts_probability
+        )
+
+        probabilities = [
+            {
+                "market_key": "h2h",
+                "market_name": "Match result",
+                "selection": home_team,
+                "probability": float(
+                    hybrid_home_probability
+                ),
+            },
+            {
+                "market_key": "h2h",
+                "market_name": "Match result",
+                "selection": "Draw",
+                "probability": float(
+                    hybrid_draw_probability
+                ),
+            },
+            {
+                "market_key": "h2h",
+                "market_name": "Match result",
+                "selection": away_team,
+                "probability": float(
+                    hybrid_away_probability
+                ),
+            },
+            {
+                "market_key": "btts",
+                "market_name": (
+                    "Both teams to score"
+                ),
+                "selection": "Yes",
+                "probability": btts_yes,
+            },
+            {
+                "market_key": "btts",
+                "market_name": (
+                    "Both teams to score"
+                ),
+                "selection": "No",
+                "probability": (
+                    1.0
+                    - btts_yes
+                ),
+            },
+            {
+                "market_key": "totals",
+                "market_name": "Total goals",
+                "selection": "Over 1.5",
+                "probability": float(
+                    prediction
+                    .over_1_5_probability
+                ),
+            },
+            {
+                "market_key": "totals",
+                "market_name": "Total goals",
+                "selection": "Over 2.5",
+                "probability": float(
+                    prediction
+                    .over_2_5_probability
+                ),
+            },
+            {
+                "market_key": "totals",
+                "market_name": "Total goals",
+                "selection": "Under 2.5",
+                "probability": float(
+                    prediction
+                    .under_2_5_probability
+                ),
+            },
+            {
+                "market_key": "totals",
+                "market_name": "Total goals",
+                "selection": "Under 3.5",
+                "probability": float(
+                    prediction
+                    .under_3_5_probability
+                ),
+            },
+        ]
+
+        return [
+            {
+                **item,
+                "probability": min(
+                    max(
+                        float(
+                            item[
+                                "probability"
+                            ]
+                        ),
+                        0.0,
+                    ),
+                    1.0,
+                ),
+            }
+            for item in probabilities
+        ]
+
+    @staticmethod
+    def _evaluate_model_probability(
+        market_key: str,
+        selection: str,
+        api_home_team: str,
+        api_away_team: str,
+        actual_home_goals: int,
+        actual_away_goals: int,
+    ) -> bool:
+        normalized_market = (
+            str(market_key)
+            .strip()
+            .casefold()
+        )
+
+        normalized_selection = (
+            str(selection)
+            .strip()
+            .casefold()
+        )
+
+        total_goals = (
+            int(actual_home_goals)
+            + int(actual_away_goals)
+        )
+
+        if normalized_market == "h2h":
+            if normalized_selection == "draw":
+                return (
+                    actual_home_goals
+                    == actual_away_goals
+                )
+
+            if (
+                PredictionHistoryService
+                ._team_names_match(
+                    selection,
+                    api_home_team,
+                )
+            ):
+                return (
+                    actual_home_goals
+                    > actual_away_goals
+                )
+
+            if (
+                PredictionHistoryService
+                ._team_names_match(
+                    selection,
+                    api_away_team,
+                )
+            ):
+                return (
+                    actual_away_goals
+                    > actual_home_goals
+                )
+
+            return False
+
+        if normalized_market == "btts":
+            both_scored = (
+                actual_home_goals > 0
+                and actual_away_goals > 0
+            )
+
+            if normalized_selection == "yes":
+                return both_scored
+
+            if normalized_selection == "no":
+                return not both_scored
+
+            return False
+
+        if normalized_market == "totals":
+            if normalized_selection == "over 1.5":
+                return total_goals >= 2
+
+            if normalized_selection == "over 2.5":
+                return total_goals >= 3
+
+            if normalized_selection == "under 2.5":
+                return total_goals <= 2
+
+            if normalized_selection == "under 3.5":
+                return total_goals <= 3
+
+        return False
+
+
+    @classmethod
+    def _is_primary_probability(
+        cls,
+        market_name,
+        selection: str,
+        recommended_market,
+        recommended_selection,
+    ) -> bool:
+        if (
+            recommended_market is None
+            or recommended_selection is None
+            or pd.isna(
+                recommended_market
+            )
+            or pd.isna(
+                recommended_selection
+            )
+        ):
+            return False
+
+        normalized_market = (
+            cls._normalize_market_text(
+                market_name
+            )
+        )
+
+        normalized_recommended_market = (
+            cls._normalize_market_text(
+                recommended_market
+            )
+        )
+
+        if (
+            normalized_market
+            != normalized_recommended_market
+        ):
+            return False
+
+        normalized_selection = (
+            cls._normalize_selection_text(
+                selection
+            )
+        )
+
+        normalized_recommended_selection = (
+            cls._normalize_selection_text(
+                recommended_selection
+            )
+        )
+
+        return (
+            normalized_selection
+            == normalized_recommended_selection
+        )
+
+    @staticmethod
+    def _normalize_market_text(
+        value,
+    ) -> str:
+        normalized = str(
+            value
+        ).strip().casefold()
+
+        normalized = re.sub(
+            r"[^a-z0-9]+",
+            " ",
+            normalized,
+        )
+
+        aliases = {
+            "h2h": "match result",
+            "match result": "match result",
+            "total goals": "total goals",
+            "totals": "total goals",
+            "both teams to score": "btts",
+            "btts": "btts",
+        }
+
+        cleaned = " ".join(
+            normalized.split()
+        )
+
+        return aliases.get(
+            cleaned,
+            cleaned,
+        )
+
+    @classmethod
+    def _normalize_selection_text(
+        cls,
+        value,
+    ) -> str:
+        raw_value = str(
+            value
+        ).strip()
+
+        normalized_team = (
+            cls._normalize_team_name(
+                raw_value
+            )
+        )
+
+        normalized = re.sub(
+            r"[^a-z0-9.]+",
+            " ",
+            raw_value.casefold(),
+        )
+
+        ignored_words = {
+            "goal",
+            "goals",
+            "win",
+            "wins",
+        }
+
+        normalized_words = [
+            word
+            for word in normalized.split()
+            if word not in ignored_words
+        ]
+
+        normalized_selection = (
+            " ".join(
+                normalized_words
+            )
+            .strip()
+        )
+
+        standard_selections = {
+            "draw",
+            "yes",
+            "no",
+            "over 1.5",
+            "over 2.5",
+            "under 2.5",
+            "under 3.5",
+        }
+
+        if normalized_selection in (
+            standard_selections
+        ):
+            return normalized_selection
+
+        return normalized_team
 
     @staticmethod
     def _result_text(
@@ -594,24 +1170,24 @@ class PredictionHistoryService:
                 )
 
             if normalized_selection in {
-                api_home_team
-                .strip()
-                .casefold(),
                 "home",
                 "home win",
-            }:
+            } or PredictionHistoryService._team_names_match(
+                selection,
+                api_home_team,
+            ):
                 return (
                     actual_home_goals
                     > actual_away_goals
                 )
 
             if normalized_selection in {
-                api_away_team
-                .strip()
-                .casefold(),
                 "away",
                 "away win",
-            }:
+            } or PredictionHistoryService._team_names_match(
+                selection,
+                api_away_team,
+            ):
                 return (
                     actual_away_goals
                     > actual_home_goals
@@ -650,3 +1226,86 @@ class PredictionHistoryService:
                 return total_goals <= 3
 
         return None
+
+    @staticmethod
+    def _team_names_match(
+        first_team: str,
+        second_team: str,
+    ) -> bool:
+        first_normalized = (
+            PredictionHistoryService
+            ._normalize_team_name(
+                first_team
+            )
+        )
+
+        second_normalized = (
+            PredictionHistoryService
+            ._normalize_team_name(
+                second_team
+            )
+        )
+
+        return (
+            bool(first_normalized)
+            and first_normalized
+            == second_normalized
+        )
+
+    @staticmethod
+    def _normalize_team_name(
+        team_name: str,
+    ) -> str:
+        normalized = unicodedata.normalize(
+            "NFKD",
+            str(team_name).casefold(),
+        )
+
+        normalized = "".join(
+            character
+            for character in normalized
+            if not unicodedata.combining(
+                character
+            )
+        )
+
+        normalized = normalized.replace(
+            "&",
+            " and ",
+        )
+
+        normalized = re.sub(
+            r"[^a-z0-9]+",
+            " ",
+            normalized,
+        )
+
+        ignored_words = {
+            "afc",
+            "bk",
+            "cd",
+            "cf",
+            "club",
+            "fc",
+            "fk",
+            "football",
+            "if",
+            "jk",
+            "kv",
+            "rc",
+            "sc",
+            "sk",
+            "sl",
+            "ssc",
+            "sv",
+            "town",
+            "ud",
+        }
+
+        words = [
+            word
+            for word in normalized.split()
+            if word not in ignored_words
+        ]
+
+        return " ".join(words).strip()

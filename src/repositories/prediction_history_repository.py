@@ -38,6 +38,10 @@ class PredictionHistoryRepository:
             sqlite3.Row
         )
 
+        connection.execute(
+            "PRAGMA foreign_keys = ON"
+        )
+
         return connection
 
     def _initialize_database(
@@ -52,6 +56,7 @@ class PredictionHistoryRepository:
                         PRIMARY KEY AUTOINCREMENT,
 
                     event_id TEXT NOT NULL,
+                    sport_key TEXT,
                     created_at TEXT NOT NULL,
                     competition TEXT NOT NULL,
                     kickoff_time TEXT NOT NULL,
@@ -144,6 +149,81 @@ class PredictionHistoryRepository:
                 """
             )
 
+            columns = {
+                str(row["name"])
+                for row in connection.execute(
+                    "PRAGMA table_info(prediction_history)"
+                ).fetchall()
+            }
+
+            if "sport_key" not in columns:
+                connection.execute(
+                    "ALTER TABLE prediction_history ADD COLUMN sport_key TEXT"
+                )
+
+            connection.execute(
+                """
+                CREATE INDEX IF NOT EXISTS
+                idx_prediction_history_sport_key
+                ON prediction_history (sport_key)
+                """
+            )
+
+
+            connection.execute(
+                """
+                CREATE TABLE IF NOT EXISTS
+                prediction_market_probabilities (
+                    probability_id INTEGER
+                        PRIMARY KEY AUTOINCREMENT,
+
+                    prediction_id INTEGER NOT NULL,
+
+                    market_key TEXT NOT NULL,
+                    market_name TEXT NOT NULL,
+                    selection TEXT NOT NULL,
+                    probability REAL NOT NULL,
+
+                    outcome_correct INTEGER,
+
+                    FOREIGN KEY (
+                        prediction_id
+                    )
+                    REFERENCES prediction_history (
+                        prediction_id
+                    )
+                    ON DELETE CASCADE,
+
+                    UNIQUE (
+                        prediction_id,
+                        market_key,
+                        selection
+                    )
+                )
+                """
+            )
+
+            connection.execute(
+                """
+                CREATE INDEX IF NOT EXISTS
+                idx_market_probabilities_prediction
+                ON prediction_market_probabilities (
+                    prediction_id
+                )
+                """
+            )
+
+            connection.execute(
+                """
+                CREATE INDEX IF NOT EXISTS
+                idx_market_probabilities_market
+                ON prediction_market_probabilities (
+                    market_key,
+                    selection
+                )
+                """
+            )
+
             connection.commit()
 
     def insert(
@@ -152,6 +232,7 @@ class PredictionHistoryRepository:
     ) -> int:
         values = {
             "event_id": record.event_id,
+            "sport_key": record.sport_key,
             "created_at": record.created_at,
             "competition": record.competition,
             "kickoff_time": record.kickoff_time,
@@ -433,6 +514,15 @@ class PredictionHistoryRepository:
             for row in rows
         ]
 
+    def list_pending_predictions(
+        self,
+        limit: int = 5000,
+    ) -> pd.DataFrame:
+        return self.list_predictions(
+            status="PENDING",
+            limit=limit,
+        )
+
     def update_result(
         self,
         prediction_id: int,
@@ -502,6 +592,214 @@ class PredictionHistoryRepository:
             )
 
             connection.commit()
+
+
+    def replace_market_probabilities(
+        self,
+        prediction_id: int,
+        probabilities: list[dict],
+    ) -> None:
+        with self._connect() as connection:
+            connection.execute(
+                """
+                DELETE FROM
+                    prediction_market_probabilities
+                WHERE prediction_id = ?
+                """,
+                (
+                    int(prediction_id),
+                ),
+            )
+
+            rows = [
+                (
+                    int(prediction_id),
+                    str(item["market_key"]),
+                    str(item["market_name"]),
+                    str(item["selection"]),
+                    float(item["probability"]),
+                    (
+                        None
+                        if item.get(
+                            "outcome_correct"
+                        ) is None
+                        else int(
+                            bool(
+                                item[
+                                    "outcome_correct"
+                                ]
+                            )
+                        )
+                    ),
+                )
+                for item in probabilities
+            ]
+
+            if rows:
+                connection.executemany(
+                    """
+                    INSERT INTO
+                        prediction_market_probabilities (
+                            prediction_id,
+                            market_key,
+                            market_name,
+                            selection,
+                            probability,
+                            outcome_correct
+                        )
+                    VALUES (?, ?, ?, ?, ?, ?)
+                    """,
+                    rows,
+                )
+
+            connection.commit()
+
+    def list_market_probabilities(
+        self,
+        prediction_id: Optional[int] = None,
+    ) -> pd.DataFrame:
+        query = """
+            SELECT
+                probability_id,
+                prediction_id,
+                market_key,
+                market_name,
+                selection,
+                probability,
+                outcome_correct
+            FROM prediction_market_probabilities
+        """
+
+        parameters: list[object] = []
+
+        if prediction_id is not None:
+            query += """
+                WHERE prediction_id = ?
+            """
+
+            parameters.append(
+                int(prediction_id)
+            )
+
+        query += """
+            ORDER BY
+                prediction_id DESC,
+                market_name,
+                probability DESC
+        """
+
+        with self._connect() as connection:
+            return pd.read_sql_query(
+                query,
+                connection,
+                params=parameters,
+            )
+
+    def update_market_probability_outcomes(
+        self,
+        prediction_id: int,
+        outcomes: list[dict],
+    ) -> None:
+        with self._connect() as connection:
+            for item in outcomes:
+                connection.execute(
+                    """
+                    UPDATE
+                        prediction_market_probabilities
+                    SET outcome_correct = ?
+                    WHERE prediction_id = ?
+                      AND market_key = ?
+                      AND selection = ?
+                    """,
+                    (
+                        int(
+                            bool(
+                                item[
+                                    "outcome_correct"
+                                ]
+                            )
+                        ),
+                        int(prediction_id),
+                        str(item["market_key"]),
+                        str(item["selection"]),
+                    ),
+                )
+
+            connection.commit()
+
+
+    def probability_performance_records(
+        self,
+    ) -> pd.DataFrame:
+        with self._connect() as connection:
+            return pd.read_sql_query(
+                """
+                SELECT
+                    probability.prediction_id,
+                    probability.market_key,
+                    probability.market_name,
+                    probability.selection,
+                    probability.probability,
+                    probability.outcome_correct,
+
+                    history.recommended_market,
+                    history.recommended_selection,
+                    history.bet_won,
+                    history.status
+
+                FROM prediction_market_probabilities
+                    AS probability
+
+                INNER JOIN prediction_history
+                    AS history
+                    ON history.prediction_id
+                    = probability.prediction_id
+
+                WHERE
+                    history.status = 'SETTLED'
+                    AND probability.outcome_correct
+                        IS NOT NULL
+
+                ORDER BY
+                    probability.prediction_id,
+                    probability.market_name,
+                    probability.probability DESC
+                """,
+                connection,
+            )
+
+    def market_probability_summary(
+        self,
+    ) -> pd.DataFrame:
+        with self._connect() as connection:
+            return pd.read_sql_query(
+                """
+                SELECT
+                    market_name,
+                    selection,
+                    COUNT(*) AS settled_predictions,
+                    SUM(
+                        CASE
+                            WHEN outcome_correct = 1
+                            THEN 1
+                            ELSE 0
+                        END
+                    ) AS correct_predictions,
+                    AVG(probability)
+                        AS average_probability,
+                    AVG(outcome_correct)
+                        AS actual_hit_rate
+                FROM prediction_market_probabilities
+                WHERE outcome_correct IS NOT NULL
+                GROUP BY
+                    market_name,
+                    selection
+                ORDER BY
+                    market_name,
+                    selection
+                """,
+                connection,
+            )
 
     def summary(
         self,

@@ -2076,10 +2076,9 @@ def render_prediction_history(
             'Prediction History'
             '</div>'
             '<div class="section-description">'
-            'Saved analyses use the validated '
-            '50% ML + 50% Poisson 1X2 probabilities. '
-            'Results can be settled manually after '
-            'the final score is known.'
+            'The primary performance metric is the result of the '
+            'recommended value selection. The separate 1X2 model '
+            'accuracy remains visible as a technical diagnostic.'
             '</div>'
         ),
         unsafe_allow_html=True,
@@ -2087,36 +2086,96 @@ def render_prediction_history(
 
     summary = history_service.summary()
 
-    metric_columns = st.columns(6)
+    status_metric_columns = st.columns(4)
 
-    metric_columns[0].metric(
+    status_metric_columns[0].metric(
         "Saved",
         summary["total_predictions"],
     )
 
-    metric_columns[1].metric(
+    status_metric_columns[1].metric(
         "Pending",
         summary["pending_predictions"],
     )
 
-    metric_columns[2].metric(
+    status_metric_columns[2].metric(
         "Settled",
         summary["settled_predictions"],
     )
 
-    metric_columns[3].metric(
-        "1X2 accuracy",
-        f"{summary['prediction_accuracy']:.1%}",
-    )
-
-    metric_columns[4].metric(
-        "Value hit rate",
-        f"{summary['bet_hit_rate']:.1%}",
-    )
-
-    metric_columns[5].metric(
+    status_metric_columns[3].metric(
         "ROI",
         f"{summary['roi']:+.1%}",
+    )
+
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'Forecast hit rates'
+            '</div>'
+            '<div class="section-description">'
+            'The main recommendation is measured separately from '
+            'supporting model signals. Secondary signals include '
+            'non-primary selections with at least 50% model '
+            'probability.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    hit_rate_columns = st.columns(4)
+
+    hit_rate_columns[0].metric(
+        "Overall forecast hit rate",
+        (
+            f"{summary['overall_forecast_hit_rate']:.1%}"
+        ),
+        help=(
+            "Combined result of settled primary recommendations "
+            "and qualifying secondary model signals."
+        ),
+    )
+
+    hit_rate_columns[1].metric(
+        "Primary recommendation",
+        (
+            f"{summary['primary_recommendation_hit_rate']:.1%}"
+        ),
+        help=(
+            "Success rate of the single value selection presented "
+            "as the main recommendation."
+        ),
+    )
+
+    hit_rate_columns[2].metric(
+        "Secondary predictions",
+        (
+            f"{summary['secondary_prediction_hit_rate']:.1%}"
+        ),
+        help=(
+            "Success rate of non-primary model selections carrying "
+            "at least 50% probability."
+        ),
+    )
+
+    hit_rate_columns[3].metric(
+        "1X2 model accuracy",
+        f"{summary['prediction_accuracy']:.1%}",
+        help=(
+            "Technical accuracy of the model's home/draw/away "
+            "winner prediction."
+        ),
+    )
+
+    st.caption(
+        (
+            "Evaluated samples — Primary: "
+            f"{summary['primary_recommendation_total']} · "
+            "Secondary: "
+            f"{summary['secondary_prediction_total']} · "
+            "Combined: "
+            f"{summary['overall_forecast_total']}"
+        )
     )
 
     st.markdown("<br>", unsafe_allow_html=True)
@@ -2165,16 +2224,17 @@ def render_prediction_history(
         "competition",
         "api_home_team",
         "api_away_team",
-        "predicted_result_text",
-        "confidence",
+        "recommended_market",
         "recommended_selection",
         "recommended_odds",
+        "bet_won",
+        "profit_loss",
+        "predicted_result_text",
+        "confidence",
+        "prediction_correct",
         "status",
         "actual_home_goals",
         "actual_away_goals",
-        "prediction_correct",
-        "bet_won",
-        "profit_loss",
     ]
 
     available_columns = [
@@ -2194,29 +2254,75 @@ def render_prediction_history(
             "competition": "Competition",
             "api_home_team": "Home",
             "api_away_team": "Away",
-            "predicted_result_text": "Prediction",
-            "confidence": "Confidence",
-            "recommended_selection": "Value pick",
+            "recommended_market": "Recommended market",
+            "recommended_selection": "Primary recommendation",
             "recommended_odds": "Odds",
+            "bet_won": "Recommendation result",
+            "profit_loss": "P/L",
+            "predicted_result_text": "1X2 model prediction",
+            "confidence": "1X2 confidence",
+            "prediction_correct": "1X2 result",
             "status": "Status",
             "actual_home_goals": "Home goals",
             "actual_away_goals": "Away goals",
-            "prediction_correct": "Correct",
-            "bet_won": "Bet won",
-            "profit_loss": "P/L",
         }
     )
 
+    if "Recommendation result" in display_frame.columns:
+        display_frame["Recommendation result"] = (
+            display_frame["Recommendation result"]
+            .map(
+                {
+                    1: "✅ Won",
+                    1.0: "✅ Won",
+                    True: "✅ Won",
+                    0: "❌ Lost",
+                    0.0: "❌ Lost",
+                    False: "❌ Lost",
+                }
+            )
+            .fillna("—")
+        )
+
+    if "1X2 result" in display_frame.columns:
+        display_frame["1X2 result"] = (
+            display_frame["1X2 result"]
+            .map(
+                {
+                    1: "✅ Correct",
+                    1.0: "✅ Correct",
+                    True: "✅ Correct",
+                    0: "❌ Wrong",
+                    0.0: "❌ Wrong",
+                    False: "❌ Wrong",
+                }
+            )
+            .fillna("—")
+        )
+
+    if "Status" in display_frame.columns:
+        display_frame["Status"] = (
+            display_frame["Status"]
+            .astype(str)
+            .str.upper()
+        )
+
     formatters = {}
 
-    if "Confidence" in display_frame.columns:
-        formatters["Confidence"] = "{:.1%}"
+    if "1X2 confidence" in display_frame.columns:
+        formatters["1X2 confidence"] = "{:.1%}"
 
     if "Odds" in display_frame.columns:
         formatters["Odds"] = "{:.2f}"
 
     if "P/L" in display_frame.columns:
         formatters["P/L"] = "{:+.2f}"
+
+    if "Home goals" in display_frame.columns:
+        formatters["Home goals"] = "{:.0f}"
+
+    if "Away goals" in display_frame.columns:
+        formatters["Away goals"] = "{:.0f}"
 
     st.dataframe(
         display_frame.style.format(
@@ -2226,6 +2332,191 @@ def render_prediction_history(
         width="stretch",
         hide_index=True,
     )
+
+    st.caption(
+        "Recommendation result measures the primary value pick shown "
+        "to the user. The 1X2 result is tracked separately and does not "
+        "override a successful recommended market."
+    )
+
+    st.markdown(
+        (
+            '<div class="section-title">'
+            'All model probability outcomes'
+            '</div>'
+            '<div class="section-description">'
+            'Review every probability produced when the analysis was '
+            'saved. Settled matches show whether each selection '
+            'actually occurred.'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+    probability_prediction_ids = (
+        history_frame[
+            "prediction_id"
+        ]
+        .astype(int)
+        .tolist()
+    )
+
+    probability_lookup = {
+        int(row.prediction_id): (
+            f"#{int(row.prediction_id)} · "
+            f"{row.api_home_team} vs "
+            f"{row.api_away_team} · "
+            f"{row.status}"
+        )
+        for row in history_frame.itertuples(
+            index=False
+        )
+    }
+
+    selected_probability_prediction_id = (
+        st.selectbox(
+            "Match probability details",
+            options=(
+                probability_prediction_ids
+            ),
+            format_func=lambda value: (
+                probability_lookup[value]
+            ),
+            key=(
+                "market_probability_prediction"
+            ),
+        )
+    )
+
+    probability_frame = (
+        history_service
+        .list_market_probabilities(
+            prediction_id=int(
+                selected_probability_prediction_id
+            )
+        )
+    )
+
+    if probability_frame.empty:
+        st.info(
+            "Detailed market probabilities were not stored for this "
+            "older record. New analyses saved after this update will "
+            "include them automatically."
+        )
+
+    else:
+        probability_display = (
+            probability_frame[
+                [
+                    "market_name",
+                    "selection",
+                    "probability",
+                    "outcome_correct",
+                ]
+            ]
+            .copy()
+            .rename(
+                columns={
+                    "market_name": "Market",
+                    "selection": "Selection",
+                    "probability": (
+                        "Model probability"
+                    ),
+                    "outcome_correct": (
+                        "Actual outcome"
+                    ),
+                }
+            )
+        )
+
+        probability_display[
+            "Actual outcome"
+        ] = (
+            probability_display[
+                "Actual outcome"
+            ]
+            .map(
+                {
+                    1: "✅ Occurred",
+                    1.0: "✅ Occurred",
+                    True: "✅ Occurred",
+                    0: "❌ Did not occur",
+                    0.0: "❌ Did not occur",
+                    False: "❌ Did not occur",
+                }
+            )
+            .fillna("— Pending")
+        )
+
+        st.dataframe(
+            probability_display.style.format(
+                {
+                    "Model probability": (
+                        "{:.1%}"
+                    ),
+                },
+                na_rep="—",
+            ),
+            width="stretch",
+            hide_index=True,
+        )
+
+    market_summary = (
+        history_service
+        .market_probability_summary()
+    )
+
+    if not market_summary.empty:
+        st.markdown(
+            (
+                '<div class="section-title">'
+                'Market probability performance'
+                '</div>'
+                '<div class="section-description">'
+                'Aggregated accuracy for every stored model selection. '
+                'Use larger samples before drawing conclusions.'
+                '</div>'
+            ),
+            unsafe_allow_html=True,
+        )
+
+        market_summary_display = (
+            market_summary.copy()
+            .rename(
+                columns={
+                    "market_name": "Market",
+                    "selection": "Selection",
+                    "settled_predictions": (
+                        "Settled"
+                    ),
+                    "correct_predictions": (
+                        "Correct"
+                    ),
+                    "average_probability": (
+                        "Average model probability"
+                    ),
+                    "actual_hit_rate": (
+                        "Actual hit rate"
+                    ),
+                }
+            )
+        )
+
+        st.dataframe(
+            market_summary_display.style.format(
+                {
+                    "Average model probability": (
+                        "{:.1%}"
+                    ),
+                    "Actual hit rate": (
+                        "{:.1%}"
+                    ),
+                },
+                na_rep="—",
+            ),
+            width="stretch",
+            hide_index=True,
+        )
 
     st.markdown(
         (
